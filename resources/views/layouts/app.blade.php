@@ -45,5 +45,85 @@
 
     <!-- Scripts -->
     @stack('scripts')
+    
+    <!-- Scroll Reveal Animation -->
+    <style>
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Staggered animation for product cards */
+        .scroll-reveal[data-delay] {
+            transition-delay: 0ms;
+        }
+        
+        .scroll-reveal.revealed[data-delay="0"] {
+            transition-delay: 0ms;
+        }
+        
+        .scroll-reveal.revealed[data-delay="100"] {
+            transition-delay: 100ms;
+        }
+        
+        .scroll-reveal.revealed[data-delay="200"] {
+            transition-delay: 200ms;
+        }
+        
+        .scroll-reveal.revealed[data-delay="300"] {
+            transition-delay: 300ms;
+        }
+        
+        .scroll-reveal.revealed[data-delay="400"] {
+            transition-delay: 400ms;
+        }
+        
+        .scroll-reveal.revealed[data-delay="500"] {
+            transition-delay: 500ms;
+        }
+    </style>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Scroll reveal animation
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all scroll-reveal elements
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
