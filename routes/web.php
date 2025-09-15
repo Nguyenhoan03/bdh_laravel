@@ -3,5 +3,13 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('layouts.app');
+    return view('home');
+});
+
+Route::get('/test', function () {
+    return view('components.product-card');
+});
+
+Route::get('/ve-chung-toi', function () {
+    return view('about');
 });
