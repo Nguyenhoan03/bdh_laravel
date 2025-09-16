@@ -80,7 +80,7 @@
 <!-- Main Heading Section -->
 <section class="py-8 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 uppercase tracking-wide scroll-reveal" style="font-family: 'Roboto Condensed', sans-serif;">
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 uppercase tracking-wide scroll-reveal roboto-condensed">
             ĐỒNG HỒ DANIEL WELLINGTON (ĐỒNG HỒ DW)
         </h1>
     </div>
@@ -188,7 +188,7 @@
                         <circle cx="12" cy="12" r="10"></circle>
                         <polyline points="12,6 12,12 16,14"></polyline>
                     </svg>
-                    <h2 class="md:text-5xl font-extrabold text-gray-900 uppercase tracking-wider" style="font-family: 'Roboto Condensed', sans-serif;font-size:22px">ĐỒNG HỒ NỮ</h2>
+                    <h2 class="md:text-5xl font-extrabold text-gray-900 uppercase tracking-wider roboto-condensed" style="font-size:22px">ĐỒNG HỒ NỮ</h2>
                 </div>
                 
                 <!-- Right line -->
@@ -262,8 +262,8 @@
             <!-- Swiper Container -->
             <div class="swiper products-swiper">
                 <div class="swiper-wrapper">
-                    @foreach($womensWatches as $product)
-                        <div class="swiper-slide">
+                    @foreach($womensWatches as $index => $product)
+                        <div class="swiper-slide scroll-reveal" data-delay="{{ $index * 100 }}">
                             <x-product-card 
                                 :name="$product['name'] ?? ''"
                                 :spec="$product['spec'] ?? ''"
@@ -321,7 +321,7 @@
                         <circle cx="12" cy="12" r="10"></circle>
                         <polyline points="12,6 12,12 16,14"></polyline>
                     </svg>
-                    <h2 class="md:text-5xl font-extrabold text-gray-900 uppercase tracking-wider" style="font-family: 'Roboto Condensed', sans-serif;font-size: 22px;">ĐỒNG HỒ NAM</h2>
+                    <h2 class="md:text-5xl font-extrabold text-gray-900 uppercase tracking-wider roboto-condensed" style="font-size: 22px;">ĐỒNG HỒ NAM</h2>
                 </div>
                 
                 <!-- Right line -->
@@ -395,8 +395,8 @@
             <!-- Swiper Container -->
             <div class="swiper products-swiper">
                 <div class="swiper-wrapper">
-                    @foreach($womensWatches as $product)
-                        <div class="swiper-slide">
+                    @foreach($womensWatches as $index => $product)
+                        <div class="swiper-slide scroll-reveal" data-delay="{{ $index * 100 }}">
                             <x-product-card 
                                 :name="$product['name'] ?? ''"
                                 :spec="$product['spec'] ?? ''"
@@ -436,11 +436,11 @@
 </section>
 
 <!-- Best Selling Section -->
-<section class="py-16 bg-white">
+<section class="py-6 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header -->
         <div class="text-center mb-12">
-            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 uppercase tracking-wider mb-4" style="font-family: 'Roboto Condensed', sans-serif;">
+            <h2 class="text-4xl md:text-2xl font-extrabold text-gray-900 uppercase tracking-wider mb-4 roboto-condensed">
                 BÁN CHẠY NHẤT HỆ THỐNG
             </h2>
             <p class="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -519,25 +519,107 @@
 
         <!-- Products Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            @foreach($bestSellingProducts as $product)
-                <x-product-card 
-                    :name="$product['name'] ?? ''"
-                    :spec="$product['spec'] ?? ''"
-                    :original-price="$product['original_price'] ?? ''"
-                    :price="$product['price'] ?? ''"
-                    :discount="$product['discount'] ?? ''"
-                    :image="$product['image'] ?? 'DW00100699-247x296.webp'"
-                    :size="'normal'"
-                />
+            @foreach($bestSellingProducts as $index => $product)
+                <div class="scroll-reveal" data-delay="{{ $index * 100 }}">
+                    <x-product-card 
+                        :name="$product['name'] ?? ''"
+                        :spec="$product['spec'] ?? ''"
+                        :original-price="$product['original_price'] ?? ''"
+                        :price="$product['price'] ?? ''"
+                        :discount="$product['discount'] ?? ''"
+                        :image="$product['image'] ?? 'DW00100699-247x296.webp'"
+                        :size="'normal'"
+                    />
+                </div>
             @endforeach
         </div>
 
         <!-- View More Button -->
         <div class="text-center">
             <a href="/products" 
-               class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+               class="inline-block bg-blue-600 text-white px-8 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                 Xem thêm sản phẩm khác <i class="fas fa-arrow-right ml-2"></i>
             </a>
+        </div>
+    </div>
+</section>
+<!-- Toplist Section -->
+<section class="py-16 bg-white scroll-reveal">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-2xl font-extrabold text-blue-600 uppercase tracking-wider mb-4 roboto-condensed">
+                CHUYÊN MỤC TOPLIST
+            </h2>
+        </div>
+
+        <!-- Toplist Carousel -->
+        <div class="swiper toplist-swiper">
+            <div class="swiper-wrapper">
+                <!-- Card 1: Rolex Perpetual 1908 Settimo -->
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                        <div class="aspect-w-16 aspect-h-12">
+                            <img src="{{ asset('img/DW00100699-247x296.webp') }}" 
+                                 alt="Rolex Perpetual 1908 Settimo" 
+                                 class="w-full h-64 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-gray-900 mb-3 leading-tight roboto-condensed">
+                                Rolex Perpetual 1908 Settimo có dây đeo sang trọng mới
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Patek Philippe Desk Clock -->
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                        <div class="aspect-w-16 aspect-h-12">
+                            <img src="{{ asset('img/DW00100699-247x296.webp') }}" 
+                                 alt="Patek Philippe Desk Clock" 
+                                 class="w-full h-64 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-gray-900 mb-3 leading-tight roboto-condensed">
+                                Chào đón sự trở lại của sự xa hoa với Đồng hồ để bàn phức tạp của Patek Philippe
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Tudor 2025 Prediction -->
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                        <div class="aspect-w-16 aspect-h-12">
+                            <img src="{{ asset('img/DW00100699-247x296.webp') }}" 
+                                 alt="Tudor 2025 Prediction" 
+                                 class="w-full h-64 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-gray-900 mb-3 leading-tight roboto-condensed">
+                                Dự đoán về Tudor 2025 - tại sao người em của Rolex có thể làm lu mờ người anh trong năm nay
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Citizen Premier Collection -->
+                <div class="swiper-slide">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                        <div class="aspect-w-16 aspect-h-12">
+                            <img src="{{ asset('img/DW00100699-247x296.webp') }}" 
+                                 alt="Citizen Premier Collection" 
+                                 class="w-full h-64 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-gray-900 mb-3 leading-tight roboto-condensed">
+                                Điều gì khiến bộ sưu tập Citizen Premier mới đủ tiêu chuẩn là đồng hồ xa xỉ?
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -692,6 +774,42 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', () => {
             productsSwiper.slideNext();
         });
+    });
+
+    // Initialize Toplist Swiper
+    const toplistSwiper = new Swiper('.toplist-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        loop: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+            },
+            768: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+            },
+            1024: {
+                slidesPerView: 4,
+                spaceBetween: 20,
+            },
+        },
+        // Pause autoplay when hovering over the swiper
+        on: {
+            init: function() {
+                this.el.addEventListener('mouseenter', () => {
+                    this.autoplay.stop();
+                });
+                this.el.addEventListener('mouseleave', () => {
+                    this.autoplay.start();
+                });
+            }
+        }
     });
 });
 </script>

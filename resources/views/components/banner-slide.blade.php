@@ -7,7 +7,7 @@
             <div class="swiper-slide relative">
                 <div class="absolute inset-0 bg-gradient-to-br from-amber-50 via-stone-100 to-amber-100">
                     <!-- Marble texture background -->
-                    <div class="absolute inset-0 opacity-30" style="background-image: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><defs><pattern id=\"marble\" patternUnits=\"userSpaceOnUse\" width=\"20\" height=\"20\"><circle cx=\"10\" cy=\"10\" r=\"2\" fill=\"%23d4af37\" opacity=\"0.1\"/></pattern></defs><rect width=\"100\" height=\"100\" fill=\"url(%23marble)\"/></svg>');"></div>
+                    <div class="absolute inset-0 opacity-30" style="background-image: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><defs><pattern id=\"marble\" patternUnits=\"userSpaceOnUse\" width=\"20\" height=\"20\"><circle cx=\"10\" cy=\"10\" r=\"2\" fill=\"%23d4af37\" opacity=\"0.1\"/></pattern></defs><rect width=\"100\" height=\"100\" fill=\"url(%23marble)\"/></svg></div>
                 </div>
                 
                 <!-- Content -->
@@ -48,7 +48,7 @@
             <!-- Slide 2: Women's Collection -->
             <div class="swiper-slide relative">
                 <div class="absolute inset-0 bg-gradient-to-br from-rose-50 via-pink-100 to-rose-100">
-                    <div class="absolute inset-0 opacity-20" style="background-image: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><defs><pattern id=\"marble2\" patternUnits=\"userSpaceOnUse\" width=\"25\" height=\"25\"><circle cx=\"12.5\" cy=\"12.5\" r=\"3\" fill=\"%23ec4899\" opacity=\"0.1\"/></pattern></defs><rect width=\"100\" height=\"100\" fill=\"url(%23marble2)\"/></svg>');"></div>
+                    <div class="absolute inset-0 opacity-20" style="background-image: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><defs><pattern id=\"marble2\" patternUnits=\"userSpaceOnUse\" width=\"25\" height=\"25\"><circle cx=\"12.5\" cy=\"12.5\" r=\"3\" fill=\"%23ec4899\" opacity=\"0.1\"/></pattern></defs><rect width=\"100\" height=\"100\" fill=\"url(%23marble2)\"/></svg></div>
                 </div>
                 
                 <div class="relative z-10 h-full flex items-center">
@@ -84,7 +84,7 @@
             <!-- Slide 3: Men's Collection -->
             <div class="swiper-slide relative">
                 <div class="absolute inset-0 bg-gradient-to-br from-slate-50 via-gray-100 to-slate-100">
-                    <div class="absolute inset-0 opacity-20" style="background-image: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><defs><pattern id=\"marble3\" patternUnits=\"userSpaceOnUse\" width=\"30\" height=\"30\"><circle cx=\"15\" cy=\"15\" r=\"4\" fill=\"%236b7280\" opacity=\"0.1\"/></pattern></defs><rect width=\"100\" height=\"100\" fill=\"url(%23marble3)\"/></svg>');"></div>
+                    <div class="absolute inset-0 opacity-20" style="background-image: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><defs><pattern id=\"marble3\" patternUnits=\"userSpaceOnUse\" width=\"30\" height=\"30\"><circle cx=\"15\" cy=\"15\" r=\"4\" fill=\"%236b7280\" opacity=\"0.1\"/></pattern></defs><rect width=\"100\" height=\"100\" fill=\"url(%23marble3)\"/></svg></div>
                 </div>
                 
                 <div class="relative z-10 h-full flex items-center">

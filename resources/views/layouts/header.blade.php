@@ -10,13 +10,13 @@
 
             <!-- Desktop Navigation -->
             <nav class="hidden md:flex space-x-8">
-                <a href="/" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4" style="font-family: 'Roboto Condensed', sans-serif;">TRANG CHỦ</a>
-                <a href="/dong-ho-nu" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4" style="font-family: 'Roboto Condensed', sans-serif;">ĐỒNG HỒ NỮ</a>
-                <a href="/dong-ho-nam" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4" style="font-family: 'Roboto Condensed', sans-serif;">ĐỒNG HỒ NAM</a>
-                <a href="/dong-ho-cap" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4" style="font-family: 'Roboto Condensed', sans-serif;">ĐỒNG HỒ CẶP</a>
-                <a href="/day-dong-ho" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4" style="font-family: 'Roboto Condensed', sans-serif;">DÂY ĐỒNG HỒ</a>
-                <a href="/trang-suc" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4" style="font-family: 'Roboto Condensed', sans-serif;">TRANG SỨC</a>
-                <a href="/blog" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4" style="font-family: 'Roboto Condensed', sans-serif;">BLOG ĐỒNG HỒ 360</a>
+                <a href="/" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4 roboto-condensed">TRANG CHỦ</a>
+                <a href="/dong-ho-nu" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4 roboto-condensed">ĐỒNG HỒ NỮ</a>
+                <a href="/dong-ho-nam" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4 roboto-condensed">ĐỒNG HỒ NAM</a>
+                <a href="/dong-ho-cap" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4 roboto-condensed">ĐỒNG HỒ CẶP</a>
+                <a href="/day-dong-ho" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4 roboto-condensed">DÂY ĐỒNG HỒ</a>
+                <a href="/trang-suc" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4 roboto-condensed">TRANG SỨC</a>
+                <a href="/blog-dong-ho-360" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4 roboto-condensed">BLOG ĐỒNG HỒ 360</a>
             </nav>
 
             <!-- Cart & Mobile Menu -->
@@ -46,7 +46,7 @@
                 <a href="/dong-ho-cap" class="text-gray-700 hover:text-orange-500 block px-3 py-2 text-base font-medium">ĐỒNG HỒ CẶP</a>
                 <a href="/day-dong-ho" class="text-gray-700 hover:text-orange-500 block px-3 py-2 text-base font-medium">DÂY ĐỒNG HỒ</a>
                 <a href="/trang-suc" class="text-gray-700 hover:text-orange-500 block px-3 py-2 text-base font-medium">TRANG SỨC</a>
-                <a href="/blog" class="text-gray-700 hover:text-orange-500 block px-3 py-2 text-base font-medium">BLOG ĐỒNG HỒ 360</a>
+                <a href="/blog-dong-ho-360" class="text-gray-700 hover:text-orange-500 block px-3 py-2 text-base font-medium">BLOG ĐỒNG HỒ 360</a>
             </div>
         </div>
     </div>

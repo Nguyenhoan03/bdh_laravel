@@ -10,6 +10,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -20,7 +21,7 @@
     <!-- Additional Styles -->
     @stack('styles')
 </head>
-<body class="font-sans antialiased">
+<body class="">
     <div class="min-h-screen bg-gray-100">
         <!-- Header -->
         @include('layouts.header')
@@ -45,6 +46,19 @@
 
     <!-- Scripts -->
     @stack('scripts')
+    
+    <!-- Font Styles -->
+    <style>
+        /* Ensure default font for body and general elements */
+        body, p, span, div, a, button, input, textarea, select {
+            font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif !important;
+        }
+        
+        /* Only apply Roboto Condensed to specific headings */
+        .roboto-condensed {
+            font-family: 'Roboto Condensed', sans-serif !important;
+        }
+    </style>
     
     <!-- Scroll Reveal Animation -->
     <style>

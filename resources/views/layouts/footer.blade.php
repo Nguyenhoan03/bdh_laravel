@@ -90,7 +90,7 @@
                     </li>
                     <li class="flex items-center space-x-2">
                         <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
-                        <a href="/blog" class="text-sm text-blue-600 hover:text-orange-500 transition-colors">Blog</a>
+                        <a href="/blog-dong-ho-360" class="text-sm text-blue-600 hover:text-orange-500 transition-colors">Blog</a>
                     </li>
                     <li class="flex items-center space-x-2">
                         <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
