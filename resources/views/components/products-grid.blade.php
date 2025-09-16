@@ -21,7 +21,7 @@
     $gapClasses = $size === 'compact' ? 'gap-4' : 'gap-6';
 @endphp
 
-<div class="grid {{ $gridClasses }} {{ $gapClasses }} mb-8">
+<div class="grid {{ $gridClasses }} {{ $gapClasses }} mb-8 p-3 scroll-reveal">
     @foreach($products as $index => $product)
         <x-product-card 
             :name="$product['name'] ?? ''"
@@ -37,9 +37,9 @@
 </div>
 
 @if($showViewMore)
-    <div class="text-right scroll-reveal" data-delay="500">
+    <div class="text-center scroll-reveal" data-delay="500">
         <a href="{{ $viewMoreUrl }}" 
-           class="inline-block bg-blue-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-blue-700 transition-all duration-300 text-sm">
+           class="inline-block bg-blue-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-blue-700 transition-all duration-300 text-sm mb-3">
             {{ $viewMoreText }} <i class="fas fa-arrow-right ml-1"></i>
         </a>
     </div>

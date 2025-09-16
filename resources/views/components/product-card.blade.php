@@ -17,24 +17,24 @@
     <div class="p-4 space-y-2">
         <!-- Product Name -->
         <h3 class="text-sm text-center font-medium text-gray-900 leading-tight">
-            'Elan Lumine Silver DW00100716' }}
+            'Elan Lumine Silver DW00100716'
         </h3>
         
         <!-- Product Specification -->
         <p class="text-xs text-center text-gray-600">
-            'Nữ 22mm' }}
+            'Nữ 22mm'
         </p>
         
         <!-- Pricing -->
         <div class="flex items-center justify-center space-x-2">
             <!-- Original Price (Crossed out) -->
             <span class="text-sm text-gray-400 line-through">
-               '₫2.850.000' }}
+               '₫2.850.000'
             </span>
             
             <!-- Discounted Price -->
             <span class="text-lg font-bold text-orange-500">
-                 '₫1.850.000' }}
+                 '₫1.850.000'
             </span>
         </div>
         
