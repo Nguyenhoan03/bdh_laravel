@@ -9,67 +9,67 @@
 <!-- Features Section -->
 <section class="py-12 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 scroll-reveal h-20">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 scroll-reveal">
             <!-- Feature 1: Diverse Designs -->
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
-                <div class="flex">
+                <div class="flex h-20 md:h-24">
                     <!-- Icon Section -->
-                    <div class="w-20 h-20 bg-orange-500 flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-clock text-white text-2xl"></i>
+                    <div class="w-16 md:w-20 h-full bg-orange-500 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-clock text-white text-lg md:text-2xl"></i>
                     </div>
 
                     <!-- Text Section -->
-                    <div class="flex-1 p-2 bg-gray-50">
-                        <h3 class="text-sm font-bold text-blue-600 mb-1">Mẫu mã đa dạng</h3>
-                        <p class="text-xs text-gray-600 leading-relaxed">Nhiều sản phẩm mới cập nhật liên tục</p>
+                    <div class="flex-1 p-2 md:p-3 bg-gray-50 flex flex-col justify-center">
+                        <h3 class="text-xs md:text-sm font-bold text-blue-600 mb-1">Mẫu mã đa dạng</h3>
+                        <p class="text-xs text-gray-600 leading-relaxed hidden sm:block">Nhiều sản phẩm mới cập nhật liên tục</p>
                     </div>
                 </div>
             </div>
 
             <!-- Feature 2: Genuine Products -->
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
-                <div class="flex">
+                <div class="flex h-20 md:h-24">
                     <!-- Icon Section -->
-                    <div class="w-20 h-20 bg-orange-500 flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-shield-check text-white text-2xl"></i>
+                    <div class="w-16 md:w-20 h-full bg-orange-500 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-shield-check text-white text-lg md:text-2xl"></i>
                     </div>
 
                     <!-- Text Section -->
-                    <div class="flex-1 p-2 bg-gray-50">
-                        <h3 class="text-sm font-bold text-blue-600 mb-1">Sản phẩm chính hãng</h3>
-                        <p class="text-xs text-gray-600 leading-relaxed">Hoàn tiền 20 lần nếu phát hiện hàng giả</p>
+                    <div class="flex-1 p-2 md:p-3 bg-gray-50 flex flex-col justify-center">
+                        <h3 class="text-xs md:text-sm font-bold text-blue-600 mb-1">Sản phẩm chính hãng</h3>
+                        <p class="text-xs text-gray-600 leading-relaxed hidden sm:block">Hoàn tiền 20 lần nếu phát hiện hàng giả</p>
                     </div>
                 </div>
             </div>
 
             <!-- Feature 3: Fast Delivery -->
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
-                <div class="flex">
+                <div class="flex h-20 md:h-24">
                     <!-- Icon Section -->
-                    <div class="w-20 h-20 bg-orange-500 flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-shipping-fast text-white text-2xl"></i>
+                    <div class="w-16 md:w-20 h-full bg-orange-500 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-shipping-fast text-white text-lg md:text-2xl"></i>
                     </div>
 
                     <!-- Text Section -->
-                    <div class="flex-1 p-2 bg-gray-50">
-                        <h3 class="text-sm font-bold text-blue-600 mb-1">Giao hàng nhanh chóng</h3>
-                        <p class="text-xs text-gray-600 leading-relaxed">Giao hàng nhanh nội thành HCM</p>
+                    <div class="flex-1 p-2 md:p-3 bg-gray-50 flex flex-col justify-center">
+                        <h3 class="text-xs md:text-sm font-bold text-blue-600 mb-1">Giao hàng nhanh chóng</h3>
+                        <p class="text-xs text-gray-600 leading-relaxed hidden sm:block">Giao hàng nhanh nội thành HCM</p>
                     </div>
                 </div>
             </div>
 
             <!-- Feature 4: Easy Returns -->
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
-                <div class="flex">
+                <div class="flex h-20 md:h-24">
                     <!-- Icon Section -->
-                    <div class="w-20 h-20 bg-orange-500 flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-undo-alt text-white text-2xl"></i>
+                    <div class="w-16 md:w-20 h-full bg-orange-500 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-undo-alt text-white text-lg md:text-2xl"></i>
                     </div>
 
                     <!-- Text Section -->
-                    <div class="flex-1 p-2 bg-gray-50">
-                        <h3 class="text-sm font-bold text-blue-600 mb-1">Đổi trả dễ dàng</h3>
-                        <p class="text-xs text-gray-600 leading-relaxed">Dễ dàng đổi trả</p>
+                    <div class="flex-1 p-2 md:p-3 bg-gray-50 flex flex-col justify-center">
+                        <h3 class="text-xs md:text-sm font-bold text-blue-600 mb-1">Đổi trả dễ dàng</h3>
+                        <p class="text-xs text-gray-600 leading-relaxed hidden sm:block">Dễ dàng đổi trả</p>
                     </div>
                 </div>
             </div>

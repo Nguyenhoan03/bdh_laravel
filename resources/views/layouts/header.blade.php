@@ -1,10 +1,10 @@
 <header class="bg-white shadow-sm sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
+        <div class="flex justify-between items-center h-20">
             <!-- Logo -->
             <div class="flex-shrink-0">
                 <a href="/" class="flex items-center">
-                    <img src="{{ asset('img/DW-LOGO.png') }}" alt="Daniel Wellington" class="h-8 w-auto">
+                    <img src="{{ asset('img/DW-LOGO.png') }}" alt="Daniel Wellington" id="logo" class="h-16 w-auto transition-all duration-300 ease-in-out">
                 </a>
             </div>
 
@@ -57,4 +57,33 @@
         const mobileMenu = document.getElementById('mobile-menu');
         mobileMenu.classList.toggle('hidden');
     }
+
+    // Logo scroll effect
+    let lastScrollTop = 0;
+    let isScrolling = false;
+
+    window.addEventListener('scroll', function() {
+        if (!isScrolling) {
+            window.requestAnimationFrame(function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const logo = document.getElementById('logo');
+                
+                if (logo) {
+                    if (scrollTop > 100) {
+                        // Scroll xuống - logo nhỏ lại
+                        logo.style.transform = 'scale(1.1)';
+                        logo.style.height = '55px';
+                    } else {
+                        // Scroll lên trên cùng - logo to ra
+                        logo.style.transform = 'scale(1)';
+                        logo.style.height = '64px';
+                    }
+                }
+                
+                lastScrollTop = scrollTop;
+                isScrolling = false;
+            });
+            isScrolling = true;
+        }
+    });
 </script>
