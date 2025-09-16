@@ -128,6 +128,30 @@
             'image' => 'DW00100699-247x296.webp'
             ],
             [
+            'name' => 'Petite Sterling DW00100002',
+            'spec' => 'Nữ 28mm',
+            'original_price' => '₫2.600.000',
+            'price' => '₫1.690.000',
+            'discount' => '-35%',
+            'image' => 'DW00100699-247x296.webp'
+            ],
+            [
+            'name' => 'Petite Sterling DW00100002',
+            'spec' => 'Nữ 28mm',
+            'original_price' => '₫2.600.000',
+            'price' => '₫1.690.000',
+            'discount' => '-35%',
+            'image' => 'DW00100699-247x296.webp'
+            ],
+            [
+            'name' => 'Petite Sterling DW00100002',
+            'spec' => 'Nữ 28mm',
+            'original_price' => '₫2.600.000',
+            'price' => '₫1.690.000',
+            'discount' => '-35%',
+            'image' => 'DW00100699-247x296.webp'
+            ],
+            [
             'name' => 'Classic Cornwall DW00100003',
             'spec' => 'Nam 40mm',
             'original_price' => '₫3.400.000',
@@ -146,13 +170,32 @@
             ];
             @endphp
 
-            <x-products-grid
-                :products="$regularProducts"
-                :columns="5"
-                :size="'normal'"
-                :show-view-more="true"
-                :view-more-text="'Xem thêm sản phẩm khác'"
-                :view-more-url="'/products'" />
+            <!-- Products Swiper -->
+            <div class="swiper promotional-products-swiper ">
+                <div class="swiper-wrapper">
+                    @foreach($regularProducts as $product)
+                    <div class="swiper-slide p-3">
+                        <x-product-card 
+                            :name="$product['name'] ?? ''"
+                            :spec="$product['spec'] ?? ''"
+                            :original-price="$product['original_price'] ?? ''"
+                            :price="$product['price'] ?? ''"
+                            :discount="$product['discount'] ?? ''"
+                            :image="$product['image'] ?? 'DW00100699-247x296.webp'"
+                            :size="'normal'"
+                        />
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            
+            <!-- View More Button -->
+            <div class="text-center m-4">
+                <a href="/products" 
+                   class="inline-block bg-blue-600 text-white px-8 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                    Xem thêm sản phẩm khác <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
 
             <!-- Decorative Watch Images -->
             <div class="absolute left-0 top-1/2 -translate-y-1/2 opacity-30">
@@ -799,6 +842,47 @@ document.addEventListener('DOMContentLoaded', function() {
                 spaceBetween: 20,
             },
         },
+        // Pause autoplay when hovering over the swiper
+        on: {
+            init: function() {
+                this.el.addEventListener('mouseenter', () => {
+                    this.autoplay.stop();
+                });
+                this.el.addEventListener('mouseleave', () => {
+                    this.autoplay.start();
+                });
+            }
+        }
+    });
+
+    // Initialize Promotional Products Swiper
+    const promotionalProductsSwiper = new Swiper('.promotional-products-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        loop: true,
+        autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+            },
+            768: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+            },
+            1024: {
+                slidesPerView: 4,
+                spaceBetween: 20,
+            },
+            1280: {
+                slidesPerView: 5,
+                spaceBetween: 20,
+            },
+        },
+        speed: 800,
         // Pause autoplay when hovering over the swiper
         on: {
             init: function() {
