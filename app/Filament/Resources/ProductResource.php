@@ -5,17 +5,24 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Models\Product;
 use App\Models\Category;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use BackedEnum;
+use Filament\Actions\EditAction;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Schemas\Components\Utilities\Set;
 
 class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    // protected static ?string $navigationIcon = 'heroicon-o-cube';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-cube';
 
     protected static ?string $navigationLabel = 'Sản Phẩm';
 
@@ -25,50 +32,86 @@ class ProductResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
-                Forms\Components\Section::make('Thông tin cơ bản')
+                Section::make('Thông tin cơ bản')
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->label('Tên sản phẩm')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->prefixIcon('heroicon-o-cube')
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function (string $operation, $state, Set $set) {
+                                if ($operation !== 'create') {
+                                    return;
+                                }
+                                $set('slug', \Illuminate\Support\Str::slug($state));
+                            }),
                         Forms\Components\TextInput::make('slug')
                             ->label('Slug')
                             ->required()
                             ->maxLength(255)
-                            ->unique(ignoreRecord: true),
+                            ->unique(ignoreRecord: true)
+                            ->prefixIcon('heroicon-o-link'),
                         Forms\Components\Select::make('category_id')
                             ->label('Danh mục')
                             ->options(Category::all()->pluck('name', 'id'))
                             ->required()
-                            ->searchable(),
-                        Forms\Components\Textarea::make('description')
-                            ->label('Mô tả')
-                            ->rows(4),
-                    ])->columns(2),
+                            ->searchable()
+                            ->prefixIcon('heroicon-o-tag'),
+                    ])->columns(3),
 
-                Forms\Components\Section::make('Giá và tồn kho')
+                Section::make('Mô tả sản phẩm')
+                    ->schema([
+                        Forms\Components\RichEditor::make('description')
+                            ->label('Mô tả chi tiết')
+                            ->placeholder('Nhập mô tả chi tiết cho sản phẩm...')
+                            ->toolbarButtons([
+                                'bold',
+                                'italic',
+                                'underline',
+                                'strike',
+                                'link',
+                                'bulletList',
+                                'orderedList',
+                                'h2',
+                                'h3',
+                                'blockquote',
+                                'codeBlock',
+                                'attachFiles',
+                            ])
+                            ->fileAttachmentsDisk('public')
+                            ->fileAttachmentsDirectory('products/descriptions')
+                            ->fileAttachmentsVisibility('public')
+                            ->columnSpanFull(),
+                    ]),
+
+                Section::make('Giá và tồn kho')
                     ->schema([
                         Forms\Components\TextInput::make('price')
                             ->label('Giá gốc')
                             ->numeric()
                             ->prefix('₫')
-                            ->required(),
+                            ->required()
+                            ->prefixIcon('heroicon-o-banknotes'),
                         Forms\Components\TextInput::make('sale_price')
                             ->label('Giá khuyến mãi')
                             ->numeric()
-                            ->prefix('₫'),
+                            ->prefix('₫')
+                            ->prefixIcon('heroicon-o-tag'),
                         Forms\Components\TextInput::make('stock')
-                            ->label('Số lượng tồn kho')
+                            ->label('Tồn kho')
                             ->numeric()
                             ->default(0)
-                            ->required(),
-                    ])->columns(3),
+                            ->required()
+                            ->prefixIcon('heroicon-o-archive-box'),
+                    ])->columns(3)
+                    ->collapsible(),
 
-                Forms\Components\Section::make('Hình ảnh và trạng thái')
+                Section::make('Hình ảnh và trạng thái')
                     ->schema([
                         Forms\Components\FileUpload::make('images')
                             ->label('Hình ảnh sản phẩm')
@@ -76,14 +119,21 @@ class ProductResource extends Resource
                             ->image()
                             ->directory('products')
                             ->visibility('public')
-                            ->reorderable(),
+                            ->reorderable()
+                            ->imageEditor()
+                            ->imageEditorAspectRatios([
+                                '16:9',
+                                '4:3',
+                                '1:1',
+                            ])
+                            ->columnSpanFull(),
                         Forms\Components\Toggle::make('is_featured')
                             ->label('Sản phẩm nổi bật')
                             ->default(false),
                         Forms\Components\Toggle::make('is_active')
                             ->label('Kích hoạt')
                             ->default(true),
-                    ])->columns(1),
+                    ])->columns(2),
             ]);
     }
 
@@ -99,7 +149,8 @@ class ProductResource extends Resource
                     ->label('Tên sản phẩm')
                     ->searchable()
                     ->sortable()
-                    ->limit(30),
+                    ->limit(30)
+                    ->weight('bold'),
                 Tables\Columns\TextColumn::make('category.name')
                     ->label('Danh mục')
                     ->sortable(),
@@ -119,7 +170,8 @@ class ProductResource extends Resource
                         $state <= 0 => 'danger',
                         $state <= 10 => 'warning',
                         default => 'success',
-                    }),
+                    })
+                    ->formatStateUsing(fn (int $state): string => $state . ' sản phẩm'),
                 Tables\Columns\IconColumn::make('is_featured')
                     ->label('Nổi bật')
                     ->boolean(),
@@ -141,13 +193,11 @@ class ProductResource extends Resource
                     ->label('Kích hoạt'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                DeleteBulkAction::make(),
             ])
             ->defaultSort('created_at', 'desc');
     }

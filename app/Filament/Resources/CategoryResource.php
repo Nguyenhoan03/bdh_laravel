@@ -4,17 +4,23 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Models\Category;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use BackedEnum;
+use Filament\Actions\EditAction;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Schemas\Components\Utilities\Set;
 
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    // protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-tag';
 
     protected static ?string $navigationLabel = 'Danh Mục';
 
@@ -24,22 +30,32 @@ class CategoryResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->label('Tên danh mục')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('slug')
-                    ->label('Slug')
-                    ->required()
-                    ->maxLength(100)
-                    ->unique(ignoreRecord: true),
+                        Forms\Components\TextInput::make('name')
+                            ->label('Tên danh mục')
+                            ->required()
+                            ->maxLength(100)
+                            ->prefixIcon('heroicon-o-tag')
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function (string $operation, $state, Set $set) {
+                                if ($operation !== 'create') {
+                                    return;
+                                }
+                                $set('slug', \Illuminate\Support\Str::slug($state));
+                            }),
+                        Forms\Components\TextInput::make('slug')
+                            ->label('Slug')
+                            ->required()
+                            ->maxLength(100)
+                            ->unique(ignoreRecord: true)
+                            ->prefixIcon('heroicon-o-link'),
                 Forms\Components\Textarea::make('description')
                     ->label('Mô tả')
-                    ->rows(3),
+                    ->rows(3)
+                    ->placeholder('Nhập mô tả cho danh mục...'),
                 Forms\Components\FileUpload::make('image')
                     ->label('Hình ảnh')
                     ->image()
@@ -71,13 +87,11 @@ class CategoryResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                DeleteBulkAction::make(),
             ]);
     }
 

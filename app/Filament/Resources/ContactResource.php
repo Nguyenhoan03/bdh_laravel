@@ -4,17 +4,24 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ContactResource\Pages;
 use App\Models\Contact;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use BackedEnum;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Schemas\Schema;
+
 
 class ContactResource extends Resource
 {
     protected static ?string $model = Contact::class;
 
-    // protected static ?string $navigationIcon = 'heroicon-o-envelope';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-envelope';
 
     protected static ?string $navigationLabel = 'Liên Hệ';
 
@@ -24,27 +31,31 @@ class ContactResource extends Resource
 
     protected static ?int $navigationSort = 6;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->label('Tên')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->prefixIcon('heroicon-o-user'),
                 Forms\Components\TextInput::make('email')
                     ->label('Email')
                     ->email()
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->prefixIcon('heroicon-o-envelope'),
                 Forms\Components\TextInput::make('phone')
                     ->label('Số điện thoại')
                     ->tel()
-                    ->maxLength(20),
+                    ->maxLength(20)
+                    ->prefixIcon('heroicon-o-phone'),
                 Forms\Components\TextInput::make('subject')
                     ->label('Chủ đề')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->prefixIcon('heroicon-o-chat-bubble-left'),
                 Forms\Components\Select::make('status')
                     ->label('Trạng thái')
                     ->options([
@@ -82,12 +93,12 @@ class ContactResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->label('Trạng thái')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'new' => 'warning',
                         'read' => 'info',
                         'replied' => 'success',
                     })
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'new' => 'Mới',
                         'read' => 'Đã đọc',
                         'replied' => 'Đã trả lời',
@@ -107,13 +118,13 @@ class ContactResource extends Resource
                     ]),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');

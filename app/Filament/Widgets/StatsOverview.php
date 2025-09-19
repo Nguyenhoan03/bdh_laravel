@@ -16,18 +16,22 @@ class StatsOverview extends BaseWidget
         return [
             Stat::make('Tổng sản phẩm', Product::count())
                 ->description('Sản phẩm trong hệ thống')
+                ->descriptionIcon('heroicon-m-cube')
                 ->color('success'),
             
             Stat::make('Đơn hàng hôm nay', Order::whereDate('created_at', today())->count())
                 ->description('Đơn hàng mới hôm nay')
+                ->descriptionIcon('heroicon-m-shopping-bag')
                 ->color('info'),
             
             Stat::make('Tổng khách hàng', Customer::count())
                 ->description('Khách hàng đã đăng ký')
+                ->descriptionIcon('heroicon-m-users')
                 ->color('warning'),
             
             Stat::make('Tin nhắn mới', Contact::where('status', 'new')->count())
                 ->description('Tin nhắn chưa đọc')
+                ->descriptionIcon('heroicon-m-envelope')
                 ->color('danger'),
         ];
     }

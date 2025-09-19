@@ -4,17 +4,23 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\BlogPostResource\Pages;
 use App\Models\BlogPost;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Actions\EditAction;
+use Filament\Schemas\Components\Section;
+use BackedEnum;
+use Filament\Schemas\Components\Utilities\Set;
 
 class BlogPostResource extends Resource
 {
     protected static ?string $model = BlogPost::class;
 
-    // protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $navigationLabel = 'Blog';
 
@@ -24,42 +30,70 @@ class BlogPostResource extends Resource
 
     protected static ?int $navigationSort = 5;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
-                Forms\Components\Section::make('Thông tin bài viết')
+                Section::make('Thông tin bài viết')
                     ->schema([
                         Forms\Components\TextInput::make('title')
                             ->label('Tiêu đề')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->prefixIcon('heroicon-o-document-text')
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function (string $operation, $state, Set $set) {
+                                if ($operation !== 'create') {
+                                    return;
+                                }
+                                $set('slug', \Illuminate\Support\Str::slug($state));
+                            }),
                         Forms\Components\TextInput::make('slug')
                             ->label('Slug')
                             ->required()
                             ->maxLength(255)
-                            ->unique(ignoreRecord: true),
+                            ->unique(ignoreRecord: true)
+                            ->prefixIcon('heroicon-o-link'),
                         Forms\Components\TextInput::make('author')
                             ->label('Tác giả')
                             ->required()
-                            ->maxLength(100),
+                            ->maxLength(100)
+                            ->prefixIcon('heroicon-o-user'),
                         Forms\Components\Toggle::make('is_published')
                             ->label('Xuất bản')
                             ->default(false),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Nội dung')
+                Section::make('Nội dung')
                     ->schema([
                         Forms\Components\FileUpload::make('image')
                             ->label('Hình ảnh')
                             ->image()
                             ->directory('blog')
                             ->visibility('public'),
-                        Forms\Components\Textarea::make('content')
+                        Forms\Components\RichEditor::make('content')
                             ->label('Nội dung')
                             ->required()
-                            ->rows(10)
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->placeholder('Nhập nội dung bài viết...')
+                            ->toolbarButtons([
+                                'bold',
+                                'italic',
+                                'underline',
+                                'strike',
+                                'link',
+                                'bulletList',
+                                'orderedList',
+                                'h1',
+                                'h2',
+                                'h3',
+                                'blockquote',
+                                'codeBlock',
+                                'attachFiles',
+                            ])
+                            ->fileAttachmentsDisk('public')
+                            ->fileAttachmentsDirectory('blog/content')
+                            ->fileAttachmentsVisibility('public'),
                     ])->columns(1),
             ]);
     }
@@ -75,7 +109,8 @@ class BlogPostResource extends Resource
                     ->label('Tiêu đề')
                     ->searchable()
                     ->sortable()
-                    ->limit(50),
+                    ->limit(50)
+                    ->weight('bold'),
                 Tables\Columns\TextColumn::make('author')
                     ->label('Tác giả')
                     ->searchable()
@@ -93,13 +128,11 @@ class BlogPostResource extends Resource
                     ->label('Xuất bản'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                DeleteBulkAction::make(),
             ])
             ->defaultSort('created_at', 'desc');
     }

@@ -8,7 +8,7 @@ use Illuminate\Support\Carbon;
 
 class RecentOrdersChart extends ChartWidget
 {
-    protected static ?string $heading = 'Đơn hàng 7 ngày qua';
+    protected ?string $heading = '📈 Đơn hàng 7 ngày qua';
 
     protected static ?int $sort = 2;
 
@@ -28,9 +28,11 @@ class RecentOrdersChart extends ChartWidget
                 [
                     'label' => 'Đơn hàng',
                     'data' => $data,
-                    'backgroundColor' => 'rgba(59, 130, 246, 0.1)',
-                    'borderColor' => 'rgb(59, 130, 246)',
-                    'borderWidth' => 2,
+                    'backgroundColor' => 'rgba(34, 197, 94, 0.1)',
+                    'borderColor' => 'rgb(34, 197, 94)',
+                    'borderWidth' => 3,
+                    'fill' => true,
+                    'tension' => 0.4,
                 ],
             ],
             'labels' => $labels,

@@ -4,17 +4,25 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderResource\Pages;
 use App\Models\Order;
+use Filament\Actions\DeleteBulkAction;
+use BackedEnum;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Tables;
 use Filament\Tables\Table;
+
+
 
 class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    // protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-shopping-bag';
 
     protected static ?string $navigationLabel = 'Đơn Hàng';
 
@@ -24,23 +32,25 @@ class OrderResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
-                Forms\Components\Section::make('Thông tin đơn hàng')
+                Section::make('Thông tin đơn hàng')
                     ->schema([
                         Forms\Components\TextInput::make('order_number')
                             ->label('Mã đơn hàng')
                             ->required()
                             ->maxLength(50)
-                            ->unique(ignoreRecord: true),
+                            ->unique(ignoreRecord: true)
+                            ->prefixIcon('heroicon-o-hashtag'),
                         Forms\Components\Select::make('customer_id')
                             ->label('Khách hàng')
                             ->relationship('customer', 'name')
                             ->searchable()
                             ->preload()
-                            ->required(),
+                            ->required()
+                            ->prefixIcon('heroicon-o-user'),
                         Forms\Components\Select::make('status')
                             ->label('Trạng thái')
                             ->options([
@@ -50,7 +60,8 @@ class OrderResource extends Resource
                                 'delivered' => 'Đã giao hàng',
                                 'cancelled' => 'Đã hủy',
                             ])
-                            ->required(),
+                            ->required()
+                            ->prefixIcon('heroicon-o-clock'),
                         Forms\Components\TextInput::make('total_amount')
                             ->label('Tổng tiền')
                             ->numeric()
@@ -62,7 +73,7 @@ class OrderResource extends Resource
                             ->maxLength(50),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Thông tin khách hàng')
+                Section::make('Thông tin khách hàng')
                     ->schema([
                         Forms\Components\TextInput::make('customer_name')
                             ->label('Tên khách hàng')
@@ -101,7 +112,8 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('total_amount')
                     ->label('Tổng tiền')
                     ->money('VND')
-                    ->sortable(),
+                    ->sortable()
+                    ->weight('bold'),
                 Tables\Columns\TextColumn::make('status')
                     ->label('Trạng thái')
                     ->badge()
@@ -138,13 +150,11 @@ class OrderResource extends Resource
                     ]),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                DeleteBulkAction::make(),
             ])
             ->defaultSort('created_at', 'desc');
     }
