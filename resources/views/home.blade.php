@@ -80,9 +80,12 @@
 <!-- Main Heading Section -->
 <section class="py-8 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 uppercase tracking-wide scroll-reveal roboto-condensed">
+        <h1 class="text-2xl md:text-4xl font-bold text-gray-900 uppercase tracking-wide scroll-reveal roboto-condensed">
             ĐỒNG HỒ DANIEL WELLINGTON (ĐỒNG HỒ DW)
         </h1>
+        <p class="text-lg text-gray-600 mt-4">
+            Thương hiệu đồng hồ cao cấp từ Thụy Điển - Phong cách tối giản, sang trọng
+        </p>
     </div>
 </section>
 
@@ -101,91 +104,28 @@
                 <img src="{{ asset('img/bnn.jpg') }}" alt="Banner Promotional" class="w-full h-auto">
             </div>
 
-            @php
-            $regularProducts = [
-            [
-            'name' => 'Elan Lumine Silver DW00100716',
-            'spec' => 'Nữ 22mm',
-            'original_price' => '₫2.850.000',
-            'price' => '₫1.850.000',
-            'discount' => '-35%',
-            'image' => 'DW00100699-247x296.webp'
-            ],
-            [
-            'name' => 'Classic Sheffield DW00100001',
-            'spec' => 'Nam 40mm',
-            'original_price' => '₫3.200.000',
-            'price' => '₫2.080.000',
-            'discount' => '-35%',
-            'image' => 'DW00100699-247x296.webp'
-            ],
-            [
-            'name' => 'Petite Sterling DW00100002',
-            'spec' => 'Nữ 28mm',
-            'original_price' => '₫2.600.000',
-            'price' => '₫1.690.000',
-            'discount' => '-35%',
-            'image' => 'DW00100699-247x296.webp'
-            ],
-            [
-            'name' => 'Petite Sterling DW00100002',
-            'spec' => 'Nữ 28mm',
-            'original_price' => '₫2.600.000',
-            'price' => '₫1.690.000',
-            'discount' => '-35%',
-            'image' => 'DW00100699-247x296.webp'
-            ],
-            [
-            'name' => 'Petite Sterling DW00100002',
-            'spec' => 'Nữ 28mm',
-            'original_price' => '₫2.600.000',
-            'price' => '₫1.690.000',
-            'discount' => '-35%',
-            'image' => 'DW00100699-247x296.webp'
-            ],
-            [
-            'name' => 'Petite Sterling DW00100002',
-            'spec' => 'Nữ 28mm',
-            'original_price' => '₫2.600.000',
-            'price' => '₫1.690.000',
-            'discount' => '-35%',
-            'image' => 'DW00100699-247x296.webp'
-            ],
-            [
-            'name' => 'Classic Cornwall DW00100003',
-            'spec' => 'Nam 40mm',
-            'original_price' => '₫3.400.000',
-            'price' => '₫2.210.000',
-            'discount' => '-35%',
-            'image' => 'DW00100699-247x296.webp'
-            ],
-            [
-            'name' => 'Classic Cornwall DW00100003',
-            'spec' => 'Nam 40mm',
-            'original_price' => '₫3.400.000',
-            'price' => '₫2.210.000',
-            'discount' => '-35%',
-            'image' => 'DW00100699-247x296.webp'
-            ]
-            ];
-            @endphp
-
             <!-- Products Swiper -->
-            <div class="swiper promotional-products-swiper ">
+            <div class="swiper promotional-products-swiper">
                 <div class="swiper-wrapper">
-                    @foreach($regularProducts as $product)
+                    @forelse($promotionalProducts ?? collect() as $product)
                     <div class="swiper-slide p-3">
                         <x-product-card 
-                            :name="$product['name'] ?? ''"
-                            :spec="$product['spec'] ?? ''"
-                            :original-price="$product['original_price'] ?? ''"
-                            :price="$product['price'] ?? ''"
-                            :discount="$product['discount'] ?? ''"
-                            :image="$product['image'] ?? 'DW00100699-247x296.webp'"
+                            :name="$product->name ?? ''"
+                            :spec="explode(' - ', $product->description)[1] ?? ''"
+                            :original-price="number_format($product->price, 0, ',', '.') . '₫'"
+                            :price="number_format($product->sale_price, 0, ',', '.') . '₫'"
+                            :discount="'-' . round((($product->price - $product->sale_price) / $product->price) * 100) . '%'"
+                            :image="$product->images[0] ?? 'DW00100699-247x296.webp'"
                             :size="'normal'"
                         />
                     </div>
-                    @endforeach
+                    @empty
+                    <div class="swiper-slide p-3">
+                        <div class="text-center text-white">
+                            <p>Không có sản phẩm khuyến mãi</p>
+                        </div>
+                    </div>
+                    @endforelse
                 </div>
             </div>
             
@@ -208,17 +148,12 @@
     </div>
 </section>
 
-<!-- Featured Products Section - 5 Columns (Compact) -->
-<!-- Women's Watches Banner -->
-
-
 <!-- Women's Watches Section -->
 <section class="py-16 bg-white scroll-reveal">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 womens-watches">
         <!-- Section Header -->
         <div class="relative w-full h-64 bg-gradient-to-r from-pink-100 to-yellow-100 flex items-center justify-end">
             <img src="{{ asset('img/dong-ho-nu-banner.jpg') }}" alt="Banner" class="absolute inset-0 w-full h-full object-cover opacity-50">
-           
         </div>
         <div class="text-center mb-12 pt-4">
             <div class="flex items-center justify-center mb-4">
@@ -239,96 +174,39 @@
             </div>
         </div>
 
-        @php
-        $womensWatches = [
-        [
-        'name' => 'Elan Lumine Silver DW00100716',
-        'spec' => 'Nữ 22mm',
-        'original_price' => '₫2.850.000',
-        'price' => '₫1.850.000',
-        'discount' => '-35%',
-        'image' => 'DW00100699-247x296.webp'
-        ],
-        [
-        'name' => 'Elan Lumine Silver DW00100716',
-        'spec' => 'Nữ 22mm',
-        'original_price' => '₫2.850.000',
-        'price' => '₫1.850.000',
-        'discount' => '-35%',
-        'image' => 'DW00100699-247x296.webp'
-        ],
-        [
-        'name' => 'Elan Lumine Silver DW00100716',
-        'spec' => 'Nữ 22mm',
-        'original_price' => '₫2.850.000',
-        'price' => '₫1.850.000',
-        'discount' => '-35%',
-        'image' => 'DW00100699-247x296.webp'
-        ],
-        [
-        'name' => 'Elan Lumine Silver DW00100716',
-        'spec' => 'Nữ 22mm',
-        'original_price' => '₫2.850.000',
-        'price' => '₫1.850.000',
-        'discount' => '-35%',
-        'image' => 'DW00100699-247x296.webp'
-        ],
-        [
-        'name' => 'Elan Lumine Silver DW00100716',
-        'spec' => 'Nữ 22mm',
-        'original_price' => '₫2.850.000',
-        'price' => '₫1.850.000',
-        'discount' => '-35%',
-        'image' => 'DW00100699-247x296.webp'
-        ],
-        [
-        'name' => 'Elan Lumine Silver DW00100716',
-        'spec' => 'Nữ 22mm',
-        'original_price' => '₫2.850.000',
-        'price' => '₫1.850.000',
-        'discount' => '-35%',
-        'image' => 'DW00100699-247x296.webp'
-        ],
-        [
-        'name' => 'Elan Lumine Silver DW00100716',
-        'spec' => 'Nữ 22mm',
-        'original_price' => '₫2.850.000',
-        'price' => '₫1.850.000',
-        'discount' => '-35%',
-        'image' => 'DW00100699-247x296.webp'
-        ]
-        ];
-        @endphp
-
         <!-- Products Grid with Navigation -->
         <div class="relative">
             <!-- Swiper Container -->
             <div class="swiper products-swiper">
                 <div class="swiper-wrapper">
-                    @foreach($womensWatches as $index => $product)
+                    @forelse($dataWatchWomen ?? collect() as $index => $product)
                         <div class="swiper-slide scroll-reveal" data-delay="{{ $index * 100 }}">
                             <x-product-card 
-                                :name="$product['name'] ?? ''"
-                                :spec="$product['spec'] ?? ''"
-                                :original-price="$product['original_price'] ?? ''"
-                                :price="$product['price'] ?? ''"
-                                :discount="$product['discount'] ?? ''"
-                                :image="$product['image'] ?? 'DW00100699-247x296.webp'"
+                                :name="$product->name ?? ''"
+                                :spec="explode(' - ', $product->description)[1] ?? ''"
+                                :original-price="number_format($product->price, 0, ',', '.') . '₫'"
+                                :price="number_format($product->sale_price, 0, ',', '.') . '₫'"
+                                :discount="'-' . round((($product->price - $product->sale_price) / $product->price) * 100) . '%'"
+                                :image="$product->images[0] ?? 'DW00100699-247x296.webp'"
                                 :size="'normal'"
                             />
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="swiper-slide scroll-reveal">
+                            <div class="text-center text-gray-500">
+                                <p>Không có sản phẩm đồng hồ nữ</p>
+                            </div>
+                        </div>
+                    @endforelse
                 </div>
             </div>
 
             <!-- Left Arrow -->
             <button class="swiper-button-prev absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-gray-50 group transform translate-y-8 opacity-0">
-               
             </button>
 
             <!-- Right Arrow -->
             <button class="swiper-button-next absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-gray-50 group transform translate-y-8 opacity-0">
-               
             </button>
 
             <!-- Pagination -->
@@ -337,7 +215,7 @@
 
         <!-- View More Button -->
         <div class="text-center mt-8">
-            <a href="/products" 
+            <a href="/dong-ho-nu" 
                class="inline-block bg-blue-600 text-white px-8 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                 Xem thêm sản phẩm khác <i class="fas fa-arrow-right ml-2"></i>
             </a>
@@ -351,7 +229,6 @@
         <!-- Section Header -->
         <div class="relative w-full h-64 bg-gradient-to-r from-pink-100 to-yellow-100 flex items-center justify-end">
             <img src="{{ asset('img/dong-ho-nam-banner.jpg') }}" alt="Banner" class="absolute inset-0 w-full h-full object-cover opacity-50">
-           
         </div>
         <div class="text-center mb-12 pt-4">
             <div class="flex items-center justify-center mb-4">
@@ -372,96 +249,39 @@
             </div>
         </div>
 
-        @php
-        $womensWatches = [
-        [
-        'name' => 'Elan Lumine Silver DW00100716',
-        'spec' => 'Nữ 22mm',
-        'original_price' => '₫2.850.000',
-        'price' => '₫1.850.000',
-        'discount' => '-35%',
-        'image' => 'DW00100699-247x296.webp'
-        ],
-        [
-        'name' => 'Elan Lumine Silver DW00100716',
-        'spec' => 'Nữ 22mm',
-        'original_price' => '₫2.850.000',
-        'price' => '₫1.850.000',
-        'discount' => '-35%',
-        'image' => 'DW00100699-247x296.webp'
-        ],
-        [
-        'name' => 'Elan Lumine Silver DW00100716',
-        'spec' => 'Nữ 22mm',
-        'original_price' => '₫2.850.000',
-        'price' => '₫1.850.000',
-        'discount' => '-35%',
-        'image' => 'DW00100699-247x296.webp'
-        ],
-        [
-        'name' => 'Elan Lumine Silver DW00100716',
-        'spec' => 'Nữ 22mm',
-        'original_price' => '₫2.850.000',
-        'price' => '₫1.850.000',
-        'discount' => '-35%',
-        'image' => 'DW00100699-247x296.webp'
-        ],
-        [
-        'name' => 'Elan Lumine Silver DW00100716',
-        'spec' => 'Nữ 22mm',
-        'original_price' => '₫2.850.000',
-        'price' => '₫1.850.000',
-        'discount' => '-35%',
-        'image' => 'DW00100699-247x296.webp'
-        ],
-        [
-        'name' => 'Elan Lumine Silver DW00100716',
-        'spec' => 'Nữ 22mm',
-        'original_price' => '₫2.850.000',
-        'price' => '₫1.850.000',
-        'discount' => '-35%',
-        'image' => 'DW00100699-247x296.webp'
-        ],
-        [
-        'name' => 'Elan Lumine Silver DW00100716',
-        'spec' => 'Nữ 22mm',
-        'original_price' => '₫2.850.000',
-        'price' => '₫1.850.000',
-        'discount' => '-35%',
-        'image' => 'DW00100699-247x296.webp'
-        ]
-        ];
-        @endphp
-
         <!-- Products Grid with Navigation -->
         <div class="relative">
             <!-- Swiper Container -->
             <div class="swiper products-swiper">
                 <div class="swiper-wrapper">
-                    @foreach($womensWatches as $index => $product)
+                    @forelse($dataWatchMen ?? collect() as $index => $product)
                         <div class="swiper-slide scroll-reveal" data-delay="{{ $index * 100 }}">
                             <x-product-card 
-                                :name="$product['name'] ?? ''"
-                                :spec="$product['spec'] ?? ''"
-                                :original-price="$product['original_price'] ?? ''"
-                                :price="$product['price'] ?? ''"
-                                :discount="$product['discount'] ?? ''"
-                                :image="$product['image'] ?? 'DW00100699-247x296.webp'"
+                                :name="$product->name ?? ''"
+                                :spec="explode(' - ', $product->description)[1] ?? ''"
+                                :original-price="number_format($product->price, 0, ',', '.') . '₫'"
+                                :price="number_format($product->sale_price, 0, ',', '.') . '₫'"
+                                :discount="'-' . round((($product->price - $product->sale_price) / $product->price) * 100) . '%'"
+                                :image="$product->images[0] ?? 'DW00100699-247x296.webp'"
                                 :size="'normal'"
                             />
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="swiper-slide scroll-reveal">
+                            <div class="text-center text-gray-500">
+                                <p>Không có sản phẩm đồng hồ nam</p>
+                            </div>
+                        </div>
+                    @endforelse
                 </div>
             </div>
 
             <!-- Left Arrow -->
             <button class="swiper-button-prev absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-gray-50 group transform translate-y-8 opacity-0">
-               
             </button>
 
             <!-- Right Arrow -->
             <button class="swiper-button-next absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-gray-50 group transform translate-y-8 opacity-0">
-               
             </button>
 
             <!-- Pagination -->
@@ -470,7 +290,7 @@
 
         <!-- View More Button -->
         <div class="text-center mt-8">
-            <a href="/products" 
+            <a href="/dong-ho-nam" 
                class="inline-block bg-blue-600 text-white px-8 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                 Xem thêm sản phẩm khác <i class="fas fa-arrow-right ml-2"></i>
             </a>
@@ -491,90 +311,25 @@
             </p>
         </div>
 
-        @php
-        $bestSellingProducts = [
-            [
-                'name' => 'Dây Đồng Hồ DW Petite Bondi 12mm',
-                'spec' => 'Dây da trắng - Khóa vàng',
-                'original_price' => '₫700.000',
-                'price' => '₫350.000',
-                'discount' => '-50%',
-                'image' => 'DW00100699-247x296.webp'
-            ],
-            [
-                'name' => 'Dây Đồng Hồ DW Classic Sheffield 20mm Bạc',
-                'spec' => 'Dây da đen - Khóa bạc',
-                'original_price' => '₫800.000',
-                'price' => '₫400.000',
-                'discount' => '-50%',
-                'image' => 'DW00100699-247x296.webp'
-            ],
-            [
-                'name' => 'Dây Đồng Hồ DW Classic Sheffield 18mm Bạc',
-                'spec' => 'Dây da đen - Khóa bạc',
-                'original_price' => '₫750.000',
-                'price' => '₫375.000',
-                'discount' => '-50%',
-                'image' => 'DW00100699-247x296.webp'
-            ],
-            [
-                'name' => 'Dây Đồng Hồ DW Classic Sheffield 20mm',
-                'spec' => 'Dây da đen - Khóa vàng',
-                'original_price' => '₫800.000',
-                'price' => '₫400.000',
-                'discount' => '-50%',
-                'image' => 'DW00100699-247x296.webp'
-            ],
-            [
-                'name' => 'Dây Đồng Hồ DW Classic Sheffield 18mm',
-                'spec' => 'Dây da đen - Khóa vàng',
-                'original_price' => '₫750.000',
-                'price' => '₫375.000',
-                'discount' => '-50%',
-                'image' => 'DW00100699-247x296.webp'
-            ],
-            [
-                'name' => 'Dây Đồng Hồ DW Petite St Mawes 14mm Bạc',
-                'spec' => 'Dây da nâu - Khóa bạc',
-                'original_price' => '₫700.000',
-                'price' => '₫350.000',
-                'discount' => '-50%',
-                'image' => 'DW00100699-247x296.webp'
-            ],
-            [
-                'name' => 'Dây Đồng Hồ DW Petite St Mawes 12mm Bạc',
-                'spec' => 'Dây da nâu - Khóa bạc',
-                'original_price' => '₫650.000',
-                'price' => '₫325.000',
-                'discount' => '-50%',
-                'image' => 'DW00100699-247x296.webp'
-            ],
-            [
-                'name' => 'Dây Đồng Hồ DW Petite Sheffield 14mm Bạc',
-                'spec' => 'Dây da đen - Khóa bạc',
-                'original_price' => '₫700.000',
-                'price' => '₫350.000',
-                'discount' => '-50%',
-                'image' => 'DW00100699-247x296.webp'
-            ]
-        ];
-        @endphp
-
         <!-- Products Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            @foreach($bestSellingProducts as $index => $product)
+            @forelse($bestSellingProducts ?? collect() as $index => $product)
                 <div class="scroll-reveal" data-delay="{{ $index * 100 }}">
                     <x-product-card 
-                        :name="$product['name'] ?? ''"
-                        :spec="$product['spec'] ?? ''"
-                        :original-price="$product['original_price'] ?? ''"
-                        :price="$product['price'] ?? ''"
-                        :discount="$product['discount'] ?? ''"
-                        :image="$product['image'] ?? 'DW00100699-247x296.webp'"
+                        :name="$product->name ?? ''"
+                        :spec="explode(' - ', $product->description)[1] ?? ''"
+                        :original-price="number_format($product->price, 0, ',', '.') . '₫'"
+                        :price="number_format($product->sale_price, 0, ',', '.') . '₫'"
+                        :discount="'-' . round((($product->price - $product->sale_price) / $product->price) * 100) . '%'"
+                        :image="$product->images[0] ?? 'DW00100699-247x296.webp'"
                         :size="'normal'"
                     />
                 </div>
-            @endforeach
+            @empty
+                <div class="col-span-full text-center text-gray-500">
+                    <p>Không có sản phẩm bán chạy</p>
+                </div>
+            @endforelse
         </div>
 
         <!-- View More Button -->
@@ -586,83 +341,44 @@
         </div>
     </div>
 </section>
-<!-- Toplist Section -->
+
+<!-- Featured Products Section -->
 <section class="py-16 bg-white scroll-reveal">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header -->
         <div class="text-center mb-12">
             <h2 class="text-4xl md:text-2xl font-extrabold text-blue-600 uppercase tracking-wider mb-4 roboto-condensed">
-                CHUYÊN MỤC TOPLIST
+                SẢN PHẨM NỔI BẬT
             </h2>
         </div>
 
-        <!-- Toplist Carousel -->
-        <div class="swiper toplist-swiper">
-            <div class="swiper-wrapper">
-                <!-- Card 1: Rolex Perpetual 1908 Settimo -->
-                <div class="swiper-slide">
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                        <div class="aspect-w-16 aspect-h-12">
-                            <img src="{{ asset('img/DW00100699-247x296.webp') }}" 
-                                 alt="Rolex Perpetual 1908 Settimo" 
-                                 class="w-full h-64 object-cover">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-lg font-bold text-gray-900 mb-3 leading-tight roboto-condensed">
-                                Rolex Perpetual 1908 Settimo có dây đeo sang trọng mới
-                            </h3>
-                        </div>
-                    </div>
+        <!-- Products Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            @forelse($featuredProducts ?? collect() as $index => $product)
+                <div class="scroll-reveal" data-delay="{{ $index * 100 }}">
+                    <x-product-card 
+                        :name="$product->name ?? ''"
+                        :spec="explode(' - ', $product->description)[1] ?? ''"
+                        :original-price="number_format($product->price, 0, ',', '.') . '₫'"
+                        :price="number_format($product->sale_price, 0, ',', '.') . '₫'"
+                        :discount="'-' . round((($product->price - $product->sale_price) / $product->price) * 100) . '%'"
+                        :image="$product->images[0] ?? 'DW00100699-247x296.webp'"
+                        :size="'normal'"
+                    />
                 </div>
+            @empty
+                <div class="col-span-full text-center text-gray-500">
+                    <p>Không có sản phẩm nổi bật</p>
+                </div>
+            @endforelse
+        </div>
 
-                <!-- Card 2: Patek Philippe Desk Clock -->
-                <div class="swiper-slide">
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                        <div class="aspect-w-16 aspect-h-12">
-                            <img src="{{ asset('img/DW00100699-247x296.webp') }}" 
-                                 alt="Patek Philippe Desk Clock" 
-                                 class="w-full h-64 object-cover">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-lg font-bold text-gray-900 mb-3 leading-tight roboto-condensed">
-                                Chào đón sự trở lại của sự xa hoa với Đồng hồ để bàn phức tạp của Patek Philippe
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3: Tudor 2025 Prediction -->
-                <div class="swiper-slide">
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                        <div class="aspect-w-16 aspect-h-12">
-                            <img src="{{ asset('img/DW00100699-247x296.webp') }}" 
-                                 alt="Tudor 2025 Prediction" 
-                                 class="w-full h-64 object-cover">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-lg font-bold text-gray-900 mb-3 leading-tight roboto-condensed">
-                                Dự đoán về Tudor 2025 - tại sao người em của Rolex có thể làm lu mờ người anh trong năm nay
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4: Citizen Premier Collection -->
-                <div class="swiper-slide">
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                        <div class="aspect-w-16 aspect-h-12">
-                            <img src="{{ asset('img/DW00100699-247x296.webp') }}" 
-                                 alt="Citizen Premier Collection" 
-                                 class="w-full h-64 object-cover">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-lg font-bold text-gray-900 mb-3 leading-tight roboto-condensed">
-                                Điều gì khiến bộ sưu tập Citizen Premier mới đủ tiêu chuẩn là đồng hồ xa xỉ?
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- View More Button -->
+        <div class="text-center">
+            <a href="/products" 
+               class="inline-block bg-blue-600 text-white px-8 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                Xem thêm sản phẩm khác <i class="fas fa-arrow-right ml-2"></i>
+            </a>
         </div>
     </div>
 </section>
@@ -817,42 +533,6 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', () => {
             productsSwiper.slideNext();
         });
-    });
-
-    // Initialize Toplist Swiper
-    const toplistSwiper = new Swiper('.toplist-swiper', {
-        slidesPerView: 1,
-        spaceBetween: 20,
-        loop: true,
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-        },
-        breakpoints: {
-            640: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-            },
-            768: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-            },
-            1024: {
-                slidesPerView: 4,
-                spaceBetween: 20,
-            },
-        },
-        // Pause autoplay when hovering over the swiper
-        on: {
-            init: function() {
-                this.el.addEventListener('mouseenter', () => {
-                    this.autoplay.stop();
-                });
-                this.el.addEventListener('mouseleave', () => {
-                    this.autoplay.start();
-                });
-            }
-        }
     });
 
     // Initialize Promotional Products Swiper

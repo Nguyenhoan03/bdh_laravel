@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Support\Facades\Log;
 
 class GetListController extends Controller
 {
@@ -17,6 +18,9 @@ class GetListController extends Controller
             // Lấy danh mục đồng hồ nữ
             $categoryWomen = Category::where('slug', 'dong-ho-nu')->select('id')->first();
             $categoryMen = Category::where('slug', 'dong-ho-nam')->select('id')->first();
+            $categoryCouple = Category::where('slug', 'dong-ho-cap')->select('id')->first();
+            $categoryStraps = Category::where('slug', 'day-dong-ho')->select('id')->first();
+            $categoryJewelry = Category::where('slug', 'trang-suc')->select('id')->first();
             
             // Lấy sản phẩm đồng hồ nữ (chỉ sản phẩm đang kích hoạt)
             $dataWatchWomen = [];
@@ -49,22 +53,91 @@ class GetListController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
                 ->get();
-            dd($dataWatchMen, $dataWatchWomen, $featuredProducts);
-            return response()->json([
-                'success' => true,
-                'data' => [
-                    'watch_women' => $dataWatchWomen,
-                    'watch_men' => $dataWatchMen,
-                    'featured_products' => $featuredProducts,
-                ]
-            ]);
+            
+            // Lấy sản phẩm bán chạy (best selling) - sử dụng stock thay vì view_count
+            $bestSellingProducts = Product::with('category')
+                ->where('is_active', true)
+                ->orderBy('stock', 'desc')
+                ->orderBy('is_featured', 'desc')
+                ->limit(8)
+                ->get();
+            
+            // Lấy sản phẩm khuyến mãi (có sale_price khác price)
+            $promotionalProducts = Product::with('category')
+                ->where('is_active', true)
+                ->whereColumn('sale_price', '<', 'price')
+                ->orderBy('created_at', 'desc')
+                ->limit(8)
+                ->get();
+            
+            // Lấy sản phẩm đồng hồ cặp
+            $coupleWatches = [];
+            if ($categoryCouple) {
+                $coupleWatches = Product::with('category')
+                    ->where('category_id', $categoryCouple->id)
+                    ->where('is_active', true)
+                    ->orderBy('is_featured', 'desc')
+                    ->orderBy('created_at', 'desc')
+                    ->limit(6)
+                    ->get();
+            }
+            
+            // Lấy dây đồng hồ
+            $watchStraps = [];
+            if ($categoryStraps) {
+                $watchStraps = Product::with('category')
+                    ->where('category_id', $categoryStraps->id)
+                    ->where('is_active', true)
+                    ->orderBy('is_featured', 'desc')
+                    ->orderBy('created_at', 'desc')
+                    ->limit(8)
+                    ->get();
+            }
+            
+            // Lấy trang sức
+            $jewelry = [];
+            if ($categoryJewelry) {
+                $jewelry = Product::with('category')
+                    ->where('category_id', $categoryJewelry->id)
+                    ->where('is_active', true)
+                    ->orderBy('is_featured', 'desc')
+                    ->orderBy('created_at', 'desc')
+                    ->limit(6)
+                    ->get();
+            }
+            
+            // Lấy tất cả danh mục cho navigation
+            $categories = Category::orderBy('name', 'asc')->get();
+            
+            return view('home', compact(
+                'dataWatchWomen', 
+                'dataWatchMen', 
+                'featuredProducts',
+                'bestSellingProducts',
+                'promotionalProducts',
+                'coupleWatches',
+                'watchStraps',
+                'jewelry',
+                'categories'
+            ));
             
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Có lỗi xảy ra khi tải dữ liệu',
-                'error' => $e->getMessage()
-            ], 500);
+            // Log lỗi để debug
+            Log::error('Error in getListHome: ' . $e->getMessage());
+
+            // Trả về view với dữ liệu rỗng thay vì JSON
+            return view('home', [
+                'dataWatchWomen' => collect(),
+                'dataWatchMen' => collect(),
+                'featuredProducts' => collect(),
+                'bestSellingProducts' => collect(),
+                'promotionalProducts' => collect(),
+                'coupleWatches' => collect(),
+                'watchStraps' => collect(),
+                'jewelry' => collect(),
+                'categories' => collect(),
+                'error' => 'Có lỗi xảy ra khi tải dữ liệu: ' . $e->getMessage()
+            ]);
         }
     }
     
