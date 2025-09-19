@@ -41,9 +41,6 @@ class CategoryResource extends Resource
                             ->prefixIcon('heroicon-o-tag')
                             ->live(onBlur: true)
                             ->afterStateUpdated(function (string $operation, $state, Set $set) {
-                                if ($operation !== 'create') {
-                                    return;
-                                }
                                 $set('slug', \Illuminate\Support\Str::slug($state));
                             }),
                         Forms\Components\TextInput::make('slug')
@@ -51,7 +48,19 @@ class CategoryResource extends Resource
                             ->required()
                             ->maxLength(100)
                             ->unique(ignoreRecord: true)
-                            ->prefixIcon('heroicon-o-link'),
+                            ->prefixIcon('heroicon-o-link')
+                            ->rules([
+                                function () {
+                                    return function (string $attribute, $value, \Closure $fail) {
+                                        if (empty($value)) return;
+                                        
+                                        $slug = \Illuminate\Support\Str::slug($value);
+                                        if ($slug !== $value) {
+                                            $fail('Slug chỉ được chứa chữ cái, số và dấu gạch ngang.');
+                                        }
+                                    };
+                                },
+                            ]),
                 Forms\Components\Textarea::make('description')
                     ->label('Mô tả')
                     ->rows(3)
