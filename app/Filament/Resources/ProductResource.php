@@ -129,9 +129,13 @@ class ProductResource extends Resource
                             ->columnSpanFull(),
                         Forms\Components\Toggle::make('is_featured')
                             ->label('Sản phẩm nổi bật')
+                            ->onColor('success')
+                            ->offColor('danger')
                             ->default(false),
                         Forms\Components\Toggle::make('is_active')
                             ->label('Kích hoạt')
+                            ->onColor('success')
+                            ->offColor('danger')
                             ->default(true),
                     ])->columns(2),
             ]);
@@ -166,12 +170,12 @@ class ProductResource extends Resource
                     ->label('Tồn kho')
                     ->sortable()
                     ->badge()
-                    ->color(fn (int $state): string => match (true) {
+                    ->color(fn(int $state): string => match (true) {
                         $state <= 0 => 'danger',
                         $state <= 10 => 'warning',
                         default => 'success',
                     })
-                    ->formatStateUsing(fn (int $state): string => $state . ' sản phẩm'),
+                    ->formatStateUsing(fn(int $state): string => $state . ' sản phẩm'),
                 Tables\Columns\IconColumn::make('is_featured')
                     ->label('Nổi bật')
                     ->boolean(),

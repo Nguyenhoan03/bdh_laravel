@@ -61,6 +61,8 @@ class BlogPostResource extends Resource
                             ->prefixIcon('heroicon-o-user'),
                         Forms\Components\Toggle::make('is_published')
                             ->label('Xuất bản')
+                            ->onColor('success')
+                            ->offColor('danger')
                             ->default(false),
                     ])->columns(2),
 
