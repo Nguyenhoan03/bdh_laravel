@@ -11,11 +11,12 @@
             <!-- Desktop Navigation -->
             <nav class="hidden md:flex space-x-8">
                 <a href="/" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4 roboto-condensed">TRANG CHỦ</a>
-                <a href="/dong-ho-nu" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4 roboto-condensed">ĐỒNG HỒ NỮ</a>
-                <a href="/dong-ho-nam" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4 roboto-condensed">ĐỒNG HỒ NAM</a>
-                <a href="/dong-ho-cap" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4 roboto-condensed">ĐỒNG HỒ CẶP</a>
-                <a href="/day-dong-ho" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4 roboto-condensed">DÂY ĐỒNG HỒ</a>
-                <a href="/trang-suc" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4 roboto-condensed">TRANG SỨC</a>
+                @php
+                    $categories = \App\Models\Category::all();
+                @endphp
+                @foreach($categories as $category)
+                <a href="/danh-muc/{{ $category->slug }}" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4 roboto-condensed">{{ strtoupper($category->name) }}</a>
+                @endforeach
                 <a href="/blog-dong-ho-360" class="text-gray-700 hover:text-orange-500 block text-xs font-bold leading-4 roboto-condensed">BLOG ĐỒNG HỒ 360</a>
             </nav>
 
@@ -41,11 +42,12 @@
         <div id="mobile-menu" class="md:hidden hidden">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
                 <a href="/" class="text-gray-700 hover:text-orange-500 block px-3 py-2 text-base font-medium">TRANG CHỦ</a>
-                <a href="/dong-ho-nu" class="text-gray-700 hover:text-orange-500 block px-3 py-2 text-base font-medium">ĐỒNG HỒ NỮ</a>
-                <a href="/dong-ho-nam" class="text-gray-700 hover:text-orange-500 block px-3 py-2 text-base font-medium">ĐỒNG HỒ NAM</a>
-                <a href="/dong-ho-cap" class="text-gray-700 hover:text-orange-500 block px-3 py-2 text-base font-medium">ĐỒNG HỒ CẶP</a>
-                <a href="/day-dong-ho" class="text-gray-700 hover:text-orange-500 block px-3 py-2 text-base font-medium">DÂY ĐỒNG HỒ</a>
-                <a href="/trang-suc" class="text-gray-700 hover:text-orange-500 block px-3 py-2 text-base font-medium">TRANG SỨC</a>
+                @php
+                    $categories = \App\Models\Category::all();
+                @endphp
+                @foreach($categories as $category)
+                <a href="/danh-muc/{{ $category->slug }}" class="text-gray-700 hover:text-orange-500 block px-3 py-2 text-base font-medium">{{ strtoupper($category->name) }}</a>
+                @endforeach
                 <a href="/blog-dong-ho-360" class="text-gray-700 hover:text-orange-500 block px-3 py-2 text-base font-medium">BLOG ĐỒNG HỒ 360</a>
             </div>
         </div>

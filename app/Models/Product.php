@@ -9,6 +9,7 @@ class Product extends Model
     protected $fillable = [
         'name',
         'slug',
+        'sku',
         'description',
         'price',
         'sale_price',
@@ -17,6 +18,8 @@ class Product extends Model
         'category_id',
         'is_featured',
         'is_active',
+        'tags',
+        'specifications',
     ];
 
     protected $casts = [
@@ -25,6 +28,7 @@ class Product extends Model
         'is_active' => 'boolean',
         'price' => 'decimal:2',
         'sale_price' => 'decimal:2',
+        'specifications' => 'array',
     ];
 
     public function category()

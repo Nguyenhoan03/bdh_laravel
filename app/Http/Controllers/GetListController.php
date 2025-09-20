@@ -198,38 +198,4 @@ class GetListController extends Controller
         }
     }
     
-    /**
-     * Lấy chi tiết sản phẩm
-     */
-    public function getProductDetail($productSlug)
-    {
-        try {
-            // Tìm sản phẩm theo slug hoặc ID
-            $product = Product::with('category')
-                ->where(function($query) use ($productSlug) {
-                    $query->where('slug', $productSlug)
-                          ->orWhere('id', $productSlug);
-                })
-                ->where('is_active', true)
-                ->first();
-            
-            if (!$product) {
-                abort(404, 'Sản phẩm không tồn tại');
-            }
-            
-            // Lấy sản phẩm liên quan
-            $relatedProducts = Product::with('category')
-                ->where('category_id', $product->category_id)
-                ->where('id', '!=', $product->id)
-                ->where('is_active', true)
-                ->limit(4)
-                ->get();
-            
-            return view('product_detail', compact('product', 'relatedProducts'));
-            
-        } catch (\Exception $e) {
-            Log::error('Error in getProductDetail: ' . $e->getMessage());
-            abort(500, 'Có lỗi xảy ra khi tải dữ liệu');
-        }
-    }
 }
