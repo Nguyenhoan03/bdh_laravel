@@ -106,6 +106,20 @@ class GetListController extends Controller
                     ->get();
             }
             
+            // Lấy sản phẩm cho banner thứ 3 (sản phẩm mới nhất)
+            $newestProducts = Product::with('category')
+                ->where('is_active', true)
+                ->orderBy('created_at', 'desc')
+                ->limit(6)
+                ->get();
+            
+            // Lấy sản phẩm có giá cao nhất (premium)
+            $premiumProducts = Product::with('category')
+                ->where('is_active', true)
+                ->orderBy('price', 'desc')
+                ->limit(4)
+                ->get();
+            
             // Lấy tất cả danh mục cho navigation
             $categories = Category::orderBy('name', 'asc')->get();
             
@@ -118,6 +132,8 @@ class GetListController extends Controller
                 'coupleWatches',
                 'watchStraps',
                 'jewelry',
+                'newestProducts',
+                'premiumProducts',
                 'categories'
             ));
             
@@ -135,6 +151,8 @@ class GetListController extends Controller
                 'coupleWatches' => collect(),
                 'watchStraps' => collect(),
                 'jewelry' => collect(),
+                'newestProducts' => collect(),
+                'premiumProducts' => collect(),
                 'categories' => collect(),
                 'error' => 'Có lỗi xảy ra khi tải dữ liệu: ' . $e->getMessage()
             ]);
@@ -186,16 +204,17 @@ class GetListController extends Controller
     public function getProductDetail($productSlug)
     {
         try {
+            // Tìm sản phẩm theo slug hoặc ID
             $product = Product::with('category')
-                ->where('slug', $productSlug)
+                ->where(function($query) use ($productSlug) {
+                    $query->where('slug', $productSlug)
+                          ->orWhere('id', $productSlug);
+                })
                 ->where('is_active', true)
                 ->first();
             
             if (!$product) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Sản phẩm không tồn tại'
-                ], 404);
+                abort(404, 'Sản phẩm không tồn tại');
             }
             
             // Lấy sản phẩm liên quan
@@ -206,20 +225,11 @@ class GetListController extends Controller
                 ->limit(4)
                 ->get();
             
-            return response()->json([
-                'success' => true,
-                'data' => [
-                    'product' => $product,
-                    'related_products' => $relatedProducts
-                ]
-            ]);
+            return view('product_detail', compact('product', 'relatedProducts'));
             
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Có lỗi xảy ra khi tải dữ liệu',
-                'error' => $e->getMessage()
-            ], 500);
+            Log::error('Error in getProductDetail: ' . $e->getMessage());
+            abort(500, 'Có lỗi xảy ra khi tải dữ liệu');
         }
     }
 }

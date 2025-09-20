@@ -138,9 +138,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const swiper = new Swiper('.hero-swiper', {
         // Basic settings
         loop: true,
+        loopAdditionalSlides: 1,
         autoplay: {
-            delay: 5000,
+            delay: 4000,
             disableOnInteraction: false,
+            pauseOnMouseEnter: false,
+            stopOnLastSlide: false,
+            reverseDirection: false,
         },
         speed: 1000,
         
@@ -182,22 +186,101 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Events
         on: {
+            init: function () {
+                // Start autoplay after initialization
+                if (this.autoplay) {
+                    this.autoplay.start();
+                }
+                console.log('Swiper initialized with', this.slides.length, 'slides');
+            },
             slideChange: function () {
                 // Add any custom logic when slide changes
                 console.log('Slide changed to:', this.activeIndex);
+                // Ensure autoplay continues
+                if (this.autoplay && !this.autoplay.running) {
+                    this.autoplay.start();
+                }
+            },
+            autoplayStart: function () {
+                console.log('Autoplay started');
+            },
+            autoplayStop: function () {
+                console.log('Autoplay stopped');
             },
         }
     });
     
-    // Pause autoplay on hover
+    // Pause autoplay on hover (optional)
     const swiperContainer = document.querySelector('.hero-swiper');
-    swiperContainer.addEventListener('mouseenter', () => {
-        swiper.autoplay.stop();
-    });
+    if (swiperContainer) {
+        swiperContainer.addEventListener('mouseenter', () => {
+            if (swiper.autoplay) {
+                swiper.autoplay.stop();
+            }
+        });
+        
+        swiperContainer.addEventListener('mouseleave', () => {
+            if (swiper.autoplay) {
+                swiper.autoplay.start();
+            }
+        });
+    }
     
-    swiperContainer.addEventListener('mouseleave', () => {
-        swiper.autoplay.start();
-    });
+    // Ensure autoplay starts with multiple fallbacks
+    setTimeout(() => {
+        if (swiper.autoplay) {
+            swiper.autoplay.start();
+        }
+    }, 1000);
+    
+    // Additional fallback
+    setTimeout(() => {
+        if (swiper && swiper.autoplay && !swiper.autoplay.running) {
+            swiper.autoplay.start();
+        }
+    }, 2000);
+    
+    // Force start autoplay if still not working
+    setTimeout(() => {
+        if (swiper && swiper.autoplay) {
+            swiper.autoplay.stop();
+            swiper.autoplay.start();
+        }
+    }, 3000);
+    
+    // Continuous autoplay monitoring
+    setInterval(() => {
+        if (swiper && swiper.autoplay) {
+            if (!swiper.autoplay.running) {
+                console.log('Restarting autoplay...');
+                swiper.autoplay.start();
+            }
+        }
+    }, 3000);
+    
+    // Force restart autoplay every 20 seconds to prevent stuck
+    setInterval(() => {
+        if (swiper && swiper.autoplay) {
+            console.log('Force restarting autoplay...');
+            swiper.autoplay.stop();
+            setTimeout(() => {
+                swiper.autoplay.start();
+            }, 100);
+        }
+    }, 20000);
+    
+    // Alternative approach: Manual slide progression if autoplay fails
+    let manualSlideInterval;
+    setTimeout(() => {
+        if (swiper && swiper.autoplay && !swiper.autoplay.running) {
+            console.log('Starting manual slide progression...');
+            manualSlideInterval = setInterval(() => {
+                if (swiper && swiper.slideNext) {
+                    swiper.slideNext();
+                }
+            }, 4000);
+        }
+    }, 10000);
 });
 </script>
 
@@ -220,6 +303,25 @@ document.addEventListener('DOMContentLoaded', function() {
 /* Smooth transitions for watch images */
 .hero-swiper .swiper-slide img {
     filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+}
+
+/* Ensure autoplay works properly */
+.hero-swiper .swiper-slide {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    transform: scale(1.05);
+}
+
+.hero-swiper .swiper-slide-active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Smooth fade transitions */
+.hero-swiper .swiper-slide-next,
+.hero-swiper .swiper-slide-prev {
+    opacity: 0.3;
+    transform: scale(0.95);
 }
 
 /* Responsive adjustments */
