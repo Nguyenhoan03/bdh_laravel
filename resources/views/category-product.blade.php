@@ -143,7 +143,7 @@
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-2">
                                     @if($product->price > $product->sale_price && $product->sale_price > 0)
-                                    <span class="text-sm text-slate-400 line-through">
+                                    <span class="text-sm text-slate-400 line-through font-medium">
                                         {{ number_format($product->price, 0, ',', '.') }}₫
                                     </span>
                                     @endif

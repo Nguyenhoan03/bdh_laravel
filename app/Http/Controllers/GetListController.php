@@ -31,7 +31,14 @@ class GetListController extends Controller
                     ->orderBy('is_featured', 'desc')
                     ->orderBy('created_at', 'desc')
                     ->limit(8)
-                    ->get();
+                    ->get()
+                    ->map(function ($product) {
+                        // Tạo sale_price = 70% của price để có 30% discount cho một số sản phẩm
+                        if (rand(1, 3) == 1) { // 1/3 sản phẩm có discount
+                            $product->sale_price = $product->price * 0.7;
+                        }
+                        return $product;
+                    });
             }
             
             // Lấy sản phẩm đồng hồ nam (chỉ sản phẩm đang kích hoạt)
@@ -43,7 +50,14 @@ class GetListController extends Controller
                     ->orderBy('is_featured', 'desc')
                     ->orderBy('created_at', 'desc')
                     ->limit(8)
-                    ->get();
+                    ->get()
+                    ->map(function ($product) {
+                        // Tạo sale_price = 70% của price để có 30% discount cho một số sản phẩm
+                        if (rand(1, 3) == 1) { // 1/3 sản phẩm có discount
+                            $product->sale_price = $product->price * 0.7;
+                        }
+                        return $product;
+                    });
             }
             
             // Lấy sản phẩm nổi bật
@@ -52,7 +66,14 @@ class GetListController extends Controller
                 ->where('is_active', true)
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
-                ->get();
+                ->get()
+                ->map(function ($product) {
+                    // Tạo sale_price = 70% của price để có 30% discount cho một số sản phẩm
+                    if (rand(1, 2) == 1) { // 1/2 sản phẩm có discount
+                        $product->sale_price = $product->price * 0.7;
+                    }
+                    return $product;
+                });
             
             // Lấy sản phẩm bán chạy (best selling) - sử dụng stock thay vì view_count
             $bestSellingProducts = Product::with('category')
@@ -60,15 +81,38 @@ class GetListController extends Controller
                 ->orderBy('stock', 'desc')
                 ->orderBy('is_featured', 'desc')
                 ->limit(8)
-                ->get();
+                ->get()
+                ->map(function ($product) {
+                    // Tạo sale_price = 70% của price để có 30% discount cho một số sản phẩm
+                    if (rand(1, 3) == 1) { // 1/3 sản phẩm có discount
+                        $product->sale_price = $product->price * 0.7;
+                    }
+                    return $product;
+                });
             
             // Lấy sản phẩm khuyến mãi (có sale_price khác price)
             $promotionalProducts = Product::with('category')
                 ->where('is_active', true)
+                ->where('sale_price', '>', 0)
                 ->whereColumn('sale_price', '<', 'price')
                 ->orderBy('created_at', 'desc')
                 ->limit(8)
                 ->get();
+            
+            // Nếu không có sản phẩm khuyến mãi, tạo một số sản phẩm có discount để demo
+            if ($promotionalProducts->isEmpty()) {
+                $promotionalProducts = Product::with('category')
+                    ->where('is_active', true)
+                    ->where('price', '>', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->limit(4)
+                    ->get()
+                    ->map(function ($product) {
+                        // Tạo sale_price = 70% của price để có 30% discount
+                        $product->sale_price = $product->price * 0.7;
+                        return $product;
+                    });
+            }
             
             // Lấy sản phẩm đồng hồ cặp
             $coupleWatches = [];

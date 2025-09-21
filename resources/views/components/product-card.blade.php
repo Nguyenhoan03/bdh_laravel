@@ -13,7 +13,7 @@
     @if($discount)
     <div class="relative">
         <div class="absolute top-2 left-2 z-10">
-            <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md">{{ $discount }}</span>
+            <span class="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-2 py-1 rounded-md shadow-lg animate-pulse">{{ $discount }}</span>
         </div>
     @endif
         
@@ -45,7 +45,7 @@
         <div class="flex items-center justify-center space-x-2">
             @if($originalPrice && $originalPrice !== $price)
             <!-- Original Price (Crossed out) -->
-            <span class="text-sm text-gray-400 line-through">
+            <span class="text-sm text-gray-400 line-through font-medium">
                 {{ $originalPrice }}
             </span>
             @endif

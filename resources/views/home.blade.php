@@ -196,14 +196,8 @@
                                 <!-- Discount Badge -->
                                 @if($product->price > $product->sale_price && $product->sale_price > 0)
                                 <div class="absolute top-4 left-4 z-20">
-                                    <div class="bg-gradient-to-r from-red-500 to-pink-500 text-white text-sm font-bold px-3 py-1.5 rounded-full shadow-lg">
+                                    <div class="bg-gradient-to-r from-red-500 to-pink-500 text-white text-sm font-bold px-3 py-1.5 rounded-full shadow-lg animate-pulse">
                                         -{{ round((($product->price - $product->sale_price) / $product->price) * 100) }}%
-                                    </div>
-                                </div>
-                                @elseif($product->price > 0 && $product->sale_price == 0)
-                                <div class="absolute top-4 left-4 z-20">
-                                    <div class="bg-gradient-to-r from-red-500 to-pink-500 text-white text-sm font-bold px-3 py-1.5 rounded-full shadow-lg">
-                                        -0%
                                     </div>
                                 </div>
                                 @endif
@@ -241,7 +235,7 @@
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center space-x-2">
                                             @if($product->price > $product->sale_price && $product->sale_price > 0)
-                                            <span class="text-sm text-gray-400 line-through">
+                                            <span class="text-sm text-gray-400 line-through font-medium">
                                                 {{ number_format($product->price, 0, ',', '.') }}₫
                                             </span>
                                             @endif
@@ -343,14 +337,8 @@
                                 <!-- Discount Badge -->
                                 @if($product->price > $product->sale_price && $product->sale_price > 0)
                                 <div class="absolute top-4 left-4 z-20">
-                                    <div class="bg-gradient-to-r from-red-500 to-pink-500 text-white text-sm font-bold px-3 py-1.5 rounded-full shadow-lg">
+                                    <div class="bg-gradient-to-r from-red-500 to-pink-500 text-white text-sm font-bold px-3 py-1.5 rounded-full shadow-lg animate-pulse">
                                         -{{ round((($product->price - $product->sale_price) / $product->price) * 100) }}%
-                                    </div>
-                                </div>
-                                @elseif($product->price > 0 && $product->sale_price == 0)
-                                <div class="absolute top-4 left-4 z-20">
-                                    <div class="bg-gradient-to-r from-red-500 to-pink-500 text-white text-sm font-bold px-3 py-1.5 rounded-full shadow-lg">
-                                        -0%
                                     </div>
                                 </div>
                                 @endif
@@ -388,7 +376,7 @@
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center space-x-2">
                                             @if($product->price > $product->sale_price && $product->sale_price > 0)
-                                            <span class="text-sm text-gray-400 line-through">
+                                            <span class="text-sm text-gray-400 line-through font-medium">
                                                 {{ number_format($product->price, 0, ',', '.') }}₫
                                             </span>
                                             @endif

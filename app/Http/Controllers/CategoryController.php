@@ -52,6 +52,15 @@ class CategoryController extends Controller
 
             // Phân trang
             $products = $query->paginate($perPage, ['*'], 'page', $page);
+            
+            // Tạo discount cho một số sản phẩm
+            $products->getCollection()->transform(function ($product) {
+                // Tạo sale_price = 70% của price để có 30% discount cho một số sản phẩm
+                if (rand(1, 3) == 1) { // 1/3 sản phẩm có discount
+                    $product->sale_price = $product->price * 0.7;
+                }
+                return $product;
+            });
 
             // Lấy tất cả categories để hiển thị menu
             $categories = Category::all();
@@ -86,7 +95,14 @@ class CategoryController extends Controller
                 ->where('is_active', true)
                 ->where('is_featured', true)
                 ->limit(12)
-                ->get();
+                ->get()
+                ->map(function ($product) {
+                    // Tạo sale_price = 70% của price để có 30% discount cho một số sản phẩm
+                    if (rand(1, 2) == 1) { // 1/2 sản phẩm có discount
+                        $product->sale_price = $product->price * 0.7;
+                    }
+                    return $product;
+                });
 
             return view('categories', compact('categories', 'featuredProducts'));
 
