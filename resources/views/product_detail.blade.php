@@ -159,12 +159,12 @@
                         </div>
                     </div>
                     
-                    <button id="addToCartBtn" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl" onclick="addToCart()">
+                    <button id="addToCartBtn" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group" onclick="addToCart()">
                         <span class="flex items-center justify-center space-x-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"></path>
                             </svg>
-                            <span>THÊM VÀO GIỎ HÀNG</span>
+                            <span class="transition-all duration-300 group-hover:font-bold">THÊM VÀO GIỎ HÀNG</span>
                         </span>
                     </button>
                 </div>
@@ -691,7 +691,7 @@ body {
 
 <script>
 // Product ID for cart functionality
-const productId = {{ $product->id }};
+const productId = {{ $product->id ?? 0 }};
 
 // Initialize Related Products Swiper
 document.addEventListener('DOMContentLoaded', function() {
@@ -782,6 +782,12 @@ function changeMainImage(imageSrc, thumbnail) {
 
 // Add to cart functionality
 function addToCart() {
+    // Check if productId is valid
+    if (!productId || productId <= 0) {
+        showNotification('Lỗi: Không tìm thấy ID sản phẩm!', 'error');
+        return;
+    }
+    
     const quantity = document.getElementById('quantity').value;
     const addToCartBtn = document.getElementById('addToCartBtn');
     

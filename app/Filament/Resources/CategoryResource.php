@@ -65,6 +65,10 @@ class CategoryResource extends Resource
                     ->label('Mô tả')
                     ->rows(3)
                     ->placeholder('Nhập mô tả cho danh mục...'),
+                Forms\Components\Toggle::make('is_active')
+                    ->label('Kích hoạt')
+                    ->default(true)
+                    ->helperText('Danh mục sẽ hiển thị trên website khi được kích hoạt'),
                 Forms\Components\FileUpload::make('image')
                     ->label('Hình ảnh')
                     ->image()
@@ -87,13 +91,24 @@ class CategoryResource extends Resource
                 Tables\Columns\TextColumn::make('slug')
                     ->label('Slug')
                     ->searchable(),
+                Tables\Columns\IconColumn::make('is_active')
+                    ->label('Trạng thái')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('danger'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Ngày tạo')
                     ->dateTime('d/m/Y H:i')
                     ->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\TernaryFilter::make('is_active')
+                    ->label('Trạng thái kích hoạt')
+                    ->placeholder('Tất cả')
+                    ->trueLabel('Đã kích hoạt')
+                    ->falseLabel('Chưa kích hoạt'),
             ])
             ->actions([
                 EditAction::make(),

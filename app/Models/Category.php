@@ -11,6 +11,11 @@ class Category extends Model
         'slug',
         'description',
         'image',
+        'is_active',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
     ];
 
     public function products()

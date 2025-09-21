@@ -26,6 +26,7 @@ class GetListController extends Controller
             $dataWatchWomen = [];
             if ($categoryWomen) {
                 $dataWatchWomen = Product::with('category')
+                    ->select('id', 'name', 'slug', 'price', 'sale_price', 'images', 'description', 'category_id', 'is_featured', 'is_active', 'created_at')
                     ->where('category_id', $categoryWomen->id)
                     ->where('is_active', true)
                     ->orderBy('is_featured', 'desc')
@@ -41,10 +42,12 @@ class GetListController extends Controller
                     });
             }
             
+            
             // Lấy sản phẩm đồng hồ nam (chỉ sản phẩm đang kích hoạt)
             $dataWatchMen = [];
             if ($categoryMen) {
                 $dataWatchMen = Product::with('category')
+                    ->select('id', 'name', 'slug', 'price', 'sale_price', 'images', 'description', 'category_id', 'is_featured', 'is_active', 'created_at')
                     ->where('category_id', $categoryMen->id)
                     ->where('is_active', true)
                     ->orderBy('is_featured', 'desc')
@@ -62,6 +65,7 @@ class GetListController extends Controller
             
             // Lấy sản phẩm nổi bật
             $featuredProducts = Product::with('category')
+                ->select('id', 'name', 'slug', 'price', 'sale_price', 'images', 'description', 'category_id', 'is_featured', 'is_active', 'created_at')
                 ->where('is_featured', true)
                 ->where('is_active', true)
                 ->orderBy('created_at', 'desc')
@@ -77,6 +81,7 @@ class GetListController extends Controller
             
             // Lấy sản phẩm bán chạy (best selling) - sử dụng stock thay vì view_count
             $bestSellingProducts = Product::with('category')
+                ->select('id', 'name', 'slug', 'price', 'sale_price', 'images', 'description', 'category_id', 'is_featured', 'is_active', 'created_at', 'stock')
                 ->where('is_active', true)
                 ->orderBy('stock', 'desc')
                 ->orderBy('is_featured', 'desc')
@@ -92,6 +97,7 @@ class GetListController extends Controller
             
             // Lấy sản phẩm khuyến mãi (có sale_price khác price)
             $promotionalProducts = Product::with('category')
+                ->select('id', 'name', 'slug', 'price', 'sale_price', 'images', 'description', 'category_id', 'is_featured', 'is_active', 'created_at')
                 ->where('is_active', true)
                 ->where('sale_price', '>', 0)
                 ->whereColumn('sale_price', '<', 'price')
@@ -102,6 +108,7 @@ class GetListController extends Controller
             // Nếu không có sản phẩm khuyến mãi, tạo một số sản phẩm có discount để demo
             if ($promotionalProducts->isEmpty()) {
                 $promotionalProducts = Product::with('category')
+                    ->select('id', 'name', 'slug', 'price', 'sale_price', 'images', 'description', 'category_id', 'is_featured', 'is_active', 'created_at')
                     ->where('is_active', true)
                     ->where('price', '>', 0)
                     ->orderBy('created_at', 'desc')
@@ -164,8 +171,8 @@ class GetListController extends Controller
                 ->limit(4)
                 ->get();
             
-            // Lấy tất cả danh mục cho navigation
-            $categories = Category::orderBy('name', 'asc')->get();
+            // Lấy tất cả danh mục đang kích hoạt cho navigation
+            $categories = Category::where('is_active', true)->orderBy('name', 'asc')->get();
             
             return view('home', compact(
                 'dataWatchWomen', 

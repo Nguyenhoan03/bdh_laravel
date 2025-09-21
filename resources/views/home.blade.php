@@ -102,31 +102,31 @@
                 <div class="swiper-wrapper">
                     @forelse($promotionalProducts ?? collect() as $product)
                     <div class="swiper-slide p-3">
-                        <a href="/san-pham/{{ $product->slug ?? $product->id }}" class="block">
-                            <x-product-card
-                                :name="$product->name ?? ''"
-                                :spec="explode(' - ', $product->description)[1] ?? ''"
-                                :original-price="number_format($product->price, 0, ',', '.') . '₫'"
-                                :price="number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') . '₫'"
-                                :discount="($product->price > $product->sale_price && $product->sale_price > 0) ? '-' . round((($product->price - $product->sale_price) / $product->price) * 100) . '%' : ''"
-                                :image="$product->images[0] ?? 'DW00100699-247x296.webp'"
-                                :size="'normal'" />
-                        </a>
+                        <x-product-card
+                            :name="$product->name ?? ''"
+                            :spec="explode(' - ', $product->description)[1] ?? ''"
+                            :original-price="number_format($product->price, 0, ',', '.') . '₫'"
+                            :price="number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') . '₫'"
+                            :discount="($product->price > $product->sale_price && $product->sale_price > 0) ? '-' . round((($product->price - $product->sale_price) / $product->price) * 100) . '%' : ''"
+                            :image="$product->images[0] ?? 'DW00100699-247x296.webp'"
+                            :size="'normal'"
+                            :product-id="$product->id"
+                            :slug="$product->slug ?? $product->id" />
                     </div>
                     @empty
                     <!-- Fallback: Show newest products if no promotional products -->
                     @forelse($newestProducts ?? collect() as $product)
                     <div class="swiper-slide p-3">
-                        <a href="/san-pham/{{ $product->slug ?? $product->id }}" class="block">
                         <x-product-card 
                             :name="$product->name ?? ''"
                             :spec="explode(' - ', $product->description)[1] ?? ''"
                             :original-price="number_format($product->price, 0, ',', '.') . '₫'"
-                                :price="number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') . '₫'"
-                                :discount="($product->price > $product->sale_price && $product->sale_price > 0) ? '-' . round((($product->price - $product->sale_price) / $product->price) * 100) . '%' : ''"
+                            :price="number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') . '₫'"
+                            :discount="($product->price > $product->sale_price && $product->sale_price > 0) ? '-' . round((($product->price - $product->sale_price) / $product->price) * 100) . '%' : ''"
                             :image="$product->images[0] ?? 'DW00100699-247x296.webp'"
-                                :size="'normal'" />
-                        </a>
+                            :size="'normal'"
+                            :product-id="$product->id"
+                            :slug="$product->slug ?? $product->id" />
                     </div>
                     @empty
                     <div class="swiper-slide p-3">
