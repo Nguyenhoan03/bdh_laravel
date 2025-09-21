@@ -34,6 +34,7 @@
                         <span class="cart-count absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-lg transform transition-all duration-300 group-hover:scale-125 group-hover:shadow-xl group-hover:animate-pulse animate-pulse-slow z-10">
                             {{ array_sum(array_column(session('cart', []), 'quantity')) }}
                         </span>
+                        
                     </div>
                     <span class="text-sm font-medium hidden sm:block transition-all duration-300 group-hover:font-semibold">GIỎ HÀNG</span>
                 </a>

@@ -27,7 +27,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
             </div>
-            <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent mb-6">
+            <h1 class="text-4xl md:text-5xl pt-3 font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent mb-6">
                 {{ $category->name ?? 'Danh mục sản phẩm' }}
             </h1>
             <p class="text-slate-600 max-w-3xl mx-auto leading-relaxed text-lg">

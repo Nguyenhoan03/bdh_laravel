@@ -11,7 +11,7 @@
         <div class="mb-4">
             <nav class="text-sm text-gray-600">
                 <a href="/" class="hover:text-blue-600">Trang chủ</a> / 
-                <a href="/{{ $category->slug ?? 'products' }}" class="hover:text-blue-600">{{ $category->name ?? 'Sản phẩm' }}</a>
+                <a href="/danh-muc/{{ $category->slug ?? 'products' }}" class="hover:text-blue-600">{{ $category->name ?? 'Sản phẩm' }}</a>
             </nav>
         </div>
     </div>
@@ -34,7 +34,7 @@
                     </div>
                     @endif
                     @php
-                        $mainImage = 'DW00100699-247x296.webp'; // Default image
+                        $mainImage = 'DW00100699-247x296.webp';
                         if ($product->images && is_array($product->images) && count($product->images) > 0) {
                             $mainImage = $product->images[0];
                         }
