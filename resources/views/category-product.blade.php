@@ -131,36 +131,36 @@
                                     {{ Str::limit($product->name, 50) }}
                                 </h3>
                                 
-                                <!-- Product Specification -->
-                                @if(explode(' - ', $product->description)[1] ?? '')
-                                <p class="text-sm text-slate-500 font-medium bg-slate-50 px-3 py-1.5 rounded-lg">
-                                    {{ explode(' - ', $product->description)[1] }}
-                                </p>
-                                @endif
+                                <!-- Product Specification and Stock -->
+                                <div class="flex items-center justify-between">
+                                    @if(explode(' - ', $product->description)[1] ?? '')
+                                    <p class="text-sm text-slate-500 font-medium bg-slate-50 px-3 py-1.5 rounded-lg">
+                                        {{ explode(' - ', $product->description)[1] }}
+                                    </p>
+                                    @endif
+                                    
+                                    <!-- Stock Indicator -->
+                                    <div class="flex items-center space-x-2 bg-green-50 px-3 py-1.5 rounded-full">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                        <span class="text-xs text-green-700 font-medium">Còn hàng</span>
+                                    </div>
+                                </div>
                             </div>
                             
                             <!-- Pricing -->
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-2">
-                                    @if($product->price > $product->sale_price && $product->sale_price > 0)
-                                    <span class="text-sm text-slate-400 line-through font-medium">
-                                        {{ number_format($product->price, 0, ',', '.') }}₫
-                                    </span>
-                                    @endif
-                                    <span class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
-                                        {{ number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') }}₫
-                                    </span>
-                                </div>
-                                
-                                <!-- Stock Indicator -->
-                                <div class="flex items-center space-x-2 bg-green-50 px-3 py-1.5 rounded-full">
-                                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                                    <span class="text-xs text-green-700 font-medium">Còn hàng</span>
-                                </div>
+                            <div class="flex items-center space-x-2">
+                                @if($product->price > $product->sale_price && $product->sale_price > 0)
+                                <span class="text-sm text-slate-400 line-through font-medium">
+                                    {{ number_format($product->price, 0, ',', '.') }}₫
+                                </span>
+                                @endif
+                                <span class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
+                                    {{ number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') }}₫
+                                </span>
                             </div>
                             
                             <!-- Add to Cart Button -->
-                            <button class="w-full mt-auto px-6 py-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-bold rounded-2xl hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm relative overflow-hidden group/btn">
+                            <button onclick="addToCart({{ $product->id }})" class="w-full mt-auto px-6 py-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-bold rounded-2xl hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm relative overflow-hidden group/btn">
                                 <!-- Button Background Animation -->
                                 <div class="absolute inset-0 bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
                                 

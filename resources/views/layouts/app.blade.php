@@ -144,25 +144,44 @@
         
         // Add to Cart Function
         function addToCart(productId, quantity = 1) {
+            console.log('Global addToCart called with:', { productId, quantity, type: typeof productId });
+            
             // Check if productId is valid
             if (!productId || productId <= 0) {
+                console.log('Global addToCart validation failed:', { productId, type: typeof productId });
                 showNotification('Lỗi: Không tìm thấy ID sản phẩm!', 'error');
                 return;
             }
             
+            // Get quantity from input field if not provided
+            if (quantity === 1) {
+                const quantityInput = document.getElementById('quantity');
+                if (quantityInput) {
+                    quantity = parseInt(quantityInput.value) || 1;
+                }
+            }
+            
+            const formData = new FormData();
+            formData.append('product_id', productId);
+            formData.append('quantity', quantity);
+            formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+            formData.append('debug', 'true');
+            
+            console.log('Sending request with FormData:', { productId, quantity });
+            
             fetch('/cart/add', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    'Accept': 'application/json'
                 },
-                body: JSON.stringify({
-                    product_id: productId,
-                    quantity: quantity
-                })
+                body: formData
             })
             .then(response => response.json())
             .then(data => {
+                console.log('Global addToCart response:', data);
+                
+                // Debug info is logged to console, no notification needed
+                
                 if (data.success) {
                     // Update cart count in header
                     const cartCount = document.querySelector('.cart-count');
@@ -177,7 +196,7 @@
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error('Global addToCart Error:', error);
                 showNotification('Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng!', 'error');
             });
         }

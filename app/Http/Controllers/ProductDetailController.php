@@ -14,9 +14,9 @@ class ProductDetailController extends Controller
         try {
             // Tìm sản phẩm theo slug hoặc ID
             $product = Product::where('slug', $slug)
-                ->orWhere('id', $slug)
-                ->with(['category'])
-                ->first();
+            ->orWhere('id', $slug)
+            ->with(['category'])
+            ->first();
 
             if (!$product) {
                 abort(404, 'Sản phẩm không tồn tại');

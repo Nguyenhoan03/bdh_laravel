@@ -157,25 +157,13 @@
                                 {{ Str::limit($product->name, 40) }}
                             </h3>
                             
-                            <!-- Product Specification -->
-                            @if(explode(' - ', $product->description)[1] ?? '')
-                            <p class="text-sm text-gray-500 font-medium">
-                                {{ explode(' - ', $product->description)[1] }}
-                            </p>
-                            @endif
-                            
-                            <!-- Pricing -->
+                            <!-- Product Specification and Stock -->
                             <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-2">
-                                    @if($product->price > $product->sale_price && $product->sale_price > 0)
-                                    <span class="text-sm text-gray-400 line-through">
-                                        {{ number_format($product->price, 0, ',', '.') }}₫
-                                    </span>
-                                    @endif
-                                    <span class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                                        {{ number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') }}₫
-                                    </span>
-                                </div>
+                                @if(explode(' - ', $product->description)[1] ?? '')
+                                <p class="text-sm text-gray-500 font-medium">
+                                    {{ explode(' - ', $product->description)[1] }}
+                                </p>
+                                @endif
                                 
                                 <!-- Stock Indicator -->
                                 <div class="flex items-center space-x-1">
@@ -184,8 +172,20 @@
                                 </div>
                             </div>
                             
+                            <!-- Pricing -->
+                            <div class="flex items-center space-x-2">
+                                @if($product->price > $product->sale_price && $product->sale_price > 0)
+                                <span class="text-sm text-gray-400 line-through">
+                                    {{ number_format($product->price, 0, ',', '.') }}₫
+                                </span>
+                                @endif
+                                <span class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                                    {{ number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') }}₫
+                                </span>
+                            </div>
+                            
                             <!-- Add to Cart Button -->
-                            <button class="w-full mt-auto px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg text-sm">
+                            <button onclick="addToCart({{ $product->id }})" class="w-full mt-auto px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg text-sm">
                                 <span class="flex items-center justify-center space-x-2">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"></path>

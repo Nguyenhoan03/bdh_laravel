@@ -31,6 +31,8 @@
             :discount="$product['discount'] ?? ''"
             :image="$product['image'] ?? 'DWr00100699-247x296.webp'"
             :size="$size"
+            :product-id="$product['id'] ?? null"
+            :slug="$product['slug'] ?? $product['id'] ?? ''"
             :loop="$loop"
         />
     @endforeach

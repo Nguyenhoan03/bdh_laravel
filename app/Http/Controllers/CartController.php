@@ -22,10 +22,9 @@ class CartController extends Controller
     public function add(Request $request)
     {
         try {
-            $productId = $request->input('product_id');
-            $quantity = $request->input('quantity', 1);
+            $productId = (int) $request->input('product_id');
+            $quantity = (int) $request->input('quantity', 1);
             // Lấy thông tin sản phẩm
-           Log::info($productId, $quantity);
             $product = Product::find($productId);
             
             if (!$product) {
@@ -37,10 +36,22 @@ class CartController extends Controller
 
             // Lấy giỏ hàng hiện tại từ session
             $cart = session('cart', []);
+            Log::info("Current cart before update", [
+                'product_id' => $productId,
+                'cart_keys' => array_keys($cart),
+                'cart_data' => $cart
+            ]);
 
             // Kiểm tra sản phẩm đã có trong giỏ hàng chưa
             if (isset($cart[$productId])) {
+                $oldQuantity = $cart[$productId]['quantity'];
                 $cart[$productId]['quantity'] += $quantity;
+                Log::info("Product already in cart - Updated quantity", [
+                    'product_id' => $productId,
+                    'old_quantity' => $oldQuantity,
+                    'added_quantity' => $quantity,
+                    'new_quantity' => $cart[$productId]['quantity']
+                ]);
             } else {
                 // Thêm sản phẩm mới vào giỏ hàng
                 $cart[$productId] = [
@@ -56,19 +67,42 @@ class CartController extends Controller
                     'quantity' => $quantity,
                     'category' => $product->category->name ?? 'Sản phẩm'
                 ];
+                Log::info("New product added to cart", [
+                    'product_id' => $productId,
+                    'product_name' => $product->name,
+                    'quantity' => $quantity
+                ]);
             }
 
             // Lưu giỏ hàng vào session
             session(['cart' => $cart]);
+            Log::info("Cart saved to session", [
+                'product_id' => $productId,
+                'final_cart_data' => $cart,
+                'session_cart' => session('cart')
+            ]);
 
-            // Tính tổng số lượng sản phẩm
-            $totalItems = array_sum(array_column($cart, 'quantity'));
+            // Tính số sản phẩm khác nhau trong giỏ hàng
+            $totalItems = count($cart);
 
-            return response()->json([
+            $response = [
                 'success' => true,
                 'message' => 'Đã thêm sản phẩm vào giỏ hàng!',
                 'cart_count' => $totalItems
-            ]);
+            ];
+            
+            // Add debug info if requested
+            if ($request->input('debug') === 'true') {
+                $response['debug'] = true;
+                $response['debug_info'] = [
+                    'product_id' => $productId,
+                    'quantity' => $quantity,
+                    'product_name' => $product->name,
+                    'cart_total_items' => $totalItems
+                ];
+            }
+            
+            return response()->json($response);
 
         } catch (\Exception $e) {
             return response()->json([
@@ -180,7 +214,7 @@ class CartController extends Controller
     public function getCart()
     {
         $cart = session('cart', []);
-        $totalItems = array_sum(array_column($cart, 'quantity'));
+        $totalItems = count($cart);
         
         $subtotal = 0;
         foreach ($cart as $item) {

@@ -159,7 +159,7 @@
                         </div>
                     </div>
                     
-                    <button id="addToCartBtn" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group" onclick="addToCart()">
+                    <button id="addToCartBtn" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group" onclick="addToCart({{ $product->id }})">
                         <span class="flex items-center justify-center space-x-2">
                             <svg class="w-5 h-5 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"></path>
@@ -439,7 +439,7 @@
                                         </div>
                                         
                                         <!-- Add to Cart Button -->
-                                        <button class="w-full mt-auto px-3 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg text-xs">
+                                        <button onclick="addToCart({{ $relatedProduct->id }})" class="w-full mt-auto px-3 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg text-xs">
                                             <span class="flex items-center justify-center space-x-2">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"></path>
@@ -692,7 +692,20 @@ body {
 <script>
 // Product ID for cart functionality
 const productId = {{ $product->id ?? 0 }};
-
+console.log('Product data:', { 
+    id: {{ $product->id ?? 'null' }}, 
+    name: '{{ $product->name ?? 'null' }}', 
+    slug: '{{ $product->slug ?? 'null' }}',
+    idType: typeof {{ $product->id ?? 'null' }}
+});
+console.log('ProductId for cart:', productId, 'type:', typeof productId);
+console.log('ProductId validation:', { 
+    isNull: productId === null, 
+    isUndefined: productId === undefined, 
+    isZero: productId === 0,
+    isNaN: isNaN(productId),
+    isFalsy: !productId
+});
 // Initialize Related Products Swiper
 document.addEventListener('DOMContentLoaded', function() {
     // Wait a bit to ensure DOM is fully loaded
@@ -780,57 +793,7 @@ function changeMainImage(imageSrc, thumbnail) {
     thumbnail.classList.add('border-blue-500');
 }
 
-// Add to cart functionality
-function addToCart() {
-    // Check if productId is valid
-    if (!productId || productId <= 0) {
-        showNotification('Lỗi: Không tìm thấy ID sản phẩm!', 'error');
-        return;
-    }
-    
-    const quantity = document.getElementById('quantity').value;
-    const addToCartBtn = document.getElementById('addToCartBtn');
-    
-    // Disable button during request
-    addToCartBtn.disabled = true;
-    addToCartBtn.innerHTML = '<span class="flex items-center justify-center space-x-2"><svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span>Đang thêm...</span></span>';
-    
-    fetch('/cart/add', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({
-            product_id: productId,
-            quantity: parseInt(quantity)
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Show success message
-            showNotification('Đã thêm sản phẩm vào giỏ hàng!', 'success');
-            
-            // Update cart count if exists
-            const cartCount = document.querySelector('.cart-count');
-            if (cartCount && data.cart_count) {
-                cartCount.textContent = data.cart_count;
-            }
-        } else {
-            showNotification(data.message || 'Có lỗi xảy ra!', 'error');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showNotification('Có lỗi xảy ra khi thêm vào giỏ hàng!', 'error');
-    })
-    .finally(() => {
-        // Re-enable button
-        addToCartBtn.disabled = false;
-        addToCartBtn.innerHTML = '<span class="flex items-center justify-center space-x-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"></path></svg><span>THÊM VÀO GIỎ HÀNG</span></span>';
-    });
-}
+// Add to cart functionality is handled by global function in app.blade.php
 
 // Notification system
 function showNotification(message, type = 'info') {

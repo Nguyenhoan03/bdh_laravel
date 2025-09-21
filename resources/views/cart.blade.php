@@ -180,8 +180,10 @@ function updateCartTotals() {
     Object.values(cart).forEach(item => {
         const price = parseFloat(item.price.replace(/[^\d]/g, ''));
         subtotal += price * item.quantity;
-        totalItems += item.quantity;
     });
+    
+    // Count unique products, not total quantity
+    totalItems = Object.keys(cart).length;
     
     document.getElementById('subtotal').textContent = formatPrice(subtotal);
     document.getElementById('total').textContent = formatPrice(subtotal);
