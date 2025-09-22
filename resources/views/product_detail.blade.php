@@ -33,13 +33,7 @@
                         </div>
                     </div>
                     @endif
-                    @php
-                        $mainImage = 'DW00100699-247x296.webp';
-                        if ($product->images && is_array($product->images) && count($product->images) > 0) {
-                            $mainImage = $product->images[0];
-                        }
-                    @endphp
-                    <img src="{{ asset('img/' . $mainImage) }}" 
+                    <img src="{{ \App\Helpers\ImageHelper::getProductImageUrl($product) }}" 
                          alt="{{ $product->name }}" 
                          class="w-full h-full object-cover" id="mainImage"
                          onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">
@@ -50,8 +44,8 @@
                     @if($product->images && is_array($product->images) && count($product->images) > 0)
                         @foreach($product->images as $index => $image)
                         <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 {{ $index === 0 ? 'border-blue-500' : 'border-gray-200' }} hover:border-blue-500 transition-colors" 
-                             onclick="changeMainImage('{{ asset('img/' . $image) }}', this)">
-                            <img src="{{ asset('img/' . $image) }}" 
+                             onclick="changeMainImage('{{ \App\Helpers\ImageHelper::getProductImageUrl($product, $image) }}', this)">
+                            <img src="{{ \App\Helpers\ImageHelper::getProductImageUrl($product, $image) }}" 
                                  alt="{{ $product->name }}" 
                                  class="w-full h-full object-cover"
                                  onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">
@@ -293,14 +287,8 @@
                         @forelse($bestSellingProducts as $bestProduct)
                         <div class="group flex space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
                             <a href="/san-pham/{{ $bestProduct->slug ?? $bestProduct->id }}" class="flex-shrink-0">
-                                @php
-                                    $bestImage = 'DW00100699-247x296.webp';
-                                    if ($bestProduct->images && is_array($bestProduct->images) && count($bestProduct->images) > 0) {
-                                        $bestImage = $bestProduct->images[0];
-                                    }
-                                @endphp
                                 <div class="relative w-20 h-20 bg-gray-100 rounded-lg overflow-hidden">
-                                    <img src="{{ asset('img/' . $bestImage) }}" 
+                                    <img src="{{ \App\Helpers\ImageHelper::getProductImageUrl($bestProduct) }}" 
                                          alt="{{ $bestProduct->name }}" 
                                          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                                          onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">
@@ -392,13 +380,7 @@
 
                                     <!-- Product Image Container -->
                                     <div class="relative h-44 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4 overflow-hidden flex-shrink-0">
-                                        @php
-                                            $relatedImage = 'DW00100699-247x296.webp';
-                                            if ($relatedProduct->images && is_array($relatedProduct->images) && count($relatedProduct->images) > 0) {
-                                                $relatedImage = $relatedProduct->images[0];
-                                            }
-                                        @endphp
-                                        <img src="{{ asset('img/' . $relatedImage) }}"
+                                        <img src="{{ \App\Helpers\ImageHelper::getProductImageUrl($relatedProduct) }}"
                                             alt="{{ $relatedProduct->name }}"
                                             class="relative z-10 max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500"
                                             onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">

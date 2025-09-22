@@ -188,7 +188,7 @@
                         <div class="space-y-4 mb-6">
                             @foreach(session('cart') as $id => $item)
                             <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                                <img src="{{ asset('img/' . ($item['image'] ?? 'DW00100699-247x296.webp')) }}" 
+                                <img src="{{ \App\Helpers\ImageHelper::getProductImageUrl($item['product'] ?? null, $item['image'] ?? null) }}" 
                                      alt="{{ $item['name'] }}" 
                                      class="w-12 h-12 object-contain rounded">
                                 <div class="flex-1 min-w-0">

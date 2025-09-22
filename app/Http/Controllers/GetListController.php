@@ -102,7 +102,7 @@ class GetListController extends Controller
                 ->where('sale_price', '>', 0)
                 ->whereColumn('sale_price', '<', 'price')
                 ->orderBy('created_at', 'desc')
-                ->limit(8)
+                ->limit(15)
                 ->get();
             
             // Nếu không có sản phẩm khuyến mãi, tạo một số sản phẩm có discount để demo

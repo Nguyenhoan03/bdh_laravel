@@ -138,13 +138,7 @@
 
                         <!-- Product Image Container -->
                         <div class="relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-6 overflow-hidden flex-shrink-0">
-                            @php
-                                $productImage = 'DW00100699-247x296.webp';
-                                if ($product->images && is_array($product->images) && count($product->images) > 0) {
-                                    $productImage = $product->images[0];
-                                }
-                            @endphp
-                            <img src="{{ asset('img/' . $productImage) }}"
+                            <img src="{{ \App\Helpers\ImageHelper::getProductImageUrl($product) }}"
                                 alt="{{ $product->name }}"
                                 class="relative z-10 max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500"
                                 onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">

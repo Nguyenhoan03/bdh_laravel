@@ -17,13 +17,26 @@ class ImageHelper
     }
     
     /**
-     * Get product image with fallback
+     * Get specific image from product or return default
      */
-    public static function getProductImageUrl($product, $default = 'DW00100699-247x296.webp')
+    public static function getProductImageUrl($product, $specificImage = null, $default = 'DW00100699-247x296.webp')
     {
-        $image = self::getProductImage($product, $default);
+        $image = $specificImage ?: self::getProductImage($product, $default);
+        
+        // If image already has 'img/' prefix, use storage path
+        if (str_starts_with($image, 'img/')) {
+            return asset('storage/' . $image);
+        }
+        
+        // If it's just a filename, check if it exists in storage first
+        if (file_exists(storage_path('app/public/img/' . $image))) {
+            return asset('storage/img/' . $image);
+        }
+        
+        // Fallback to public/img
         return asset('img/' . $image);
     }
+    
     
     /**
      * Clean and sanitize description content from Filament
