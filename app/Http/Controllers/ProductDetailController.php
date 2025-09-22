@@ -119,12 +119,15 @@ class ProductDetailController extends Controller
             if (isset($cart[$request->product_id])) {
                 $cart[$request->product_id]['quantity'] += $request->quantity;
             } else {
+                $finalPrice = $product->sale_price > 0 ? $product->sale_price : $product->price;
                 $cart[$request->product_id] = [
                     'id' => $product->id,
                     'name' => $product->name,
-                    'price' => $product->sale_price > 0 ? $product->sale_price : $product->price,
-                    'original_price' => $product->price,
-                    'image' => $product->images[0] ?? 'DW00100699-247x296.webp',
+                    'price' => $finalPrice, // Raw number
+                    'price_formatted' => number_format($finalPrice, 0, ',', '.') . '₫',
+                    'original_price' => $product->price, // Raw number
+                    'original_price_formatted' => number_format($product->price, 0, ',', '.') . '₫',
+                    'image' => $product->first_image_url,
                     'quantity' => $request->quantity,
                     'slug' => $product->slug ?? $product->id
                 ];

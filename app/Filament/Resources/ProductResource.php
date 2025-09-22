@@ -126,7 +126,8 @@ class ProductResource extends Resource
                             ->label('Hình ảnh sản phẩm')
                             ->multiple()
                             ->image()
-                            ->directory('products')
+                            ->directory('img')
+                            ->disk('public')
                             ->visibility('public')
                             ->reorderable()
                             ->imageEditor()
@@ -135,6 +136,7 @@ class ProductResource extends Resource
                                 '4:3',
                                 '1:1',
                             ])
+                            ->maxFiles(10)
                             ->columnSpanFull(),
                         Forms\Components\Toggle::make('is_featured')
                             ->label('Sản phẩm nổi bật')

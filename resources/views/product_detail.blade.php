@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     @endif
-                    <img src="{{ \App\Helpers\ImageHelper::getProductImageUrl($product) }}" 
+                    <img src="{{ $product->first_image_url }}" 
                          alt="{{ $product->name }}" 
                          class="w-full h-full object-cover" id="mainImage"
                          onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">
@@ -41,18 +41,18 @@
                 
                 <!-- Product Gallery Thumbnails -->
                 <div class="grid grid-cols-4 gap-2">
-                    @if($product->images && is_array($product->images) && count($product->images) > 0)
-                        @foreach($product->images as $index => $image)
+                    @if($product->image_urls && count($product->image_urls) > 0)
+                        @foreach($product->image_urls as $index => $imageUrl)
                         <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 {{ $index === 0 ? 'border-blue-500' : 'border-gray-200' }} hover:border-blue-500 transition-colors" 
-                             onclick="changeMainImage('{{ \App\Helpers\ImageHelper::getProductImageUrl($product, $image) }}', this)">
-                            <img src="{{ \App\Helpers\ImageHelper::getProductImageUrl($product, $image) }}" 
+                             onclick="changeMainImage('{{ $imageUrl }}', this)">
+                            <img src="{{ $imageUrl }}" 
                                  alt="{{ $product->name }}" 
                                  class="w-full h-full object-cover"
                                  onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">
                         </div>
                         @endforeach
-                        @if(count($product->images) < 4)
-                            @for($i = count($product->images); $i < 4; $i++)
+                        @if(count($product->image_urls) < 4)
+                            @for($i = count($product->image_urls); $i < 4; $i++)
                             <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 border-gray-200 hover:border-blue-500 transition-colors" 
                                  onclick="changeMainImage('{{ asset('img/DW00100699-247x296.webp') }}', this)">
                                 <img src="{{ asset('img/DW00100699-247x296.webp') }}" 
@@ -288,7 +288,7 @@
                         <div class="group flex space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
                             <a href="/san-pham/{{ $bestProduct->slug ?? $bestProduct->id }}" class="flex-shrink-0">
                                 <div class="relative w-20 h-20 bg-gray-100 rounded-lg overflow-hidden">
-                                    <img src="{{ \App\Helpers\ImageHelper::getProductImageUrl($bestProduct) }}" 
+                                    <img src="{{ $bestProduct->first_image_url }}" 
                                          alt="{{ $bestProduct->name }}" 
                                          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                                          onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">
@@ -380,7 +380,7 @@
 
                                     <!-- Product Image Container -->
                                     <div class="relative h-44 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4 overflow-hidden flex-shrink-0">
-                                        <img src="{{ \App\Helpers\ImageHelper::getProductImageUrl($relatedProduct) }}"
+                                        <img src="{{ $relatedProduct->first_image_url }}"
                                             alt="{{ $relatedProduct->name }}"
                                             class="relative z-10 max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500"
                                             onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">

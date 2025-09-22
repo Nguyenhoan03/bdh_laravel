@@ -44,13 +44,13 @@
                                 <!-- Price -->
                                 <div class="flex items-center space-x-2">
                                     @if(isset($item['original_price']) && $item['original_price'] != $item['price'])
-                                    <span class="text-sm text-gray-400 line-through font-medium">
-                                        {{ $item['original_price'] }}
-                                    </span>
-                                    @endif
-                                    <span class="text-lg font-bold text-blue-600">
-                                        {{ $item['price'] }}
-                                    </span>
+                                      <span class="text-sm text-gray-400 line-through font-medium">
+                                         {{ $item['original_price_formatted'] ?? number_format((float)$item['original_price'], 0, ',', '.') . '₫' }}
+                                      </span>
+                                      @endif
+                                      <span class="text-lg font-bold text-blue-600">
+                                         {{ $item['price_formatted'] ?? number_format((float)$item['price'], 0, ',', '.') . '₫' }}
+                                      </span>
                                 </div>
                             </div>
                             
@@ -178,12 +178,38 @@ function updateCartTotals() {
     let totalItems = 0;
     
     Object.values(cart).forEach(item => {
-        const price = parseFloat(item.price.replace(/[^\d]/g, ''));
+        // Use raw price if available, otherwise parse formatted price
+        let price;
+        if (typeof item.price === 'number') {
+            price = item.price;
+        } else {
+            // Parse formatted price string
+            let priceString = item.price.replace(/[^\d.]/g, '').replace(/,/g, '');
+            priceString = priceString.replace(/\./g, '');
+            price = parseFloat(priceString);
+        }
+        
+        // Debug log
+        console.log('Cart item calculation:', {
+            product: item.name,
+            originalPrice: item.price,
+            priceString: priceString,
+            parsedPrice: price,
+            quantity: item.quantity,
+            subtotal: price * item.quantity
+        });
         subtotal += price * item.quantity;
     });
     
     // Count unique products, not total quantity
     totalItems = Object.keys(cart).length;
+    
+    // Debug log
+    console.log('Total calculation:', {
+        subtotal: subtotal,
+        formattedSubtotal: formatPrice(subtotal),
+        totalItems: totalItems
+    });
     
     document.getElementById('subtotal').textContent = formatPrice(subtotal);
     document.getElementById('total').textContent = formatPrice(subtotal);

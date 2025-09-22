@@ -108,7 +108,7 @@
                             <!-- Background Pattern -->
                             <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23E2E8F0" fill-opacity="0.3"%3E%3Ccircle cx="20" cy="20" r="1"/%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
                             
-                            <img src="{{ \App\Helpers\ImageHelper::getProductImageUrl($product) }}"
+                            <img src="{{ $product->first_image_url }}"
                                 alt="{{ $product->name }}"
                                 class="relative z-10 max-w-full max-h-full object-contain transform group-hover:scale-110 transition-all duration-700 ease-out"
                                 onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">

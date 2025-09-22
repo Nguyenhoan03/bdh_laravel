@@ -51,9 +51,11 @@
                                 {{ $order->payment_method === 'cod' ? 'Thanh toán khi nhận hàng' : 'Chuyển khoản ngân hàng' }}
                             </span>
                         </div>
-                        <div class="flex justify-between">
+                        <div class="flex justify-betweenn">
                             <span class="text-gray-600">Tổng tiền:</span>
-                            <span class="font-bold text-lg text-red-600">{{ number_format($order->total_amount, 0, ',', '.') }}₫</span>
+                            <span class="font-bold text-lg text-red-600 whitespace-nowrap pl-3 pb-2">
+                                {{ number_format($order->orderItems->sum('subtotal'), 0, ',', '.') }}₫
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -90,6 +92,7 @@
             <h3 class="text-xl font-bold text-gray-900 mb-6">Sản phẩm đã đặt</h3>
             
             <div class="space-y-4">
+                @if($order->orderItems && $order->orderItems->count() > 0)
                 @foreach($order->orderItems as $item)
                 <div class="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg">
                     <div class="flex-shrink-0">
@@ -107,16 +110,21 @@
                         <p class="text-sm text-gray-500">Số lượng: {{ $item->quantity }}</p>
                     </div>
                     
-                    <div class="text-right">
-                        <div class="text-lg font-bold text-gray-900">
-                            {{ number_format($item->subtotal, 0, ',', '.') }}₫
+                    <div class="text-right min-w-0">
+                        <div class="text-lg font-bold text-gray-900 whitespace-nowrap">
+                            {{ number_format((float)$item->subtotal, 0, ',', '.') }}₫
                         </div>
-                        <div class="text-sm text-gray-500">
-                            {{ number_format($item->price, 0, ',', '.') }}₫ × {{ $item->quantity }}
+                        <div class="text-sm text-gray-500 whitespace-nowrap">
+                            {{ number_format((float)$item->price, 0, ',', '.') }}₫ × {{ $item->quantity }}
                         </div>
                     </div>
                 </div>
                 @endforeach
+                @else
+                <div class="text-center py-8">
+                    <p class="text-gray-500">Không có sản phẩm nào trong đơn hàng này.</p>
+                </div>
+                @endif
             </div>
         </div>
 

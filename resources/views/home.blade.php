@@ -26,7 +26,7 @@
             <!-- Feature 2: Genuine Products -->
             <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 p-6 text-center">
                 <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-shield-check text-white text-2xl"></i>
+                    <i class="fas fa-shield-alt text-white text-2xl"></i>
                 </div>
                 <h3 class="text-lg font-bold text-gray-900 mb-2">Sản phẩm chính hãng</h3>
                 <p class="text-sm text-gray-600">Hoàn tiền 20 lần nếu phát hiện hàng giả</p>
@@ -102,34 +102,34 @@
                 <div class="swiper-wrapper">
                     @forelse($promotionalProducts ?? collect() as $product)
                     <div class="swiper-slide p-3 h-[400px]">
-                    <a href="/san-pham/{{ $product->slug ?? $product->id }}" class="block h-full">
-                        <x-product-card
-                            :name="$product->name ?? ''"
-                            :spec="explode(' - ', $product->description)[1] ?? ''"
-                            :original-price="number_format($product->price, 0, ',', '.') . '₫'"
-                            :price="number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') . '₫'"
-                            :discount="($product->price > $product->sale_price && $product->sale_price > 0) ? '-' . round((($product->price - $product->sale_price) / $product->price) * 100) . '%' : ''"
-                            :image="\App\Helpers\ImageHelper::getProductImage($product)"
-                            :size="'normal'"
-                            :product-id="$product->id"
-                            :slug="$product->slug ?? $product->id" />
+                        <a href="/san-pham/{{ $product->slug ?? $product->id }}" class="block h-full">
+                            <x-product-card
+                                :name="$product->name ?? ''"
+                                :spec="explode(' - ', $product->description)[1] ?? ''"
+                                :original-price="number_format($product->price, 0, ',', '.') . '₫'"
+                                :price="number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') . '₫'"
+                                :discount="($product->price > $product->sale_price && $product->sale_price > 0) ? '-' . round((($product->price - $product->sale_price) / $product->price) * 100) . '%' : ''"
+                                :image="$product->first_image_url"
+                                :size="'normal'"
+                                :product-id="$product->id"
+                                :slug="$product->slug ?? $product->id" />
                         </a>
                     </div>
                     @empty
                     <!-- Fallback: Show newest products if no promotional products -->
                     @forelse($newestProducts ?? collect() as $product)
                     <div class="swiper-slide p-3 h-[400px]">
-                    <a href="/san-pham/{{ $product->slug ?? $product->id }}" class="block h-full">
-                        <x-product-card 
-                            :name="$product->name ?? ''"
-                            :spec="explode(' - ', $product->description)[1] ?? ''"
-                            :original-price="number_format($product->price, 0, ',', '.') . '₫'"
-                            :price="number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') . '₫'"
-                            :discount="($product->price > $product->sale_price && $product->sale_price > 0) ? '-' . round((($product->price - $product->sale_price) / $product->price) * 100) . '%' : ''"
-                            :image="\App\Helpers\ImageHelper::getProductImage($product)"
-                            :size="'normal'"
-                            :product-id="$product->id"
-                            :slug="$product->slug ?? $product->id" />
+                        <a href="/san-pham/{{ $product->slug ?? $product->id }}" class="block h-full">
+                            <x-product-card
+                                :name="$product->name ?? ''"
+                                :spec="explode(' - ', $product->description)[1] ?? ''"
+                                :original-price="number_format($product->price, 0, ',', '.') . '₫'"
+                                :price="number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') . '₫'"
+                                :discount="($product->price > $product->sale_price && $product->sale_price > 0) ? '-' . round((($product->price - $product->sale_price) / $product->price) * 100) . '%' : ''"
+                                :image="$product->first_image_url"
+                                :size="'normal'"
+                                :product-id="$product->id"
+                                :slug="$product->slug ?? $product->id" />
                         </a>
                     </div>
                     @empty
@@ -142,11 +142,11 @@
                     @endforelse
                 </div>
             </div>
-            
+
             <!-- View More Button -->
             <div class="text-center m-4">
-                <a href="/products" 
-                   class="inline-block bg-blue-600 text-white px-8 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                <a href="/products"
+                    class="inline-block bg-blue-600 text-white px-8 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                     Xem thêm sản phẩm khác <i class="fas fa-arrow-right ml-2"></i>
                 </a>
             </div>
@@ -173,7 +173,7 @@
             <div class="flex items-center justify-center mb-4">
                 <!-- Left line -->
                 <div class="flex-1 h-px bg-gray-300 mr-4"></div>
-                
+
                 <!-- Icon and text -->
                 <div class="flex items-center">
                     <svg class="w-6 h-6 text-gray-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -182,7 +182,7 @@
                     </svg>
                     <h2 class="md:text-5xl mt-5 font-extrabold text-gray-900 uppercase tracking-wider roboto-condensed" style="font-size: 22px;">ĐỒNG HỒ NỮ</h2>
                 </div>
-                
+
                 <!-- Right line -->
                 <div class="flex-1 h-px bg-gray-300 ml-4"></div>
             </div>
@@ -194,7 +194,7 @@
             <div class="swiper products-swiper">
                 <div class="swiper-wrapper">
                     @forelse($dataWatchWomen ?? collect() as $index => $product)
-                        <div class="swiper-slide scroll-reveal" data-delay="{{ $index * 100 }}">
+                    <div class="swiper-slide scroll-reveal" data-delay="{{ $index * 100 }}">
                         <a href="/san-pham/{{ $product->slug ?? $product->id }}" class="block">
                             <div class="relative bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border border-gray-100 h-[400px] flex flex-col">
                                 <!-- Discount Badge -->
@@ -215,7 +215,7 @@
 
                                 <!-- Product Image Container -->
                                 <div class="relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-6 overflow-hidden flex-shrink-0">
-                                    <img src="{{ \App\Helpers\ImageHelper::getProductImageUrl($product) }}"
+                                    <img src="{{ $product->first_image_url }}"
                                         alt="{{ $product->name }}"
                                         class="relative z-10 max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500"
                                         onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">
@@ -227,7 +227,7 @@
                                     <h3 class="text-base font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors duration-300 h-12 overflow-hidden" title="{{ $product->name }}">
                                         {{ Str::limit($product->name, 40) }}
                                     </h3>
-                                    
+
                                     <!-- Product Specification and Stock -->
                                     <div class="flex items-center justify-between">
                                         @if(explode(' - ', $product->description)[1] ?? '')
@@ -235,14 +235,14 @@
                                             {{ explode(' - ', $product->description)[1] }}
                                         </p>
                                         @endif
-                                        
+
                                         <!-- Stock Indicator -->
                                         <div class="flex items-center space-x-1">
                                             <div class="w-2 h-2 bg-green-500 rounded-full"></div>
                                             <span class="text-xs text-gray-500">Còn hàng</span>
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Pricing -->
                                     <div class="flex">
                                         <div class="flex space-x-2">
@@ -256,7 +256,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Add to Cart Button -->
                                     <button onclick="addToCart({{ $product->id }})" class="w-full mt-auto px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg text-sm">
                                         <span class="flex items-center justify-center space-x-2">
@@ -272,13 +272,13 @@
                                 <div class="absolute inset-0 bg-gradient-to-t from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                             </div>
                         </a>
-                        </div>
+                    </div>
                     @empty
-                        <div class="swiper-slide scroll-reveal">
-                            <div class="text-center text-gray-500">
-                                <p>Không có sản phẩm đồng hồ nữ</p>
-                            </div>
+                    <div class="swiper-slide scroll-reveal">
+                        <div class="text-center text-gray-500">
+                            <p>Không có sản phẩm đồng hồ nữ</p>
                         </div>
+                    </div>
                     @endforelse
                 </div>
             </div>
@@ -297,8 +297,8 @@
 
         <!-- View More Button -->
         <div class="text-center mt-8">
-            <a href="/danh-muc" 
-               class="inline-block bg-blue-600 text-white px-8 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            <a href="/danh-muc"
+                class="inline-block bg-blue-600 text-white px-8 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                 Xem thêm sản phẩm khác <i class="fas fa-arrow-right ml-2"></i>
             </a>
         </div>
@@ -316,7 +316,7 @@
             <div class="flex items-center justify-center mb-4">
                 <!-- Left line -->
                 <div class="flex-1 h-px bg-gray-300 mr-4"></div>
-                
+
                 <!-- Icon and text -->
                 <div class="flex items-center">
                     <svg class="w-6 h-6 text-gray-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -325,7 +325,7 @@
                     </svg>
                     <h2 class="md:text-5xl mt-5 font-extrabold text-gray-900 uppercase tracking-wider roboto-condensed" style="font-size: 22px;">ĐỒNG HỒ NAM</h2>
                 </div>
-                
+
                 <!-- Right line -->
                 <div class="flex-1 h-px bg-gray-300 ml-4"></div>
             </div>
@@ -337,7 +337,7 @@
             <div class="swiper products-swiper">
                 <div class="swiper-wrapper">
                     @forelse($dataWatchMen ?? collect() as $index => $product)
-                        <div class="swiper-slide scroll-reveal" data-delay="{{ $index * 100 }}">
+                    <div class="swiper-slide scroll-reveal" data-delay="{{ $index * 100 }}">
                         <a href="/san-pham/{{ $product->slug ?? $product->id }}" class="block">
                             <div class="relative bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border border-gray-100 h-[400px] flex flex-col">
                                 <!-- Discount Badge -->
@@ -358,7 +358,7 @@
 
                                 <!-- Product Image Container -->
                                 <div class="relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-6 overflow-hidden flex-shrink-0">
-                                    <img src="{{ \App\Helpers\ImageHelper::getProductImageUrl($product) }}"
+                                    <img src="{{ $product->first_image_url }}"
                                         alt="{{ $product->name }}"
                                         class="relative z-10 max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500"
                                         onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">
@@ -370,7 +370,7 @@
                                     <h3 class="text-base font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors duration-300 h-12 overflow-hidden" title="{{ $product->name }}">
                                         {{ Str::limit($product->name, 40) }}
                                     </h3>
-                                    
+
                                     <!-- Product Specification and Stock -->
                                     <div class="flex items-center justify-between">
                                         @if(explode(' - ', $product->description)[1] ?? '')
@@ -378,14 +378,14 @@
                                             {{ explode(' - ', $product->description)[1] }}
                                         </p>
                                         @endif
-                                        
+
                                         <!-- Stock Indicator -->
                                         <div class="flex items-center space-x-1">
                                             <div class="w-2 h-2 bg-green-500 rounded-full"></div>
                                             <span class="text-xs text-gray-500">Còn hàng</span>
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Pricing -->
                                     <div class="flex">
                                         <div class="flex space-x-2">
@@ -399,7 +399,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Add to Cart Button -->
                                     <button onclick="addToCart({{ $product->id }})" class="w-full mt-auto px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg text-sm">
                                         <span class="flex items-center justify-center space-x-2">
@@ -415,13 +415,13 @@
                                 <div class="absolute inset-0 bg-gradient-to-t from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                             </div>
                         </a>
-                        </div>
+                    </div>
                     @empty
-                        <div class="swiper-slide scroll-reveal">
-                            <div class="text-center text-gray-500">
-                                <p>Không có sản phẩm đồng hồ nam</p>
-                            </div>
+                    <div class="swiper-slide scroll-reveal">
+                        <div class="text-center text-gray-500">
+                            <p>Không có sản phẩm đồng hồ nam</p>
                         </div>
+                    </div>
                     @endforelse
                 </div>
             </div>
@@ -440,8 +440,8 @@
 
         <!-- View More Button -->
         <div class="text-center mt-8 mb-5">
-            <a href="/dong-ho-nam" 
-               class="inline-block bg-blue-600 text-white px-8 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            <a href="/dong-ho-nam"
+                class="inline-block bg-blue-600 text-white px-8 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                 Xem thêm sản phẩm khác <i class="fas fa-arrow-right ml-2"></i>
             </a>
         </div>
@@ -491,7 +491,7 @@
 
                         <!-- Product Image Container -->
                         <div class="relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-6 overflow-hidden flex-shrink-0">
-                            <img src="{{ \App\Helpers\ImageHelper::getProductImageUrl($product) }}"
+                            <img src="{{ $product->first_image_url }}"
                                 alt="{{ $product->name }}"
                                 class="relative z-10 max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500"
                                 onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">
@@ -503,7 +503,7 @@
                             <h3 class="text-base font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors duration-300 h-12 overflow-hidden" title="{{ $product->name }}">
                                 {{ Str::limit($product->name, 40) }}
                             </h3>
-                            
+
                             <!-- Product Specification and Stock -->
                             <div class="flex items-center justify-between">
                                 @if(explode(' - ', $product->description)[1] ?? '')
@@ -511,14 +511,14 @@
                                     {{ explode(' - ', $product->description)[1] }}
                                 </p>
                                 @endif
-                                
+
                                 <!-- Stock Indicator -->
                                 <div class="flex items-center space-x-1">
                                     <div class="w-2 h-2 bg-green-500 rounded-full"></div>
                                     <span class="text-xs text-gray-500">Còn hàng</span>
                                 </div>
                             </div>
-                            
+
                             <!-- Pricing -->
                             <div class="flex items-center space-x-2">
                                 @if($product->price > $product->sale_price && $product->sale_price > 0)
@@ -530,7 +530,7 @@
                                     {{ number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') }}₫
                                 </span>
                             </div>
-                            
+
                             <!-- Add to Cart Button -->
                             <button class="w-full mt-auto px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg text-sm">
                                 <span class="flex items-center justify-center space-x-2">
@@ -546,18 +546,18 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                     </div>
                 </a>
-                </div>
+            </div>
             @empty
-                <div class="col-span-full text-center text-gray-500">
-                    <p>Không có sản phẩm bán chạy</p>
-                </div>
+            <div class="col-span-full text-center text-gray-500">
+                <p>Không có sản phẩm bán chạy</p>
+            </div>
             @endforelse
         </div>
 
         <!-- View More Button -->
         <div class="text-center">
-            <a href="/products" 
-               class="inline-block bg-blue-600 text-white px-8 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            <a href="/products"
+                class="inline-block bg-blue-600 text-white px-8 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                 Xem thêm sản phẩm khác <i class="fas fa-arrow-right ml-2"></i>
             </a>
         </div>
@@ -580,8 +580,8 @@
         <!-- Featured Products Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             @forelse($featuredProducts ?? collect() as $index => $product)
-                <div class="group scroll-reveal" data-delay="{{ $index * 150 }}">
-                    <!-- Product Card with Enhanced Design -->
+            <div class="group scroll-reveal" data-delay="{{ $index * 150 }}">
+                <!-- Product Card with Enhanced Design -->
                 <a href="/san-pham/{{ $product->slug ?? $product->id }}" class="block">
                     <div class="relative bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border border-gray-100 h-[400px] flex flex-col">
                         <!-- Discount Badge -->
@@ -608,8 +608,8 @@
 
                         <!-- Product Image Container -->
                         <div class="relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-6 overflow-hidden flex-shrink-0">
-                            <img src="{{ \App\Helpers\ImageHelper::getProductImageUrl($product) }}"
-                                 alt="{{ $product->name }}" 
+                            <img src="{{ $product->first_image_url }}"
+                                alt="{{ $product->name }}"
                                 class="relative z-10 max-w-full max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500"
                                 onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">
                         </div>
@@ -620,7 +620,7 @@
                             <h3 class="text-base font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors duration-300 h-12 overflow-hidden" title="{{ $product->name }}">
                                 {{ Str::limit($product->name, 40) }}
                             </h3>
-                            
+
                             <!-- Product Specification and Stock -->
                             <div class="flex items-center justify-between">
                                 @if(explode(' - ', $product->description)[1] ?? '')
@@ -628,14 +628,14 @@
                                     {{ explode(' - ', $product->description)[1] }}
                                 </p>
                                 @endif
-                                
+
                                 <!-- Stock Indicator -->
                                 <div class="flex items-center space-x-1">
                                     <div class="w-2 h-2 bg-green-500 rounded-full"></div>
                                     <span class="text-xs text-gray-500">Còn hàng</span>
                                 </div>
                             </div>
-                            
+
                             <!-- Pricing -->
                             <div class="flex items-center space-x-2">
                                 @if($product->price > $product->sale_price && $product->sale_price > 0)
@@ -647,7 +647,7 @@
                                     {{ number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') }}₫
                                 </span>
                             </div>
-                            
+
                             <!-- Add to Cart Button -->
                             <button class="w-full mt-auto px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg text-sm">
                                 <span class="flex items-center justify-center space-x-2">
@@ -663,23 +663,23 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                     </div>
                 </a>
-                </div>
+            </div>
             @empty
-                <div class="col-span-full text-center py-16">
-                    <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-500 mb-2">Chưa có sản phẩm nổi bật</h3>
-                    <p class="text-gray-400">Chúng tôi đang cập nhật những sản phẩm tốt nhất cho bạn</p>
+            <div class="col-span-full text-center py-16">
+                <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
                 </div>
+                <h3 class="text-xl font-semibold text-gray-500 mb-2">Chưa có sản phẩm nổi bật</h3>
+                <p class="text-gray-400">Chúng tôi đang cập nhật những sản phẩm tốt nhất cho bạn</p>
+            </div>
             @endforelse
         </div>
 
         <!-- Enhanced View More Button -->
         <div class="text-center">
-            <a href="/products" 
+            <a href="/products"
                 class="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                 <span>Khám phá thêm sản phẩm</span>
                 <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -695,205 +695,205 @@
 
 <!-- Custom Swiper Styles -->
 <style>
-/* Custom navigation button styles */
-.swiper-button-prev,
-.swiper-button-next {
-    position: absolute !important;
-    top: 43% !important;
-    width: 48px !important;
-    height: 48px !important;
-    margin-top: 0 !important;
-    background: white !important;
-    border-radius: 50% !important;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    z-index: 10 !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    transform: translateY(-50%) translateY(32px) scale(0.8) !important;
-}
+    /* Custom navigation button styles */
+    .swiper-button-prev,
+    .swiper-button-next {
+        position: absolute !important;
+        top: 43% !important;
+        width: 48px !important;
+        height: 48px !important;
+        margin-top: 0 !important;
+        background: white !important;
+        border-radius: 50% !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        z-index: 10 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transform: translateY(-50%) translateY(32px) scale(0.8) !important;
+    }
 
-.womens-watches:hover .swiper-button-prev,
-.womens-watches:hover .swiper-button-next {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateY(-50%) translateY(0) scale(1) !important;
-}
+    .womens-watches:hover .swiper-button-prev,
+    .womens-watches:hover .swiper-button-next {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(-50%) translateY(0) scale(1) !important;
+    }
 
-.womens-watches:hover .swiper-button-prev:hover,
-.womens-watches:hover .swiper-button-next:hover {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
-    transform: translateY(-50%) scale(1.1) !important;
-    background: #f9fafb !important;
-}
+    .womens-watches:hover .swiper-button-prev:hover,
+    .womens-watches:hover .swiper-button-next:hover {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+        transform: translateY(-50%) scale(1.1) !important;
+        background: #f9fafb !important;
+    }
 
-.swiper-button-prev:after,
-.swiper-button-next:after {
-    font-size: 18px !important;
-    color: #6b7280 !important;
-    font-weight: bold !important;
-}
+    .swiper-button-prev:after,
+    .swiper-button-next:after {
+        font-size: 18px !important;
+        color: #6b7280 !important;
+        font-weight: bold !important;
+    }
 
-.swiper-button-prev:hover:after,
-.swiper-button-next:hover:after {
-    color: #2563eb !important;
-}
+    .swiper-button-prev:hover:after,
+    .swiper-button-next:hover:after {
+        color: #2563eb !important;
+    }
 
-/* Custom pagination styles */
-.swiper-pagination-bullet {
-    width: 12px !important;
-    height: 12px !important;
-    background: #d1d5db !important;
-    opacity: 1 !important;
-    transition: all 0.3s ease !important;
-}
+    /* Custom pagination styles */
+    .swiper-pagination-bullet {
+        width: 12px !important;
+        height: 12px !important;
+        background: #d1d5db !important;
+        opacity: 1 !important;
+        transition: all 0.3s ease !important;
+    }
 
-.swiper-pagination-bullet-active {
-    background: #2563eb !important;
-    transform: scale(1.2) !important;
-}
+    .swiper-pagination-bullet-active {
+        background: #2563eb !important;
+        transform: scale(1.2) !important;
+    }
 
-.swiper-pagination-bullet-active-main {
-    background: #2563eb !important;
-}
+    .swiper-pagination-bullet-active-main {
+        background: #2563eb !important;
+    }
 
-.swiper-pagination-bullet-active-prev,
-.swiper-pagination-bullet-active-next {
-    background: #9ca3af !important;
-}
+    .swiper-pagination-bullet-active-prev,
+    .swiper-pagination-bullet-active-next {
+        background: #9ca3af !important;
+    }
 
-/* Smooth slide transitions */
-.swiper-slide {
-    transition: transform 0.3s ease !important;
-}
+    /* Smooth slide transitions */
+    .swiper-slide {
+        transition: transform 0.3s ease !important;
+    }
 
-/* Hide default swiper navigation */
-.swiper-button-disabled {
-    opacity: 0.3 !important;
-    cursor: not-allowed !important;
-}
+    /* Hide default swiper navigation */
+    .swiper-button-disabled {
+        opacity: 0.3 !important;
+        cursor: not-allowed !important;
+    }
 </style>
 
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Products Swiper
-    const productsSwiper = new Swiper('.products-swiper', {
-        slidesPerView: 1,
-        spaceBetween: 20,
-        loop: true,
-        autoplay: {
-            delay: 2500, // Auto-slide every 2.5 seconds
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-        },
-        speed: 800, // Smooth transition speed
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-            dynamicBullets: true,
-        },
-        breakpoints: {
-            640: {
-                slidesPerView: 2,
-                spaceBetween: 20,
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Products Swiper
+        const productsSwiper = new Swiper('.products-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            autoplay: {
+                delay: 2500, // Auto-slide every 2.5 seconds
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
             },
-            768: {
-                slidesPerView: 3,
-                spaceBetween: 20,
+            speed: 800, // Smooth transition speed
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
             },
-            1024: {
-                slidesPerView: 4,
-                spaceBetween: 20,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+                dynamicBullets: true,
             },
-            1280: {
-                slidesPerView: 5,
-                spaceBetween: 20,
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                },
+                1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 20,
+                },
+                1280: {
+                    slidesPerView: 5,
+                    spaceBetween: 20,
+                },
             },
-        },
-        // Pause autoplay when hovering over the swiper
-        on: {
-            init: function() {
-                this.el.addEventListener('mouseenter', () => {
-                    this.autoplay.stop();
-                });
-                this.el.addEventListener('mouseleave', () => {
-                    this.autoplay.start();
-                });
+            // Pause autoplay when hovering over the swiper
+            on: {
+                init: function() {
+                    this.el.addEventListener('mouseenter', () => {
+                        this.autoplay.stop();
+                    });
+                    this.el.addEventListener('mouseleave', () => {
+                        this.autoplay.start();
+                    });
+                }
             }
-        }
-    });
-
-    // Add click handlers for custom navigation buttons
-    document.querySelectorAll('.swiper-button-prev').forEach(button => {
-        button.addEventListener('click', () => {
-            productsSwiper.slidePrev();
         });
-    });
 
-    document.querySelectorAll('.swiper-button-next').forEach(button => {
-        button.addEventListener('click', () => {
-            productsSwiper.slideNext();
+        // Add click handlers for custom navigation buttons
+        document.querySelectorAll('.swiper-button-prev').forEach(button => {
+            button.addEventListener('click', () => {
+                productsSwiper.slidePrev();
+            });
         });
-    });
 
-    // Initialize Promotional Products Swiper
-    const promotionalProductsSwiper = new Swiper('.promotional-products-swiper', {
-        slidesPerView: 1,
-        spaceBetween: 20,
-        loop: true,
-        autoplay: {
+        document.querySelectorAll('.swiper-button-next').forEach(button => {
+            button.addEventListener('click', () => {
+                productsSwiper.slideNext();
+            });
+        });
+
+        // Initialize Promotional Products Swiper
+        const promotionalProductsSwiper = new Swiper('.promotional-products-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            autoplay: {
                 delay: 3000,
-            disableOnInteraction: false,
+                disableOnInteraction: false,
                 pauseOnMouseEnter: false,
                 stopOnLastSlide: false,
-        },
-        breakpoints: {
-            640: {
-                slidesPerView: 2,
-                spaceBetween: 20,
             },
-            768: {
-                slidesPerView: 3,
-                spaceBetween: 20,
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                },
+                1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 20,
+                },
+                1280: {
+                    slidesPerView: 5,
+                    spaceBetween: 20,
+                },
             },
-            1024: {
-                slidesPerView: 4,
-                spaceBetween: 20,
-            },
-            1280: {
-                slidesPerView: 5,
-                spaceBetween: 20,
-            },
-        },
-        speed: 800,
-        // Pause autoplay when hovering over the swiper
-        on: {
-            init: function() {
+            speed: 800,
+            // Pause autoplay when hovering over the swiper
+            on: {
+                init: function() {
                     // Ensure autoplay starts
                     if (this.autoplay) {
                         this.autoplay.start();
                     }
-                this.el.addEventListener('mouseenter', () => {
+                    this.el.addEventListener('mouseenter', () => {
                         if (this.autoplay) {
-                    this.autoplay.stop();
+                            this.autoplay.stop();
                         }
-                });
-                this.el.addEventListener('mouseleave', () => {
+                    });
+                    this.el.addEventListener('mouseleave', () => {
                         if (this.autoplay) {
-                    this.autoplay.start();
+                            this.autoplay.start();
                         }
-                });
+                    });
+                }
             }
-        }
-    });
-        
+        });
+
         // Continuous autoplay monitoring for promotional products
         setInterval(() => {
             if (promotionalProductsSwiper && promotionalProductsSwiper.autoplay && !promotionalProductsSwiper.autoplay.running) {
@@ -902,42 +902,42 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 5000);
 
-    // Scroll Reveal Animation
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const element = entry.target;
-                const delay = element.getAttribute('data-delay') || 0;
-                
-                setTimeout(() => {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
-                }, delay);
-            } else {
-                // Reset animation when element goes out of view
-                const element = entry.target;
-                element.style.opacity = '0';
-                element.style.transform = 'translateY(30px)';
-            }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const delay = element.getAttribute('data-delay') || 0;
+
+                    setTimeout(() => {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }, delay);
+                } else {
+                    // Reset animation when element goes out of view
+                    const element = entry.target;
+                    element.style.opacity = '0';
+                    element.style.transform = 'translateY(30px)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all scroll-reveal elements
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            // Set initial state
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+
+            // Start observing
+            observer.observe(el);
         });
-    }, observerOptions);
-
-    // Observe all scroll-reveal elements
-    document.querySelectorAll('.scroll-reveal').forEach(el => {
-        // Set initial state
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        
-        // Start observing
-        observer.observe(el);
     });
-});
 </script>
 
 @endsection

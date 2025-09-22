@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use Illuminate\Support\Facades\Log;
 
 class CheckoutController extends Controller
 {
@@ -57,7 +58,25 @@ class CheckoutController extends Controller
             $totalItems = 0;
             
             foreach ($cart as $item) {
-                $price = (float) str_replace(['₫', ','], '', $item['price']);
+                // Use raw price if available, otherwise parse formatted price
+                if (isset($item['price']) && is_numeric($item['price'])) {
+                    $price = (float) $item['price'];
+                } else {
+                    // Fallback: parse formatted price string
+                    $priceString = preg_replace('/[^\d.]/', '', $item['price']);
+                    $priceString = str_replace(',', '', $priceString);
+                    $priceString = str_replace('.', '', $priceString);
+                    $price = (float) $priceString;
+                }
+                
+                // Debug log
+                Log::info('Cart item price calculation', [
+                    'original_price' => $item['price'],
+                    'cleaned_price' => $priceString,
+                    'final_price' => $price,
+                    'quantity' => $item['quantity']
+                ]);
+                
                 $subtotal += $price * $item['quantity'];
                 $totalItems += $item['quantity'];
             }
@@ -70,6 +89,14 @@ class CheckoutController extends Controller
             }
 
             $total = $subtotal - $discount;
+
+            // Debug log
+            Log::info('Order calculation', [
+                'subtotal' => $subtotal,
+                'discount' => $discount,
+                'total' => $total,
+                'total_items' => $totalItems
+            ]);
 
             // Create order
             $order = Order::create([
@@ -91,11 +118,31 @@ class CheckoutController extends Controller
                 'total_items' => $totalItems
             ]);
 
-            // Create order items
+            // Create order items and update product stock
             foreach ($cart as $productId => $item) {
-                $price = (float) str_replace(['₫', ','], '', $item['price']);
+                // Use raw price if available, otherwise parse formatted price
+                if (isset($item['price']) && is_numeric($item['price'])) {
+                    $price = (float) $item['price'];
+                } else {
+                    // Fallback: parse formatted price string
+                    $priceString = preg_replace('/[^\d.]/', '', $item['price']);
+                    $priceString = str_replace(',', '', $priceString);
+                    $priceString = str_replace('.', '', $priceString);
+                    $price = (float) $priceString;
+                }
                 
-                OrderItem::create([
+                // Debug log
+                Log::info('Order item price parsing', [
+                    'product_id' => $productId,
+                    'product_name' => $item['name'],
+                    'original_price' => $item['price'],
+                    'cleaned_price_string' => $priceString,
+                    'final_price' => $price,
+                    'quantity' => $item['quantity'],
+                    'subtotal' => $price * $item['quantity']
+                ]);
+                
+                $orderItem = OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $productId,
                     'product_name' => $item['name'],
@@ -103,6 +150,23 @@ class CheckoutController extends Controller
                     'quantity' => $item['quantity'],
                     'subtotal' => $price * $item['quantity']
                 ]);
+
+                // Debug log
+                Log::info('Order item created', [
+                    'order_id' => $order->id,
+                    'product_id' => $productId,
+                    'product_name' => $item['name'],
+                    'price' => $price,
+                    'quantity' => $item['quantity'],
+                    'subtotal' => $price * $item['quantity'],
+                    'order_item_id' => $orderItem->id
+                ]);
+
+                // Update product stock
+                $product = Product::find($productId);
+                if ($product) {
+                    $product->decrement('stock', $item['quantity']);
+                }
             }
 
             // Clear cart
@@ -133,9 +197,14 @@ class CheckoutController extends Controller
         
         $order = null;
         if ($orderNumber) {
-            $order = Order::where('order_number', $orderNumber)->first();
+            $order = Order::with('orderItems')->where('order_number', $orderNumber)->first();
         } elseif ($orderId) {
-            $order = Order::find($orderId);
+            $order = Order::with('orderItems')->find($orderId);
+        }
+
+        // If no order found, redirect to home with error message
+        if (!$order) {
+            return redirect('/')->with('error', 'Không tìm thấy đơn hàng. Vui lòng liên hệ hỗ trợ.');
         }
 
         return view('checkout-success', compact('order'));

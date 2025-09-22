@@ -198,7 +198,11 @@
                                     <p class="text-xs text-gray-500">Số lượng: {{ $item['quantity'] }}</p>
                                 </div>
                                 <div class="text-sm font-semibold text-gray-900">
-                                    {{ $item['price'] }}
+                                    @if(isset($item['price_formatted']))
+                                        {{ $item['price_formatted'] }}
+                                    @else
+                                        {{ number_format((float)$item['price'], 0, ',', '.') }}₫
+                                    @endif
                                 </div>
                             </div>
                             @endforeach
@@ -296,8 +300,35 @@ function updateCartTotals() {
     let subtotal = 0;
     
     Object.values(cart).forEach(item => {
-        const price = parseFloat(item.price.replace(/[^\d]/g, ''));
+        // Use raw price if available, otherwise parse formatted price
+        let price;
+        if (typeof item.price === 'number') {
+            price = item.price;
+        } else {
+            // Parse formatted price string
+            let priceString = item.price.replace(/[^\d.]/g, '').replace(/,/g, '');
+            priceString = priceString.replace(/\./g, '');
+            price = parseFloat(priceString);
+        }
+        
+        // Debug log
+        console.log('Checkout item calculation:', {
+            product: item.name,
+            originalPrice: item.price,
+            priceString: priceString,
+            parsedPrice: price,
+            quantity: item.quantity,
+            subtotal: price * item.quantity
+        });
+        
         subtotal += price * item.quantity;
+    });
+    
+    // Debug log
+    console.log('Checkout total calculation:', {
+        subtotal: subtotal,
+        formattedSubtotal: formatPrice(subtotal),
+        totalItems: Object.keys(cart).length
     });
     
     document.getElementById('subtotal').textContent = formatPrice(subtotal);
@@ -337,13 +368,20 @@ document.getElementById('checkout-form').addEventListener('submit', function(e) 
     
     requiredFields.forEach(field => {
         const input = document.getElementById(field);
-        if (!input.value.trim()) {
-            input.classList.add('border-red-500');
+        if (!input || !input.value.trim()) {
+            if (input) input.classList.add('border-red-500');
             isValid = false;
         } else {
             input.classList.remove('border-red-500');
         }
     });
+    
+    // Check payment method
+    const paymentMethod = document.querySelector('input[name="payment_method"]:checked');
+    if (!paymentMethod) {
+        showNotification('Vui lòng chọn phương thức thanh toán!', 'error');
+        isValid = false;
+    }
     
     if (!isValid) {
         showNotification('Vui lòng điền đầy đủ thông tin bắt buộc!', 'error');
@@ -356,19 +394,39 @@ document.getElementById('checkout-form').addEventListener('submit', function(e) 
     submitBtn.innerHTML = '<span class="flex items-center justify-center space-x-2"><svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span>ĐANG XỬ LÝ...</span></span>';
     submitBtn.disabled = true;
     
-    // Simulate form submission
-    setTimeout(() => {
-        showNotification('Đơn hàng đã được đặt thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất.', 'success');
-        
-        // Reset form
+    // Submit form via AJAX
+    const form = document.getElementById('checkout-form');
+    const formData = new FormData(form);
+    
+    fetch('/checkout/process', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showNotification(data.message, 'success');
+            
+            // Redirect to success page with order info
+            setTimeout(() => {
+                window.location.href = `/checkout/success?order_number=${data.order_number}&order_id=${data.order_id}`;
+            }, 1500);
+        } else {
+            showNotification(data.message, 'error');
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification('Có lỗi xảy ra khi xử lý đơn hàng!', 'error');
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
-        
-        // Redirect to success page (you can create this later)
-        setTimeout(() => {
-            window.location.href = '/checkout/success';
-        }, 2000);
-    }, 2000);
+    });
 });
 
 // Notification system

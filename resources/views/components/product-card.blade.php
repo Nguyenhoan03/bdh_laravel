@@ -21,7 +21,7 @@
         
         <!-- Product Image -->
         <div class="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4 relative overflow-hidden">
-            <img src="{{ str_starts_with($image, 'img/') ? asset('storage/' . $image) : asset('img/' . $image) }}" 
+            <img src="{{ $image }}" 
                  alt="{{ $name }}" 
                  class="max-w-full max-h-full object-contain transition-transform duration-300 hover:scale-105"
                  onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">
