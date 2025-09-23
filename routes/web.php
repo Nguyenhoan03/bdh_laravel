@@ -29,10 +29,7 @@ Route::get('/test', function () {
     return view('components.product-card');
 });
 
-Route::get('/ve-chung-toi', function () {
-    return view('about');
-});
-
+// Blog routes
 Route::get('/blog-dong-ho-360', [App\Http\Controllers\BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [App\Http\Controllers\BlogController::class, 'show'])->name('blog.show');
 

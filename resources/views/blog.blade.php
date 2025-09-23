@@ -18,7 +18,7 @@
                 <li class="text-slate-400">/</li>
                 <li class="text-slate-900 font-semibold">BLOG ĐỒNG HỒ 360</li>
             </ol>
-        </nav>
+            </nav>
 
         <!-- Blog Header -->
         <div class="text-center mb-12">
@@ -26,7 +26,7 @@
                 <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
                 </svg>
-            </div>
+        </div>
             <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent mb-6">
                 BLOG ĐỒNG HỒ 360
             </h1>
@@ -50,7 +50,16 @@
                     <article class="group scroll-reveal" data-delay="{{ $index * 100 }}">
                         <div class="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden border border-slate-100">
                             <!-- Featured Post (First Post) -->
-                            @if($index == 0)
+                    @if($index == 0)
+                            <!-- Featured Post Image -->
+                            <div class="relative h-64 md:h-80 bg-gradient-to-br from-slate-100 to-blue-100 overflow-hidden">
+                                <img src="{{ $post->image_url }}" 
+                                     alt="{{ $post->title }}" 
+                                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                     onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                            </div>
+                            
                             <div class="p-8">
                                 <div class="flex items-center space-x-3 mb-4">
                                     <div class="flex items-center space-x-2 bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-2 rounded-2xl border border-blue-100">
@@ -67,7 +76,7 @@
                                 
                                 <h2 class="text-3xl font-bold text-slate-900 mb-4 group-hover:text-blue-600 transition-colors duration-300 leading-tight">
                                     <a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a>
-                                </h2>
+                        </h2>
                                 
                                 <p class="text-slate-600 mb-6 leading-relaxed text-lg">
                                     {{ $post->excerpt }}
@@ -94,13 +103,14 @@
                                     </a>
                                 </div>
                             </div>
-                            @else
+                    @else
                             <!-- Regular Posts -->
                             <div class="flex flex-col md:flex-row">
-                                <div class="md:w-1/3 flex-shrink-0">
+                        <div class="md:w-1/3 flex-shrink-0">
                                     <img src="{{ $post->image_url }}" 
                                          alt="{{ $post->title }}" 
-                                         class="w-full h-64 md:h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                         class="w-full h-64 md:h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                         onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">
                                 </div>
                                 <div class="md:w-2/3 p-8">
                                     <div class="flex items-center space-x-3 mb-4">
@@ -110,11 +120,11 @@
                                             </svg>
                                             <span>{{ $post->reading_time }} phút đọc</span>
                                         </div>
-                                    </div>
+                        </div>
                                     
                                     <h2 class="text-2xl font-bold text-slate-900 mb-4 group-hover:text-blue-600 transition-colors duration-300 leading-tight">
                                         <a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a>
-                                    </h2>
+                            </h2>
                                     
                                     <p class="text-slate-600 mb-6 leading-relaxed">
                                         {{ $post->excerpt }}
@@ -164,14 +174,14 @@
                             </svg>
                         </a>
                         @endif
-
+                        
                         <!-- Page Numbers -->
                         @foreach($blogPosts->getUrlRange(1, $blogPosts->lastPage()) as $page => $url)
                         @if($page == $blogPosts->currentPage())
                         <span class="px-5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold shadow-lg">{{ $page }}</span>
-                        @else
+                            @else
                         <a href="{{ $url }}" class="px-5 py-3 text-slate-600 bg-white border-2 border-slate-200 rounded-xl hover:bg-slate-50 hover:border-blue-300 transition-all duration-200 shadow-sm hover:shadow-md font-medium">{{ $page }}</a>
-                        @endif
+                            @endif
                         @endforeach
 
                         <!-- Next Page -->
@@ -245,7 +255,7 @@
                                     <div class="flex items-center space-x-2 mb-2">
                                         <div class="w-2 h-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"></div>
                                         <span class="text-xs text-slate-500 font-medium">{{ $post->formatted_date }}</span>
-                                    </div>
+                            </div>
                                     <a href="{{ route('blog.show', $post->slug) }}" class="text-sm font-semibold text-slate-900 group-hover:text-blue-600 transition-colors duration-300 leading-tight block line-clamp-2">
                                         {{ $post->title }}
                                     </a>

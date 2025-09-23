@@ -22,7 +22,7 @@
 <div class="bg-white py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 uppercase tracking-wide roboto-condensed mb-6">
+            <h1 class="text-4xl md:text-5xl pt-2 font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 uppercase tracking-wide roboto-condensed mb-6">
                 Danh mục sản phẩm
             </h1>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
@@ -37,32 +37,68 @@
                 <a href="/danh-muc/{{ $category->slug }}" class="block">
                     <div class="relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden border border-gray-100 h-80 flex flex-col">
                         <!-- Category Image Background -->
-                        <div class="relative h-48 bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center overflow-hidden">
+                        <div class="relative h-48 flex items-center justify-center overflow-hidden
+                            @if(str_contains(strtolower($category->name), 'nữ')) bg-gradient-to-br from-pink-50 to-rose-50
+                            @elseif(str_contains(strtolower($category->name), 'nam')) bg-gradient-to-br from-blue-50 to-indigo-50
+                            @elseif(str_contains(strtolower($category->name), 'cặp')) bg-gradient-to-br from-red-50 to-pink-50
+                            @elseif(str_contains(strtolower($category->name), 'dây')) bg-gradient-to-br from-purple-50 to-violet-50
+                            @elseif(str_contains(strtolower($category->name), 'trang sức')) bg-gradient-to-br from-yellow-50 to-amber-50
+                            @else bg-gradient-to-br from-blue-50 to-purple-50 @endif">
                             <!-- Decorative Pattern -->
                             <div class="absolute inset-0 opacity-10">
                                 <svg class="w-full h-full" viewBox="0 0 100 100" fill="none">
-                                    <circle cx="20" cy="20" r="2" fill="currentColor" class="text-blue-600"/>
-                                    <circle cx="80" cy="20" r="2" fill="currentColor" class="text-purple-600"/>
-                                    <circle cx="20" cy="80" r="2" fill="currentColor" class="text-purple-600"/>
-                                    <circle cx="80" cy="80" r="2" fill="currentColor" class="text-blue-600"/>
-                                    <circle cx="50" cy="50" r="3" fill="currentColor" class="text-blue-400"/>
+                                    <circle cx="20" cy="20" r="2" fill="currentColor" 
+                                        @if(str_contains(strtolower($category->name), 'nữ')) class="text-pink-600"
+                                        @elseif(str_contains(strtolower($category->name), 'nam')) class="text-blue-600"
+                                        @elseif(str_contains(strtolower($category->name), 'cặp')) class="text-red-600"
+                                        @elseif(str_contains(strtolower($category->name), 'dây')) class="text-purple-600"
+                                        @elseif(str_contains(strtolower($category->name), 'trang sức')) class="text-yellow-600"
+                                        @else class="text-blue-600" @endif/>
+                                    <circle cx="80" cy="20" r="2" fill="currentColor" 
+                                        @if(str_contains(strtolower($category->name), 'nữ')) class="text-rose-600"
+                                        @elseif(str_contains(strtolower($category->name), 'nam')) class="text-indigo-600"
+                                        @elseif(str_contains(strtolower($category->name), 'cặp')) class="text-pink-600"
+                                        @elseif(str_contains(strtolower($category->name), 'dây')) class="text-violet-600"
+                                        @elseif(str_contains(strtolower($category->name), 'trang sức')) class="text-amber-600"
+                                        @else class="text-purple-600" @endif/>
+                                    <circle cx="20" cy="80" r="2" fill="currentColor" 
+                                        @if(str_contains(strtolower($category->name), 'nữ')) class="text-rose-600"
+                                        @elseif(str_contains(strtolower($category->name), 'nam')) class="text-indigo-600"
+                                        @elseif(str_contains(strtolower($category->name), 'cặp')) class="text-pink-600"
+                                        @elseif(str_contains(strtolower($category->name), 'dây')) class="text-violet-600"
+                                        @elseif(str_contains(strtolower($category->name), 'trang sức')) class="text-amber-600"
+                                        @else class="text-purple-600" @endif/>
+                                    <circle cx="80" cy="80" r="2" fill="currentColor" 
+                                        @if(str_contains(strtolower($category->name), 'nữ')) class="text-pink-600"
+                                        @elseif(str_contains(strtolower($category->name), 'nam')) class="text-blue-600"
+                                        @elseif(str_contains(strtolower($category->name), 'cặp')) class="text-red-600"
+                                        @elseif(str_contains(strtolower($category->name), 'dây')) class="text-purple-600"
+                                        @elseif(str_contains(strtolower($category->name), 'trang sức')) class="text-yellow-600"
+                                        @else class="text-blue-600" @endif/>
+                                    <circle cx="50" cy="50" r="3" fill="currentColor" 
+                                        @if(str_contains(strtolower($category->name), 'nữ')) class="text-pink-400"
+                                        @elseif(str_contains(strtolower($category->name), 'nam')) class="text-blue-400"
+                                        @elseif(str_contains(strtolower($category->name), 'cặp')) class="text-red-400"
+                                        @elseif(str_contains(strtolower($category->name), 'dây')) class="text-purple-400"
+                                        @elseif(str_contains(strtolower($category->name), 'trang sức')) class="text-yellow-400"
+                                        @else class="text-blue-400" @endif/>
                                 </svg>
                             </div>
                             
                             <!-- Category Icon -->
-                            <div class="relative z-10 text-6xl opacity-20">
+                            <div class="relative z-10 text-5xl opacity-30">
                                 @if(str_contains(strtolower($category->name), 'nữ'))
-                                    <i class="fas fa-female text-pink-500"></i>
+                                    <i class="fas fa-heart text-pink-400"></i>
                                 @elseif(str_contains(strtolower($category->name), 'nam'))
-                                    <i class="fas fa-male text-blue-500"></i>
+                                    <i class="fas fa-user-tie text-blue-400"></i>
                                 @elseif(str_contains(strtolower($category->name), 'cặp'))
-                                    <i class="fas fa-heart text-red-500"></i>
+                                    <i class="fas fa-heart text-red-400"></i>
                                 @elseif(str_contains(strtolower($category->name), 'dây'))
-                                    <i class="fas fa-link text-gray-500"></i>
+                                    <i class="fas fa-link text-purple-400"></i>
                                 @elseif(str_contains(strtolower($category->name), 'trang sức'))
-                                    <i class="fas fa-gem text-yellow-500"></i>
+                                    <i class="fas fa-gem text-yellow-400"></i>
                                 @else
-                                    <i class="fas fa-clock text-blue-500"></i>
+                                    <i class="fas fa-clock text-blue-400"></i>
                                 @endif
                             </div>
                         </div>

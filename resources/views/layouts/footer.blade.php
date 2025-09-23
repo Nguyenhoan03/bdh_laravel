@@ -46,17 +46,20 @@
                 
                 <!-- Social Media Icons -->
                 <div class="flex space-x-3 mt-6">
-                    <a href="#" class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">
+                    <a href="https://facebook.com/danielwellington.vn" target="_blank" class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl">
                         <i class="fab fa-facebook-f text-sm"></i>
                     </a>
-                    <a href="#" class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full flex items-center justify-center hover:from-purple-600 hover:to-pink-600 transition-colors">
-                        <i class="fab fa-instagram text-sm"></i>
+                    <a href="https://instagram.com/danielwellington_vn" target="_blank" class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full flex items-center justify-center hover:from-purple-600 hover:to-pink-600 transition-colors shadow-lg hover:shadow-xl">
+                        <i class="fab fa-instagram text-base"></i>
                     </a>
-                    <a href="#" class="w-8 h-8 bg-blue-400 text-white rounded-full flex items-center justify-center hover:bg-blue-500 transition-colors">
+                    <a href="https://twitter.com/danielwellington_vn" target="_blank" class="w-10 h-10 bg-blue-400 text-white rounded-full flex items-center justify-center hover:bg-blue-500 transition-colors shadow-lg hover:shadow-xl">
                         <i class="fab fa-twitter text-sm"></i>
                     </a>
-                    <a href="#" class="w-8 h-8 bg-blue-700 text-white rounded-full flex items-center justify-center hover:bg-blue-800 transition-colors">
-                        <i class="fab fa-linkedin-in text-sm"></i>
+                    <a href="https://linkedin.com/company/daniel-wellington-vn" target="_blank" class="w-10 h-10 bg-blue-700 text-white rounded-full flex items-center justify-center hover:bg-blue-800 transition-colors shadow-lg hover:shadow-xl">
+                        <i class="fab fa-linkedin-in text-base"></i>
+                    </a>
+                    <a href="https://youtube.com/@danielwellington_vn" target="_blank" class="w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700 transition-colors shadow-lg hover:shadow-xl">
+                        <i class="fab fa-youtube text-sm"></i>
                     </a>
                 </div>
                 
@@ -86,7 +89,7 @@
                     </li>
                     <li class="flex items-center space-x-2">
                         <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
-                        <a href="/products" class="text-sm text-blue-600 hover:text-orange-500 transition-colors">Sản Phẩm</a>
+                        <a href="/danh-muc" class="text-sm text-blue-600 hover:text-orange-500 transition-colors">Sản Phẩm</a>
                     </li>
                     <li class="flex items-center space-x-2">
                         <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
@@ -94,7 +97,7 @@
                     </li>
                     <li class="flex items-center space-x-2">
                         <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
-                        <a href="/contact" class="text-sm text-blue-600 hover:text-orange-500 transition-colors">Liên Hệ</a>
+                        <a href="/lien-he" class="text-sm text-blue-600 hover:text-orange-500 transition-colors">Liên Hệ</a>
                     </li>
                 </ul>
             </div>
@@ -106,23 +109,23 @@
                 <ul class="space-y-2">
                     <li class="flex items-center space-x-2">
                         <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
-                        <a href="/payment-terms" class="text-sm text-blue-600 hover:text-orange-500 transition-colors">Điều khoản thanh toán</a>
+                        <a href="/dieu-khoan-thanh-toan" class="text-sm text-blue-600 hover:text-orange-500 transition-colors">Điều khoản thanh toán</a>
                     </li>
                     <li class="flex items-center space-x-2">
                         <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
-                        <a href="/warranty-policy" class="text-sm text-blue-600 hover:text-orange-500 transition-colors">Chính sách bảo hành</a>
+                        <a href="/chinh-sach-bao-hanh" class="text-sm text-blue-600 hover:text-orange-500 transition-colors">Chính sách bảo hành</a>
                     </li>
                     <li class="flex items-center space-x-2">
                         <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
-                        <a href="/return-policy" class="text-sm text-blue-600 hover:text-orange-500 transition-colors">Chính sách đổi trả</a>
+                        <a href="/chinh-sach-doi-tra" class="text-sm text-blue-600 hover:text-orange-500 transition-colors">Chính sách đổi trả</a>
                     </li>
                     <li class="flex items-center space-x-2">
                         <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
-                        <a href="/shipping-policy" class="text-sm text-blue-600 hover:text-orange-500 transition-colors">Chính sách vận chuyển</a>
+                        <a href="/chinh-sach-van-chuyen" class="text-sm text-blue-600 hover:text-orange-500 transition-colors">Chính sách vận chuyển</a>
                     </li>
                     <li class="flex items-center space-x-2">
                         <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
-                        <a href="/privacy-policy" class="text-sm text-blue-600 hover:text-orange-500 transition-colors">Chính sách bảo mật</a>
+                        <a href="/chinh-sach-bao-mat" class="text-sm text-blue-600 hover:text-orange-500 transition-colors">Chính sách bảo mật</a>
                     </li>
                 </ul>
             </div>

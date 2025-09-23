@@ -36,9 +36,15 @@ class BlogPost extends Model
     public function getImageUrlAttribute()
     {
         if ($this->image) {
+            // Nếu đường dẫn bắt đầu với 'blog/', thêm 'storage/' vào trước
+            if (str_starts_with($this->image, 'blog/')) {
+                return asset('storage/' . $this->image);
+            }
+            // Nếu đường dẫn bắt đầu với 'img/', thêm 'storage/' vào trước
             if (str_starts_with($this->image, 'img/')) {
                 return asset('storage/' . $this->image);
             }
+            // Nếu chỉ là tên file, thêm 'storage/img/' vào trước
             return asset('storage/img/' . $this->image);
         }
         return asset('img/DW00100699-247x296.webp');
