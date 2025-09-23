@@ -37,16 +37,29 @@
         <!-- Product Info Section -->
         <div class="space-y-2">
             <!-- Product Name -->
-            <h3 class="text-sm text-center font-medium text-gray-900 leading-tight h-12 overflow-hidden hover:text-blue-600 transition-colors duration-300" title="{{ $name }}">
-                {{ Str::limit($name, 40) }}
+            @php
+                $nameParts = explode(' - ', $name);
+                $mainName = $nameParts[0] ?? $name;
+                $subName = isset($nameParts[1]) ? $nameParts[1] : '';
+            @endphp
+            <h3 class="text-sm text-center font-medium text-gray-900 leading-tight hover:text-blue-600 transition-colors duration-300" title="{{ $name }}">
+                {{ Str::limit($mainName, 30) }}
             </h3>
             
-            <!-- Product Specification -->
-            @if($spec)
-            <p class="text-xs text-center text-gray-600 bg-gray-50 px-2 py-1 rounded-md">
-                {{ $spec }}
-            </p>
-            @endif
+            <!-- Sub Name and Stock Indicator -->
+            <div class="flex items-center justify-between pt-2">
+                @if($subName)
+                <p class="text-xs text-gray-600 font-medium">
+                    {{ Str::limit($subName, 20) }}
+                </p>
+                @endif
+                
+                <!-- Stock Indicator -->
+                <div class="flex items-center space-x-2 bg-green-50 px-3 py-1.5 rounded-full">
+                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span class="text-xs text-green-700 font-medium">Còn hàng</span>
+                </div>
+            </div>
         </div>
         
         <!-- Pricing Section -->

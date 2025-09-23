@@ -86,15 +86,21 @@
             <div class="space-y-6">
                 <!-- Product Title -->
                 <div>
-                    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2 roboto-condensed">
-                        {{ $product->name }}
+                    @php
+                        $nameParts = explode(' - ', $product->name);
+                        $mainName = $nameParts[0] ?? $product->name;
+                        $subName = isset($nameParts[1]) ? $nameParts[1] : '';
+                    @endphp
+                    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-1 roboto-condensed">
+                        {{ $mainName }}
                     </h1>
+                    @if($subName)
+                    <h2 class="text-lg text-gray-600 font-medium mb-2">
+                        {{ $subName }}
+                    </h2>
+                    @endif
                     <div class="flex items-center space-x-2 text-sm text-gray-600">
                         <span>{{ $product->sku ?? 'N/A' }}</span>
-                        @if(explode(' - ', $product->description)[1] ?? '')
-                        <span>•</span>
-                        <span>{{ explode(' - ', $product->description)[1] }}</span>
-                        @endif
                     </div>
                 </div>
 
@@ -187,7 +193,7 @@
             <!-- Main Description -->
             <div class="lg:col-span-2">
                 <div class="bg-white p-6 rounded-lg shadow-sm">
-                    <h2 class="text-xl font-bold text-gray-900 mb-4 roboto-condensed">Mô tả</h2>
+                    <h2 class="text-xl font-bold text-gray-900 mb-4 roboto-condensed">Mô tả chi tiết</h2>
                     
                     <!-- Product Rating -->
                     <div class="flex items-center mb-4">
@@ -200,28 +206,7 @@
                     </div>
 
                     <!-- Product Specifications -->
-                    <div class="space-y-3 mb-6">
-                        <div class="flex justify-between py-2 border-b border-gray-100">
-                            <span class="font-medium text-gray-700">Thương hiệu:</span>
-                            <span class="text-gray-900">Daniel Wellington (DW)</span>
-                        </div>
-                        <div class="flex justify-between py-2 border-b border-gray-100">
-                            <span class="font-medium text-gray-700">Xuất xứ:</span>
-                            <span class="text-gray-900">Thụy Điển</span>
-                        </div>
-                        <div class="flex justify-between py-2 border-b border-gray-100">
-                            <span class="font-medium text-gray-700">Danh mục:</span>
-                            <span class="text-gray-900">{{ $category->name ?? 'N/A' }}</span>
-                        </div>
-                        @if($product->specifications)
-                        @foreach(json_decode($product->specifications, true) ?? [] as $key => $value)
-                        <div class="flex justify-between py-2 border-b border-gray-100">
-                            <span class="font-medium text-gray-700">{{ $key }}:</span>
-                            <span class="text-gray-900">{{ $value }}</span>
-                        </div>
-                        @endforeach
-                        @endif
-                </div>
+                   
 
                     <!-- Detailed Description -->
                     <div class="prose prose-sm max-w-none overflow-hidden">

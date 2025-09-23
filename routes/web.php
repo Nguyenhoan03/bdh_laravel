@@ -33,6 +33,35 @@ Route::get('/ve-chung-toi', function () {
     return view('about');
 });
 
-Route::get('/blog-dong-ho-360', function () {
-    return view('blog');
-});
+Route::get('/blog-dong-ho-360', [App\Http\Controllers\BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{slug}', [App\Http\Controllers\BlogController::class, 'show'])->name('blog.show');
+
+// Policy pages
+Route::get('/dieu-khoan-thanh-toan', function () {
+    return view('policies.payment-terms');
+})->name('policy.payment');
+
+Route::get('/chinh-sach-bao-hanh', function () {
+    return view('policies.warranty-policy');
+})->name('policy.warranty');
+
+Route::get('/chinh-sach-doi-tra', function () {
+    return view('policies.return-policy');
+})->name('policy.return');
+
+Route::get('/chinh-sach-van-chuyen', function () {
+    return view('policies.shipping-policy');
+})->name('policy.shipping');
+
+Route::get('/chinh-sach-bao-mat', function () {
+    return view('policies.privacy-policy');
+})->name('policy.privacy');
+
+// About and Contact pages
+Route::get('/ve-chung-toi', function () {
+    return view('about');
+})->name('about');
+
+Route::get('/lien-he', function () {
+    return view('contact');
+})->name('contact');

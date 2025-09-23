@@ -105,7 +105,7 @@
                         <a href="/san-pham/{{ $product->slug ?? $product->id }}" class="block h-full">
                             <x-product-card
                                 :name="$product->name ?? ''"
-                                :spec="explode(' - ', $product->description)[1] ?? ''"
+                                :spec="''"
                                 :original-price="number_format($product->price, 0, ',', '.') . '₫'"
                                 :price="number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') . '₫'"
                                 :discount="($product->price > $product->sale_price && $product->sale_price > 0) ? '-' . round((($product->price - $product->sale_price) / $product->price) * 100) . '%' : ''"
@@ -122,7 +122,7 @@
                         <a href="/san-pham/{{ $product->slug ?? $product->id }}" class="block h-full">
                             <x-product-card
                                 :name="$product->name ?? ''"
-                                :spec="explode(' - ', $product->description)[1] ?? ''"
+                                :spec="''"
                                 :original-price="number_format($product->price, 0, ',', '.') . '₫'"
                                 :price="number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') . '₫'"
                                 :discount="($product->price > $product->sale_price && $product->sale_price > 0) ? '-' . round((($product->price - $product->sale_price) / $product->price) * 100) . '%' : ''"
@@ -224,18 +224,23 @@
                                 <!-- Product Details -->
                                 <div class="p-4 space-y-3 flex-1 flex flex-col justify-between">
                                     <!-- Product Name -->
-                                    <h3 class="text-base font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors duration-300 h-12 overflow-hidden" title="{{ $product->name }}">
-                                        {{ Str::limit($product->name, 40) }}
+                                    @php
+                                        $nameParts = explode(' - ', $product->name);
+                                        $mainName = $nameParts[0] ?? $product->name;
+                                        $subName = isset($nameParts[1]) ? $nameParts[1] : '';
+                                    @endphp
+                                    <h3 class="text-base font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors duration-300 mb-1" title="{{ $product->name }}">
+                                        {{ Str::limit($mainName, 30) }}
                                     </h3>
-
-                                    <!-- Product Specification and Stock -->
-                                    <div class="flex items-center justify-between">
-                                        @if(explode(' - ', $product->description)[1] ?? '')
-                                        <p class="text-sm text-gray-500 font-medium">
-                                            {{ explode(' - ', $product->description)[1] }}
+                                    
+                                    <!-- Sub Name and Stock Indicator -->
+                                    <div class="flex items-center justify-between mb-3">
+                                        @if($subName)
+                                        <p class="text-sm text-gray-600 font-medium">
+                                            {{ Str::limit($subName, 25) }}
                                         </p>
                                         @endif
-
+                                        
                                         <!-- Stock Indicator -->
                                         <div class="flex items-center space-x-1">
                                             <div class="w-2 h-2 bg-green-500 rounded-full"></div>
@@ -367,18 +372,23 @@
                                 <!-- Product Details -->
                                 <div class="p-4 space-y-3 flex-1 flex flex-col justify-between">
                                     <!-- Product Name -->
-                                    <h3 class="text-base font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors duration-300 h-12 overflow-hidden" title="{{ $product->name }}">
-                                        {{ Str::limit($product->name, 40) }}
+                                    @php
+                                        $nameParts = explode(' - ', $product->name);
+                                        $mainName = $nameParts[0] ?? $product->name;
+                                        $subName = isset($nameParts[1]) ? $nameParts[1] : '';
+                                    @endphp
+                                    <h3 class="text-base font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors duration-300 mb-1" title="{{ $product->name }}">
+                                        {{ Str::limit($mainName, 30) }}
                                     </h3>
-
-                                    <!-- Product Specification and Stock -->
-                                    <div class="flex items-center justify-between">
-                                        @if(explode(' - ', $product->description)[1] ?? '')
-                                        <p class="text-sm text-gray-500 font-medium">
-                                            {{ explode(' - ', $product->description)[1] }}
+                                    
+                                    <!-- Sub Name and Stock Indicator -->
+                                    <div class="flex items-center justify-between mb-3">
+                                        @if($subName)
+                                        <p class="text-sm text-gray-600 font-medium">
+                                            {{ Str::limit($subName, 25) }}
                                         </p>
                                         @endif
-
+                                        
                                         <!-- Stock Indicator -->
                                         <div class="flex items-center space-x-1">
                                             <div class="w-2 h-2 bg-green-500 rounded-full"></div>
@@ -500,18 +510,23 @@
                         <!-- Product Details -->
                         <div class="p-4 space-y-3 flex-1 flex flex-col justify-between">
                             <!-- Product Name -->
-                            <h3 class="text-base font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors duration-300 h-12 overflow-hidden" title="{{ $product->name }}">
-                                {{ Str::limit($product->name, 40) }}
+                            @php
+                                $nameParts = explode(' - ', $product->name);
+                                $mainName = $nameParts[0] ?? $product->name;
+                                $subName = isset($nameParts[1]) ? $nameParts[1] : '';
+                            @endphp
+                            <h3 class="text-base font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors duration-300 mb-1" title="{{ $product->name }}">
+                                {{ Str::limit($mainName, 30) }}
                             </h3>
-
-                            <!-- Product Specification and Stock -->
-                            <div class="flex items-center justify-between">
-                                @if(explode(' - ', $product->description)[1] ?? '')
-                                <p class="text-sm text-gray-500 font-medium">
-                                    {{ explode(' - ', $product->description)[1] }}
+                            
+                            <!-- Sub Name and Stock Indicator -->
+                            <div class="flex items-center justify-between mb-3 pt-2">
+                                @if($subName)
+                                <p class="text-sm text-gray-600 font-medium">
+                                    {{ Str::limit($subName, 25) }}
                                 </p>
                                 @endif
-
+                                
                                 <!-- Stock Indicator -->
                                 <div class="flex items-center space-x-1">
                                     <div class="w-2 h-2 bg-green-500 rounded-full"></div>
@@ -617,18 +632,23 @@
                         <!-- Product Details -->
                         <div class="p-4 space-y-3 flex-1 flex flex-col justify-between">
                             <!-- Product Name -->
-                            <h3 class="text-base font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors duration-300 h-12 overflow-hidden" title="{{ $product->name }}">
-                                {{ Str::limit($product->name, 40) }}
+                            @php
+                                $nameParts = explode(' - ', $product->name);
+                                $mainName = $nameParts[0] ?? $product->name;
+                                $subName = isset($nameParts[1]) ? $nameParts[1] : '';
+                            @endphp
+                            <h3 class="text-base font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors duration-300 mb-1" title="{{ $product->name }}">
+                                {{ Str::limit($mainName, 30) }}
                             </h3>
-
-                            <!-- Product Specification and Stock -->
-                            <div class="flex items-center justify-between">
-                                @if(explode(' - ', $product->description)[1] ?? '')
-                                <p class="text-sm text-gray-500 font-medium">
-                                    {{ explode(' - ', $product->description)[1] }}
+                            
+                            <!-- Sub Name and Stock Indicator -->
+                            <div class="flex items-center justify-between mb-3 pt-2">
+                                @if($subName)
+                                <p class="text-sm text-gray-600 font-medium">
+                                    {{ Str::limit($subName, 25) }}
                                 </p>
                                 @endif
-
+                                
                                 <!-- Stock Indicator -->
                                 <div class="flex items-center space-x-1">
                                     <div class="w-2 h-2 bg-green-500 rounded-full"></div>

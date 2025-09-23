@@ -20,8 +20,7 @@ class CategoryController extends Controller
 
             // Lấy tham số từ request
             $sortBy = $request->get('sort', 'newest');
-            $perPage = $request->get('per_page', 24);
-            $page = $request->get('page', 1);
+            $perPage = $request->get('per_page', 24); // Giảm xuống 12 để dễ test phân trang
 
             // Query sản phẩm theo category
             $query = Product::with(['category'])
@@ -51,7 +50,7 @@ class CategoryController extends Controller
             }
 
             // Phân trang
-            $products = $query->paginate($perPage, ['*'], 'page', $page);
+            $products = $query->paginate($perPage);
             
             // Tạo discount cho một số sản phẩm
             $products->getCollection()->transform(function ($product) {

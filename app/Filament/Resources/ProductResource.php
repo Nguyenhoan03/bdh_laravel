@@ -156,10 +156,10 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('images')
+                Tables\Columns\ImageColumn::make('first_image_url')
                     ->label('Hình ảnh')
                     ->circular()
-                    ->stacked(),
+                    ->defaultImageUrl(asset('img/DW00100699-247x296.webp')),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tên sản phẩm')
                     ->searchable()

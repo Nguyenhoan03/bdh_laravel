@@ -64,9 +64,9 @@ class Product extends Model
             'first_image' => $firstImage
         ]);
         
-        // If image path starts with 'img/', it's from public/img
+        // If image path starts with 'img/', it's from storage/app/public/img
         if (str_starts_with($firstImage, 'img/')) {
-            return asset($firstImage);
+            return asset('storage/' . $firstImage);
         }
         
         // If it's just a filename, check if it exists in storage
@@ -88,7 +88,7 @@ class Product extends Model
         $urls = [];
         foreach ($this->images as $image) {
             if (str_starts_with($image, 'img/')) {
-                $urls[] = asset($image);
+                $urls[] = asset('storage/' . $image);
             } else {
                 $storagePath = storage_path('app/public/img/' . $image);
                 if (file_exists($storagePath)) {

@@ -43,7 +43,11 @@
                     <div class="flex items-center space-x-2 bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-2 rounded-2xl border border-blue-100">
                         <div class="w-3 h-3 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full animate-pulse"></div>
                         <span class="text-sm text-slate-700 font-semibold">
-                            Hiển thị {{ $products->firstItem() ?? 0 }}-{{ $products->lastItem() ?? 0 }} của {{ $totalProducts }} kết quả
+                            @if($products->count() > 0)
+                                Hiển thị {{ $products->firstItem() }}-{{ $products->lastItem() }} của {{ $totalProducts }} kết quả
+                            @else
+                                Hiển thị 0-0 của {{ $totalProducts }} kết quả
+                            @endif
                         </span>
                     </div>
                 </div>
@@ -121,15 +125,20 @@
                         <div class="p-6 space-y-4 flex-1 flex flex-col justify-between">
                             <!-- Product Name -->
                             <div>
-                                <h3 class="text-lg font-bold text-slate-900 leading-tight group-hover:text-blue-600 transition-colors duration-300 mb-2 h-12 overflow-hidden" title="{{ $product->name }}">
-                                    {{ Str::limit($product->name, 40) }}
+                                @php
+                                    $nameParts = explode(' - ', $product->name);
+                                    $mainName = $nameParts[0] ?? $product->name;
+                                    $subName = isset($nameParts[1]) ? $nameParts[1] : '';
+                                @endphp
+                                <h3 class="text-lg font-bold text-slate-900 leading-tight group-hover:text-blue-600 transition-colors duration-300 mb-1" title="{{ $product->name }}">
+                                    {{ Str::limit($mainName, 30) }}
                                 </h3>
                                 
-                                <!-- Product Specification and Stock -->
-                                <div class="flex items-center justify-between">
-                                    @if(explode(' - ', $product->description)[1] ?? '')
-                                    <p class="text-sm text-slate-500 font-medium bg-slate-50 px-3 py-1.5 rounded-lg">
-                                        {{ explode(' - ', $product->description)[1] }}
+                                <!-- Sub Name and Stock Indicator -->
+                                <div class="flex items-center justify-between mb-3">
+                                    @if($subName)
+                                    <p class="text-sm text-slate-600 font-medium">
+                                        {{ Str::limit($subName, 25) }}
                                     </p>
                                     @endif
                                     
@@ -139,18 +148,18 @@
                                         <span class="text-xs text-green-700 font-medium">Còn hàng</span>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <!-- Pricing -->
-                            <div class="flex items-center space-x-2">
-                                @if($product->price > $product->sale_price && $product->sale_price > 0)
-                                <span class="text-sm text-slate-400 line-through font-medium">
-                                    {{ number_format($product->price, 0, ',', '.') }}₫
-                                </span>
-                                @endif
-                                <span class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
-                                    {{ number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') }}₫
-                                </span>
+                                
+                                <!-- Pricing -->
+                                <div class="flex items-center space-x-2">
+                                    @if($product->price > $product->sale_price && $product->sale_price > 0)
+                                    <span class="text-sm text-slate-400 line-through font-medium">
+                                        {{ number_format($product->price, 0, ',', '.') }}₫
+                                    </span>
+                                    @endif
+                                    <span class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
+                                        {{ number_format($product->sale_price > 0 ? $product->sale_price : $product->price, 0, ',', '.') }}₫
+                                    </span>
+                                </div>
                             </div>
                             
                             <!-- Add to Cart Button -->
