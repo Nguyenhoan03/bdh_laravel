@@ -49,7 +49,7 @@ class OrderResource extends Resource
                             ->relationship('customer', 'name')
                             ->searchable()
                             ->preload()
-                            ->required()
+                            ->nullable()
                             ->prefixIcon('heroicon-o-user'),
                         Forms\Components\Select::make('status')
                             ->label('Trạng thái')

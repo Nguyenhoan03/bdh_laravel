@@ -188,6 +188,34 @@ class GetListController extends Controller
                 'no_follow' => false,
             ];
             
+            // Tạo JSON-LD structured data cho trang chủ
+            $jsonLd = [
+                '@context' => 'https://schema.org',
+                '@type' => 'Organization',
+                'name' => 'Daniel Wellington Vietnam',
+                'url' => url('/'),
+                'logo' => asset('img/DW-LOGO.png'),
+                'description' => 'Đại lý chính thức đồng hồ Daniel Wellington tại Việt Nam. Chuyên cung cấp đồng hồ cao cấp, thiết kế tối giản và đa dạng dây đeo.',
+                'address' => [
+                    '@type' => 'PostalAddress',
+                    'streetAddress' => '590 Cách Mạng Tháng 8, Phường Nhiêu Lộc, Số nhà 04 Lô B',
+                    'addressLocality' => 'Hồ Chí Minh',
+                    'postalCode' => '700000',
+                    'addressCountry' => 'VN'
+                ],
+                'contactPoint' => [
+                    '@type' => 'ContactPoint',
+                    'telephone' => '+84-978-187-088',
+                    'contactType' => 'customer service',
+                    'email' => 'cskh@donghodanielwellington.vn'
+                ],
+                'sameAs' => [
+                    'https://facebook.com/danielwellington.vn',
+                    'https://instagram.com/danielwellington_vn',
+                    'https://twitter.com/danielwellington_vn'
+                ]
+            ];
+            
             return view('home', compact(
                 'dataWatchWomen', 
                 'dataWatchMen', 
@@ -200,7 +228,8 @@ class GetListController extends Controller
                 'newestProducts',
                 'premiumProducts',
                 'categories',
-                'meta'
+                'meta',
+                'jsonLd'
             ));
             
         } catch (\Exception $e) {

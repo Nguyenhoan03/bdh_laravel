@@ -66,12 +66,16 @@ class CartController extends Controller
                 ]);
             } else {
                 // Thêm sản phẩm mới vào giỏ hàng
+                $finalPrice = $product->sale_price > 0 ? $product->sale_price : $product->price;
                 $cart[$productId] = [
                     'id' => $product->id,
                     'name' => $product->name,
                     'slug' => $product->slug,
-                    'price' => $this->formatPrice($product->sale_price > 0 ? $product->sale_price : $product->price),
+                    'price' => $finalPrice, // Lưu giá số thay vì format
+                    'price_formatted' => $this->formatPrice($finalPrice), // Thêm field format riêng
                     'original_price' => $product->price > $product->sale_price && $product->sale_price > 0 ? 
+                        $product->price : null,
+                    'original_price_formatted' => $product->price > $product->sale_price && $product->sale_price > 0 ? 
                         $this->formatPrice($product->price) : null,
                     'image' => $product->images && is_array($product->images) && count($product->images) > 0 ? 
                         $product->images[0] : 'DW00100699-247x296.webp',

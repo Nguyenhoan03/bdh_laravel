@@ -960,4 +960,7 @@
     });
 </script>
 
+{{-- JSON-LD Structured Data for Homepage --}}
+<x-home-json-ld :jsonLd="$jsonLd ?? null" />
+
 @endsection

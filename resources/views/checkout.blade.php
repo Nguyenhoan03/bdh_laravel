@@ -198,11 +198,7 @@
                                     <p class="text-xs text-gray-500">Số lượng: {{ $item['quantity'] }}</p>
                                 </div>
                                 <div class="text-sm font-semibold text-gray-900">
-                                    @if(isset($item['price_formatted']))
-                                        {{ $item['price_formatted'] }}
-                                    @else
-                                        {{ number_format((float)$item['price'], 0, ',', '.') }}₫
-                                    @endif
+                                    {{ $item['price_formatted'] ?? number_format((float)$item['price'], 0, ',', '.') . '₫' }}
                                 </div>
                             </div>
                             @endforeach
@@ -300,22 +296,13 @@ function updateCartTotals() {
     let subtotal = 0;
     
     Object.values(cart).forEach(item => {
-        // Use raw price if available, otherwise parse formatted price
-        let price;
-        if (typeof item.price === 'number') {
-            price = item.price;
-        } else {
-            // Parse formatted price string
-            let priceString = item.price.replace(/[^\d.]/g, '').replace(/,/g, '');
-            priceString = priceString.replace(/\./g, '');
-            price = parseFloat(priceString);
-        }
+        // Use raw price directly (should be number now)
+        let price = parseFloat(item.price) || 0;
         
         // Debug log
         console.log('Checkout item calculation:', {
             product: item.name,
             originalPrice: item.price,
-            priceString: priceString,
             parsedPrice: price,
             quantity: item.quantity,
             subtotal: price * item.quantity

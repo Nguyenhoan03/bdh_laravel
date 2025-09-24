@@ -41,6 +41,11 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
     public function getFormattedTotalAttribute()
     {
         return number_format($this->total_amount, 0, ',', '.') . '₫';

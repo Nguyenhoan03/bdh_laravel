@@ -84,7 +84,6 @@ class CheckoutController extends Controller
                 // Debug log
                 Log::info('Cart item price calculation', [
                     'original_price' => $item['price'],
-                    'cleaned_price' => $priceString,
                     'final_price' => $price,
                     'quantity' => $item['quantity']
                 ]);
@@ -148,7 +147,6 @@ class CheckoutController extends Controller
                     'product_id' => $productId,
                     'product_name' => $item['name'],
                     'original_price' => $item['price'],
-                    'cleaned_price_string' => $priceString,
                     'final_price' => $price,
                     'quantity' => $item['quantity'],
                     'subtotal' => $price * $item['quantity']

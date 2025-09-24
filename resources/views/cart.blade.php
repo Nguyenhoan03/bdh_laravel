@@ -178,22 +178,13 @@ function updateCartTotals() {
     let totalItems = 0;
     
     Object.values(cart).forEach(item => {
-        // Use raw price if available, otherwise parse formatted price
-        let price;
-        if (typeof item.price === 'number') {
-            price = item.price;
-        } else {
-            // Parse formatted price string
-            let priceString = item.price.replace(/[^\d.]/g, '').replace(/,/g, '');
-            priceString = priceString.replace(/\./g, '');
-            price = parseFloat(priceString);
-        }
+        // Use raw price directly (should be number now)
+        let price = parseFloat(item.price) || 0;
         
         // Debug log
         console.log('Cart item calculation:', {
             product: item.name,
             originalPrice: item.price,
-            priceString: priceString,
             parsedPrice: price,
             quantity: item.quantity,
             subtotal: price * item.quantity
