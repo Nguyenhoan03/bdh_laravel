@@ -21,7 +21,19 @@ class CheckoutController extends Controller
             return redirect('/gio-hang')->with('error', 'Giỏ hàng trống!');
         }
         
-        return view('checkout');
+        $meta = [
+            'title' => 'Thanh toán - Daniel Wellington Vietnam',
+            'description' => 'Thanh toán đơn hàng đồng hồ Daniel Wellington. Thông tin giao hàng, phương thức thanh toán an toàn và bảo mật.',
+            'keywords' => 'thanh toán, checkout, daniel wellington thanh toán, giao hàng, đặt hàng',
+            'og_title' => 'Thanh toán - Daniel Wellington Vietnam',
+            'og_description' => 'Thanh toán đơn hàng đồng hồ Daniel Wellington. Thông tin giao hàng và phương thức thanh toán an toàn.',
+            'og_image' => asset('img/DW-LOGO.png'),
+            'canonical_url' => url('/checkout'),
+            'no_index' => true, // Không index trang checkout
+            'no_follow' => true,
+        ];
+        
+        return view('checkout', compact('meta'));
     }
 
     /**
@@ -207,7 +219,19 @@ class CheckoutController extends Controller
             return redirect('/')->with('error', 'Không tìm thấy đơn hàng. Vui lòng liên hệ hỗ trợ.');
         }
 
-        return view('checkout-success', compact('order'));
+        $meta = [
+            'title' => 'Đặt hàng thành công - Daniel Wellington Vietnam',
+            'description' => 'Cảm ơn bạn đã đặt hàng tại Daniel Wellington Vietnam. Đơn hàng #' . $order->order_number . ' đã được xác nhận và sẽ được giao trong thời gian sớm nhất.',
+            'keywords' => 'đặt hàng thành công, daniel wellington đặt hàng, xác nhận đơn hàng, giao hàng',
+            'og_title' => 'Đặt hàng thành công - Daniel Wellington Vietnam',
+            'og_description' => 'Cảm ơn bạn đã đặt hàng tại Daniel Wellington Vietnam. Đơn hàng đã được xác nhận.',
+            'og_image' => asset('img/DW-LOGO.png'),
+            'canonical_url' => url('/checkout/success'),
+            'no_index' => true, // Không index trang success
+            'no_follow' => true,
+        ];
+
+        return view('checkout-success', compact('order', 'meta'));
     }
 
     /**

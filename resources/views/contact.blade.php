@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Liên hệ - Daniel Wellington Vietnam')
+@section('title', $meta['title'] ?? 'Liên hệ - Daniel Wellington Vietnam')
 
 @section('content')
 <!-- Hero Section -->
@@ -123,7 +123,7 @@
                             <div>
                                 <h3 class="text-lg font-semibold text-slate-900 mb-1">Điện thoại</h3>
                                 <p class="text-slate-600 mb-2">Hotline hỗ trợ 24/7</p>
-                                <a href="tel:1900123456" class="text-blue-600 font-semibold hover:text-blue-700 transition-colors duration-200">1900 123 456</a>
+                                <a href="tel:1900123456" class="text-blue-600 font-semibold hover:text-blue-700 transition-colors duration-200">0978187088</a>
                             </div>
                         </div>
                         

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Về chúng tôi - Daniel Wellington Vietnam')
+@section('title', $meta['title'] ?? 'Về chúng tôi - Daniel Wellington Vietnam')
 
 @section('content')
 <!-- Hero Section -->
@@ -201,7 +201,7 @@
                             </svg>
                         </div>
                         <h3 class="text-lg font-semibold mb-2">Điện thoại</h3>
-                        <p class="text-blue-100">1900 123 456</p>
+                        <p class="text-blue-100">0978187088</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -210,7 +210,7 @@
                             </svg>
                         </div>
                         <h3 class="text-lg font-semibold mb-2">Email</h3>
-                        <p class="text-blue-100">info@danielwellington.vn</p>
+                        <p class="text-blue-100">cskh@donghodanielwellington.vn</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -220,7 +220,7 @@
                             </svg>
                         </div>
                         <h3 class="text-lg font-semibold mb-2">Địa chỉ</h3>
-                        <p class="text-blue-100">123 Nguyễn Huệ, Q1, TP.HCM</p>
+                        <p class="text-blue-100">590 Cách Mạng Tháng 8, Phường Nhiêu Lộc, Hồ Chí Minh. Số nhà 04 Lô B</p>
                     </div>
                 </div>
             </div>

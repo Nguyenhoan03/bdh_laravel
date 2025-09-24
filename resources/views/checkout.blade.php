@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Thanh Toán - Daniel Wellington Vietnam')
+@section('title', $meta['title'] ?? 'Thanh Toán - Daniel Wellington Vietnam')
 
 @section('content')
 <div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">

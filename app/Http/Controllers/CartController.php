@@ -13,7 +13,19 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view('cart');
+        $meta = [
+            'title' => 'Giỏ hàng - Daniel Wellington Vietnam',
+            'description' => 'Xem giỏ hàng của bạn tại Daniel Wellington Vietnam. Kiểm tra sản phẩm, cập nhật số lượng và tiến hành thanh toán.',
+            'keywords' => 'giỏ hàng, daniel wellington giỏ hàng, thanh toán, mua sắm đồng hồ',
+            'og_title' => 'Giỏ hàng - Daniel Wellington Vietnam',
+            'og_description' => 'Xem giỏ hàng của bạn tại Daniel Wellington Vietnam. Kiểm tra sản phẩm và tiến hành thanh toán.',
+            'og_image' => asset('img/DW-LOGO.png'),
+            'canonical_url' => url('/gio-hang'),
+            'no_index' => true, // Không index trang giỏ hàng
+            'no_follow' => true,
+        ];
+        
+        return view('cart', compact('meta'));
     }
 
     /**
