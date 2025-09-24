@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\OrderItem;
+use App\Helpers\SeoHelper;
 
 class ProductDetailController extends Controller
 {
@@ -80,6 +81,9 @@ class ProductDetailController extends Controller
             // Lấy thông tin category
             $category = $product->category;
 
+            // Tạo SEO meta data
+            $meta = SeoHelper::generateProductMeta($product);
+
             return view('product_detail', compact(
                 'product',
                 'relatedProducts',
@@ -87,7 +91,8 @@ class ProductDetailController extends Controller
                 'featuredProducts',
                 'newestProducts',
                 'discount',
-                'category'
+                'category',
+                'meta'
             ));
 
         } catch (\Exception $e) {

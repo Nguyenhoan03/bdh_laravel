@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CategoryResource\Pages;
+use App\Filament\Resources\Components\SeoSection;
 use App\Models\Category;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -12,6 +13,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Schemas\Components\Utilities\Set;
@@ -34,6 +36,8 @@ class CategoryResource extends Resource
     {
         return $schema
             ->schema([
+                Section::make('Thông tin danh mục')
+                    ->schema([
                         Forms\Components\TextInput::make('name')
                             ->label('Tên danh mục')
                             ->required()
@@ -61,19 +65,23 @@ class CategoryResource extends Resource
                                     };
                                 },
                             ]),
-                Forms\Components\Textarea::make('description')
-                    ->label('Mô tả')
-                    ->rows(3)
-                    ->placeholder('Nhập mô tả cho danh mục...'),
-                Forms\Components\Toggle::make('is_active')
-                    ->label('Kích hoạt')
-                    ->default(true)
-                    ->helperText('Danh mục sẽ hiển thị trên website khi được kích hoạt'),
-                Forms\Components\FileUpload::make('image')
-                    ->label('Hình ảnh')
-                    ->image()
-                    ->directory('categories')
-                    ->visibility('public'),
+                        Forms\Components\Textarea::make('description')
+                            ->label('Mô tả')
+                            ->rows(3)
+                            ->placeholder('Nhập mô tả cho danh mục...'),
+                        Forms\Components\Toggle::make('is_active')
+                            ->label('Kích hoạt')
+                            ->default(true)
+                            ->helperText('Danh mục sẽ hiển thị trên website khi được kích hoạt'),
+                        Forms\Components\FileUpload::make('image')
+                            ->label('Hình ảnh')
+                            ->image()
+                            ->directory('categories')
+                            ->visibility('public'),
+                    ])
+                    ->columns(2),
+
+                SeoSection::make(),
             ]);
     }
 
@@ -98,6 +106,14 @@ class CategoryResource extends Resource
                     ->falseIcon('heroicon-o-x-circle')
                     ->trueColor('success')
                     ->falseColor('danger'),
+                Tables\Columns\IconColumn::make('meta_title')
+                    ->label('SEO')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('gray')
+                    ->getStateUsing(fn ($record) => !empty($record->meta_title) || !empty($record->meta_description)),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Ngày tạo')
                     ->dateTime('d/m/Y H:i')

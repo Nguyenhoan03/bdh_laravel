@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\BlogPostResource\Pages;
+use App\Filament\Resources\Components\SeoSection;
 use App\Models\BlogPost;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -106,6 +107,8 @@ class BlogPostResource extends Resource
                             ->fileAttachmentsDirectory('blog/content')
                             ->fileAttachmentsVisibility('public'),
                     ])->columns(1),
+
+                SeoSection::make(),
             ]);
     }
 
@@ -129,6 +132,14 @@ class BlogPostResource extends Resource
                 Tables\Columns\IconColumn::make('is_published')
                     ->label('Xuất bản')
                     ->boolean(),
+                Tables\Columns\IconColumn::make('meta_title')
+                    ->label('SEO')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('gray')
+                    ->getStateUsing(fn ($record) => !empty($record->meta_title) || !empty($record->meta_description)),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Ngày tạo')
                     ->dateTime('d/m/Y H:i')

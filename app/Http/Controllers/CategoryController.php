@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Helpers\SeoHelper;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -69,13 +70,17 @@ class CategoryController extends Controller
                 ->where('is_active', true)
                 ->count();
 
+            // Tạo SEO meta data
+            $meta = SeoHelper::generateCategoryMeta($category);
+
             return view('category-product', compact(
                 'category',
                 'products',
                 'categories',
                 'totalProducts',
                 'sortBy',
-                'perPage'
+                'perPage',
+                'meta'
             ));
 
         } catch (\Exception $e) {

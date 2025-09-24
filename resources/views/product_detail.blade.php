@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($product->name ?? 'Sản phẩm') . ' - Daniel Wellington Vietnam')
+@section('title', $meta['title'] ?? (($product->name ?? 'Sản phẩm') . ' - Daniel Wellington Vietnam'))
 
 @section('content')
 
@@ -830,3 +830,8 @@ function openImageModal() {
 }
 </script>
 @endpush
+
+@section('content')
+    {{-- JSON-LD Structured Data --}}
+    <x-product-json-ld :product="$product" />
+@endsection

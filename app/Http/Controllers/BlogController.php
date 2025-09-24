@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
 use App\Models\Category;
+use App\Helpers\SeoHelper;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -64,7 +65,10 @@ class BlogController extends Controller
                 ->limit(4)
                 ->get();
 
-            return view('blog-detail', compact('post', 'relatedPosts'));
+            // Tạo SEO meta data
+            $meta = SeoHelper::generateBlogMeta($post);
+
+            return view('blog-detail', compact('post', 'relatedPosts', 'meta'));
 
         } catch (\Exception $e) {
             abort(500, 'Có lỗi xảy ra khi tải bài viết');

@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\GetListController::class, 'getListHome'])->name('home');
 
+// Page routes
+Route::get('/{slug}', [App\Http\Controllers\PageController::class, 'show'])->name('page.show');
+
 // Product detail routes
 Route::get('/san-pham/{slug}', [App\Http\Controllers\ProductDetailController::class, 'show'])->name('product.detail');
 

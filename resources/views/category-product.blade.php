@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($category->name ?? 'Danh mục') . ' - Daniel Wellington Vietnam')
+@section('title', $meta['title'] ?? (($category->name ?? 'Danh mục') . ' - Daniel Wellington Vietnam'))
 
 @section('content')
 <!-- Hero Section with Gradient Background -->

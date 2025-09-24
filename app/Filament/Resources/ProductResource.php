@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
+use App\Filament\Resources\Components\SeoSection;
 use App\Models\Product;
 use App\Models\Category;
 use Filament\Actions\DeleteAction;
@@ -149,6 +150,8 @@ class ProductResource extends Resource
                             ->offColor('danger')
                             ->default(true),
                     ])->columns(2),
+
+                SeoSection::make(),
             ]);
     }
 
@@ -196,6 +199,14 @@ class ProductResource extends Resource
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('Kích hoạt')
                     ->boolean(),
+                Tables\Columns\IconColumn::make('meta_title')
+                    ->label('SEO')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('gray')
+                    ->getStateUsing(fn ($record) => !empty($record->meta_title) || !empty($record->meta_description)),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Ngày tạo')
                     ->dateTime('d/m/Y H:i')

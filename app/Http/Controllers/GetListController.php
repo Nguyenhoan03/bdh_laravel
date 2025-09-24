@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Helpers\SeoHelper;
 use Illuminate\Support\Facades\Log;
 
 class GetListController extends Controller
@@ -174,6 +175,19 @@ class GetListController extends Controller
             // Lấy tất cả danh mục đang kích hoạt cho navigation
             $categories = Category::where('is_active', true)->orderBy('name', 'asc')->get();
             
+            // Tạo SEO meta data cho trang chủ
+            $meta = [
+                'title' => 'Daniel Wellington Vietnam - Đồng hồ cao cấp chính hãng',
+                'description' => 'Khám phá bộ sưu tập đồng hồ Daniel Wellington chính hãng tại Việt Nam. Thiết kế tối giản, đa dạng dây đeo và phong cách hiện đại phù hợp với mọi phong cách thời trang.',
+                'keywords' => 'daniel wellington vietnam, đồng hồ daniel wellington, đồng hồ cao cấp, đồng hồ nam, đồng hồ nữ, dây đeo đồng hồ, trang sức daniel wellington',
+                'og_title' => 'Daniel Wellington Vietnam - Đồng hồ cao cấp chính hãng',
+                'og_description' => 'Khám phá bộ sưu tập đồng hồ Daniel Wellington chính hãng tại Việt Nam. Thiết kế tối giản, đa dạng dây đeo và phong cách hiện đại.',
+                'og_image' => asset('img/DW-LOGO.png'),
+                'canonical_url' => url('/'),
+                'no_index' => false,
+                'no_follow' => false,
+            ];
+            
             return view('home', compact(
                 'dataWatchWomen', 
                 'dataWatchMen', 
@@ -185,7 +199,8 @@ class GetListController extends Controller
                 'jewelry',
                 'newestProducts',
                 'premiumProducts',
-                'categories'
+                'categories',
+                'meta'
             ));
             
         } catch (\Exception $e) {

@@ -6,6 +6,32 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title', config('app.name', 'donghodanielwellington'))</title>
+    
+    {{-- SEO Meta Tags --}}
+    @if(isset($meta))
+        <x-seo-meta :meta="$meta" />
+    @else
+        {{-- Default meta tags --}}
+        <meta name="description" content="@yield('description', 'Daniel Wellington Vietnam - Đồng hồ cao cấp, thiết kế tối giản và đa dạng dây đeo')">
+        <meta name="keywords" content="@yield('keywords', 'đồng hồ daniel wellington, đồng hồ cao cấp, đồng hồ nam, đồng hồ nữ, dây đeo đồng hồ')">
+        
+        {{-- Open Graph --}}
+        <meta property="og:title" content="@yield('title', config('app.name', 'Daniel Wellington Vietnam'))">
+        <meta property="og:description" content="@yield('description', 'Daniel Wellington Vietnam - Đồng hồ cao cấp, thiết kế tối giản và đa dạng dây đeo')">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="{{ config('app.name') }}">
+        @if(isset($ogImage))
+            <meta property="og:image" content="{{ $ogImage }}">
+        @endif
+        
+        {{-- Twitter Card --}}
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="@yield('title', config('app.name', 'Daniel Wellington Vietnam'))">
+        <meta name="twitter:description" content="@yield('description', 'Daniel Wellington Vietnam - Đồng hồ cao cấp, thiết kế tối giản và đa dạng dây đeo')">
+        @if(isset($ogImage))
+            <meta name="twitter:image" content="{{ $ogImage }}">
+        @endif
+    @endif
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">

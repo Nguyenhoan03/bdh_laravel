@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Trang Chủ - Daniel Wellington Vietnam')
+@section('title', $meta['title'] ?? 'Trang Chủ - Daniel Wellington Vietnam')
 
 @section('content')
 <!-- Hero Banner -->
