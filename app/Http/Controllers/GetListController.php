@@ -177,11 +177,11 @@ class GetListController extends Controller
             
             // Tạo SEO meta data cho trang chủ
             $meta = [
-                'title' => 'Daniel Wellington Vietnam - Đồng hồ cao cấp chính hãng',
-                'description' => 'Khám phá bộ sưu tập đồng hồ Daniel Wellington chính hãng tại Việt Nam. Thiết kế tối giản, đa dạng dây đeo và phong cách hiện đại phù hợp với mọi phong cách thời trang.',
-                'keywords' => 'daniel wellington vietnam, đồng hồ daniel wellington, đồng hồ cao cấp, đồng hồ nam, đồng hồ nữ, dây đeo đồng hồ, trang sức daniel wellington',
-                'og_title' => 'Daniel Wellington Vietnam - Đồng hồ cao cấp chính hãng',
-                'og_description' => 'Khám phá bộ sưu tập đồng hồ Daniel Wellington chính hãng tại Việt Nam. Thiết kế tối giản, đa dạng dây đeo và phong cách hiện đại.',
+                'title' => 'Đồng hồ DW Daniel Wellington Cao Cấp Giá Tốt',
+                'description' => 'Khám phá bộ sưu tập đồng hồ DW đẳng cấp ☆ Thiết kế tối giản từ Thụy Điển ☆ Dây da cao cấp ☆ Kính khoáng chống xước ☆ Giao hàng nhanh 24h. Mua ngay!',
+                'keywords' => 'đồng hồ DW, daniel wellington cao cấp, đồng hồ DW giá tốt, đồng hồ daniel wellington chính hãng, đồng hồ nam nữ, dây đeo đồng hồ DW',
+                'og_title' => 'Đồng hồ DW Daniel Wellington Cao Cấp Giá Tốt T09/2025',
+                'og_description' => 'Khám phá bộ sưu tập đồng hồ DW đẳng cấp ☆ Thiết kế tối giản từ Thụy Điển ☆ Dây da cao cấp ☆ Kính khoáng chống xước ☆ Giao hàng nhanh 24h. Mua ngay!',
                 'og_image' => asset('img/DW-LOGO.png'),
                 'canonical_url' => url('/'),
                 'no_index' => false,
