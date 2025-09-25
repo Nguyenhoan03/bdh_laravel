@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\BlogPostResource\Pages;
 use App\Filament\Resources\Components\SeoSection;
+use App\Filament\Components\MobileFileUpload;
 use App\Models\BlogPost;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -78,11 +79,14 @@ class BlogPostResource extends Resource
 
                 Section::make('Nội dung')
                     ->schema([
-                        Forms\Components\FileUpload::make('image')
+                        MobileFileUpload::make('image')
                             ->label('Hình ảnh')
                             ->image()
                             ->directory('blog')
-                            ->visibility('public'),
+                            ->visibility('public')
+                            ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'])
+                            ->maxSize(10240) // 10MB
+                            ->helperText('Chấp nhận: JPG, PNG, GIF, WebP (tối đa 10MB)'),
                         Forms\Components\RichEditor::make('content')
                             ->label('Nội dung')
                             ->required()

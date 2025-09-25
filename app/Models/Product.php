@@ -77,17 +77,17 @@ class Product extends Model
         
         // If image path starts with 'img/', it's from storage/app/public/img
         if (str_starts_with($firstImage, 'img/')) {
-            return asset('storage/' . $firstImage);
+            return url('storage/' . $firstImage);
         }
         
         // If it's just a filename, check if it exists in storage
         $storagePath = storage_path('app/public/img/' . $firstImage);
         if (file_exists($storagePath)) {
-            return asset('storage/img/' . $firstImage);
+            return url('storage/img/' . $firstImage);
         }
         
         // Fallback to public/img
-        return asset('img/' . $firstImage);
+        return url('img/' . $firstImage);
     }
 
     public function getImageUrlsAttribute()
@@ -99,13 +99,13 @@ class Product extends Model
         $urls = [];
         foreach ($this->images as $image) {
             if (str_starts_with($image, 'img/')) {
-                $urls[] = asset('storage/' . $image);
+                $urls[] = url('storage/' . $image);
             } else {
                 $storagePath = storage_path('app/public/img/' . $image);
                 if (file_exists($storagePath)) {
-                    $urls[] = asset('storage/img/' . $image);
+                    $urls[] = url('storage/img/' . $image);
                 } else {
-                    $urls[] = asset('img/' . $image);
+                    $urls[] = url('img/' . $image);
                 }
             }
         }

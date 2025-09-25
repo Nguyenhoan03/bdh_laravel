@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\Components\SeoSection;
+use App\Filament\Components\MobileFileUpload;
 use App\Models\Product;
 use App\Models\Category;
 use Filament\Actions\DeleteAction;
@@ -138,6 +139,15 @@ class ProductResource extends Resource
                                 '1:1',
                             ])
                             ->maxFiles(10)
+                            ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'])
+                            ->maxSize(10240) // 10MB
+                            ->helperText('Chấp nhận: JPG, PNG, GIF, WebP (tối đa 10MB mỗi file)')
+                            ->downloadable()
+                            ->openable()
+                            ->previewable(true)
+                            ->getUploadedFileNameForStorageUsing(function (\Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file): string {
+                                return time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            })
                             ->columnSpanFull(),
                         Forms\Components\Toggle::make('is_featured')
                             ->label('Sản phẩm nổi bật')
@@ -159,13 +169,33 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image_urls')
+                Tables\Columns\ImageColumn::make('images')
                     ->label('Hình ảnh')
                     ->circular()
                     ->stacked()
                     ->limit(5)
                     ->limitedRemainingText()
-                    ->defaultImageUrl(asset('img/DW00100699-247x296.webp')),
+                    ->defaultImageUrl(asset('img/DW00100699-247x296.webp'))
+                    ->getStateUsing(function ($record) {
+                        if (empty($record->images) || !is_array($record->images)) {
+                            return [asset('img/DW00100699-247x296.webp')];
+                        }
+                        
+                        $urls = [];
+                        foreach ($record->images as $image) {
+                            if (str_starts_with($image, 'img/')) {
+                                $urls[] = url('storage/' . $image);
+                            } else {
+                                $storagePath = storage_path('app/public/img/' . $image);
+                                if (file_exists($storagePath)) {
+                                    $urls[] = url('storage/img/' . $image);
+                                } else {
+                                    $urls[] = url('img/' . $image);
+                                }
+                            }
+                        }
+                        return $urls;
+                    }),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tên sản phẩm')
                     ->searchable()

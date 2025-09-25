@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Components;
 
 use Filament\Forms;
 use Filament\Schemas\Components\Section;
+use App\Filament\Components\MobileFileUpload;
 use Filament\Schemas\Components\Utilities\Set;
 use App\Filament\Resources\Components\CharacterCounter;
 use Filament\Schemas\Components\Group;
@@ -76,10 +77,13 @@ class SeoSection
                         ->placeholder('Nếu để trống sẽ dùng Meta Description'),
                 ])->columns(1),
 
-                Forms\Components\FileUpload::make('og_image')
+                MobileFileUpload::make('og_image')
                     ->label('🖼️ Open Graph Image')
                     ->image()
                     ->directory('seo/og-images')
+                    ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'])
+                    ->maxSize(10240) // 10MB
+                    ->helperText('Chấp nhận: JPG, PNG, GIF, WebP (tối đa 10MB)')
                     ->imageEditor()
                     ->imageEditorAspectRatios([
                         '16:9',

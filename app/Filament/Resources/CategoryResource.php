@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\Components\SeoSection;
+use App\Filament\Components\MobileFileUpload;
 use App\Models\Category;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -73,11 +74,14 @@ class CategoryResource extends Resource
                             ->label('Kích hoạt')
                             ->default(true)
                             ->helperText('Danh mục sẽ hiển thị trên website khi được kích hoạt'),
-                        Forms\Components\FileUpload::make('image')
+                        MobileFileUpload::make('image')
                             ->label('Hình ảnh')
                             ->image()
                             ->directory('categories')
-                            ->visibility('public'),
+                            ->visibility('public')
+                            ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'])
+                            ->maxSize(10240) // 10MB
+                            ->helperText('Chấp nhận: JPG, PNG, GIF, WebP (tối đa 10MB)'),
                     ])
                     ->columns(2),
 
