@@ -196,14 +196,14 @@
                     <h2 class="text-xl font-bold text-gray-900 mb-4 roboto-condensed">Mô tả chi tiết</h2>
                     
                     <!-- Product Rating -->
-                    <div class="flex items-center mb-4">
+                    <!-- <div class="flex items-center mb-4">
                         <div class="flex items-center">
                             @for($i = 1; $i <= 5; $i++)
                                 <i class="fas fa-star text-yellow-400"></i>
                             @endfor
                         </div>
                         <span class="ml-2 text-sm text-gray-600">5/5 - (1 bình chọn)</span>
-                    </div>
+                    </div> -->
 
                     <!-- Product Specifications -->
                    
@@ -222,7 +222,7 @@
                         </p>
                         @endif
 
-                        <h4 class="text-md font-semibold text-gray-800 mb-2">Thông tin sản phẩm</h4>
+                        <!-- <h4 class="text-md font-semibold text-gray-800 mb-2">Thông tin sản phẩm</h4>
                         <ul class="list-disc list-inside text-gray-700 mb-4 space-y-1">
                             <li><strong>Tên sản phẩm:</strong> {{ $product->name }}</li>
                             <li><strong>Danh mục:</strong> {{ $category->name ?? 'N/A' }}</li>
@@ -231,7 +231,7 @@
                             <li><strong>Giá khuyến mãi:</strong> {{ number_format($product->sale_price, 0, ',', '.') }}₫</li>
                             <li><strong>Tiết kiệm:</strong> {{ number_format($product->price - $product->sale_price, 0, ',', '.') }}₫ ({{ $discount }}%)</li>
                             @endif
-                        </ul>
+                        </ul> -->
                     </div>
                 </div>
             </div>
@@ -378,31 +378,31 @@
                                             {{ Str::limit($relatedProduct->name, 35) }}
                                         </h3>
                                         
-                                        <!-- Product Specification -->
-                                        @if(explode(' - ', $relatedProduct->description)[1] ?? '')
-                                        <p class="text-xs text-gray-500 font-medium">
-                                            {{ explode(' - ', $relatedProduct->description)[1] }}
-                                        </p>
-                                        @endif
-                                        
-                                        <!-- Pricing -->
+                                        <!-- Product Specification and Stock -->
                                         <div class="flex items-center justify-between">
-                                            <div class="flex items-center space-x-2">
-                                                @if($relatedProduct->price > $relatedProduct->sale_price && $relatedProduct->sale_price > 0)
-                                                <span class="text-sm text-gray-400 line-through">
-                                                    {{ number_format($relatedProduct->price, 0, ',', '.') }}₫
-                                                </span>
-                                                @endif
-                                                <span class="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                                                    {{ number_format($relatedProduct->sale_price > 0 ? $relatedProduct->sale_price : $relatedProduct->price, 0, ',', '.') }}₫
-                                                </span>
-                                            </div>
+                                            @if(explode(' - ', $relatedProduct->description)[1] ?? '')
+                                            <p class="text-xs text-gray-500 font-medium">
+                                                {{ explode(' - ', $relatedProduct->description)[1] }}
+                                            </p>
+                                            @endif
                                             
                                             <!-- Stock Indicator -->
                                             <div class="flex items-center space-x-1">
                                                 <div class="w-2 h-2 bg-green-500 rounded-full"></div>
                                                 <span class="text-xs text-gray-500">Còn hàng</span>
                                             </div>
+                                        </div>
+                                        
+                                        <!-- Pricing -->
+                                        <div class="flex items-center space-x-2">
+                                            @if($relatedProduct->price > $relatedProduct->sale_price && $relatedProduct->sale_price > 0)
+                                            <span class="text-sm text-gray-400 line-through">
+                                                {{ number_format($relatedProduct->price, 0, ',', '.') }}₫
+                                            </span>
+                                            @endif
+                                            <span class="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                                                {{ number_format($relatedProduct->sale_price > 0 ? $relatedProduct->sale_price : $relatedProduct->price, 0, ',', '.') }}₫
+                                            </span>
                                         </div>
                                         
                                         <!-- Add to Cart Button -->
