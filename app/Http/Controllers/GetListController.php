@@ -64,13 +64,13 @@ class GetListController extends Controller
                     });
             }
             
-            // Lấy sản phẩm nổi bật
+            // Lấy tối đa 25 sản phẩm nổi bật
             $featuredProducts = Product::with('category')
                 ->select('id', 'name', 'slug', 'price', 'sale_price', 'images', 'description', 'category_id', 'is_featured', 'is_active', 'created_at')
                 ->where('is_featured', true)
                 ->where('is_active', true)
                 ->orderBy('created_at', 'desc')
-                ->limit(6)
+                ->limit(25)
                 ->get()
                 ->map(function ($product) {
                     // Tạo sale_price = 70% của price để có 30% discount cho một số sản phẩm
@@ -80,13 +80,13 @@ class GetListController extends Controller
                     return $product;
                 });
             
-            // Lấy sản phẩm bán chạy (best selling) - sử dụng stock thay vì view_count
+            // Lấy tối đa 30 sản phẩm bán chạy (best selling) - sử dụng stock thay vì view_count
             $bestSellingProducts = Product::with('category')
                 ->select('id', 'name', 'slug', 'price', 'sale_price', 'images', 'description', 'category_id', 'is_featured', 'is_active', 'created_at', 'stock')
                 ->where('is_active', true)
                 ->orderBy('stock', 'desc')
                 ->orderBy('is_featured', 'desc')
-                ->limit(8)
+                ->limit(30)
                 ->get()
                 ->map(function ($product) {
                     // Tạo sale_price = 70% của price để có 30% discount cho một số sản phẩm

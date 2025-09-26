@@ -472,9 +472,9 @@
         </div>
 
         <!-- Products Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div id="bestSellingGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             @forelse($bestSellingProducts ?? collect() as $index => $product)
-            <div class="group scroll-reveal" data-delay="{{ $index * 100 }}">
+            <div class="group scroll-reveal {{ $index >= 8 ? 'hidden more-product' : '' }}" data-delay="{{ $index * 100 }}">
                 <a href="/san-pham/{{ $product->slug ?? $product->id }}" class="block">
                     <div class="relative bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border border-gray-100 h-[400px] flex flex-col">
                         <!-- Discount Badge -->
@@ -571,10 +571,10 @@
 
         <!-- View More Button -->
         <div class="text-center">
-            <a href="/products"
+            <button id="loadMoreBestSelling" 
                 class="inline-block bg-blue-600 text-white px-8 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                 Xem thêm sản phẩm khác <i class="fas fa-arrow-right ml-2"></i>
-            </a>
+            </button>
         </div>
     </div>
 </section>
@@ -593,9 +593,9 @@
         </div>
 
         <!-- Featured Products Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div id="featuredGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             @forelse($featuredProducts ?? collect() as $index => $product)
-            <div class="group scroll-reveal" data-delay="{{ $index * 150 }}">
+            <div class="group scroll-reveal {{ $index >= 8 ? 'hidden more-product' : '' }}" data-delay="{{ $index * 150 }}">
                 <!-- Product Card with Enhanced Design -->
                 <a href="/san-pham/{{ $product->slug ?? $product->id }}" class="block">
                     <div class="relative bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border border-gray-100 h-[400px] flex flex-col">
@@ -699,13 +699,13 @@
 
         <!-- Enhanced View More Button -->
         <div class="text-center">
-            <a href="/products"
+            <button id="loadMoreFeatured" 
                 class="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                 <span>Khám phá thêm sản phẩm</span>
                 <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                 </svg>
-            </a>
+            </button>
         </div>
     </div>
 </section>
@@ -956,6 +956,75 @@
 
             // Start observing
             observer.observe(el);
+        });
+
+        // Load More Products Functionality
+        let bestSellingVisible = 8;
+        let featuredVisible = 8;
+        const itemsPerLoad = 8;
+
+        // Load more best selling products
+        document.getElementById('loadMoreBestSelling').addEventListener('click', function() {
+            const hiddenProducts = document.querySelectorAll('#bestSellingGrid .more-product.hidden');
+            const productsToShow = Array.from(hiddenProducts).slice(0, itemsPerLoad);
+            
+            if (productsToShow.length === 0) {
+                this.style.display = 'none';
+                return;
+            }
+
+            productsToShow.forEach((product, index) => {
+                setTimeout(() => {
+                    product.classList.remove('hidden');
+                    product.style.opacity = '0';
+                    product.style.transform = 'translateY(30px)';
+                    
+                    // Trigger animation
+                    setTimeout(() => {
+                        product.style.opacity = '1';
+                        product.style.transform = 'translateY(0)';
+                    }, 50);
+                }, index * 100);
+            });
+
+            bestSellingVisible += productsToShow.length;
+            
+            // Hide button if no more products
+            if (bestSellingVisible >= document.querySelectorAll('#bestSellingGrid .group').length) {
+                this.style.display = 'none';
+            }
+        });
+
+        // Load more featured products
+        document.getElementById('loadMoreFeatured').addEventListener('click', function() {
+            const hiddenProducts = document.querySelectorAll('#featuredGrid .more-product.hidden');
+            const productsToShow = Array.from(hiddenProducts).slice(0, itemsPerLoad);
+            
+            if (productsToShow.length === 0) {
+                this.style.display = 'none';
+                return;
+            }
+
+            productsToShow.forEach((product, index) => {
+                setTimeout(() => {
+                    product.classList.remove('hidden');
+                    product.style.opacity = '0';
+                    product.style.transform = 'translateY(30px)';
+                    
+                    // Trigger animation
+                    setTimeout(() => {
+                        product.style.opacity = '1';
+                        product.style.transform = 'translateY(0)';
+                    }, 50);
+                }, index * 100);
+            });
+
+            featuredVisible += productsToShow.length;
+            
+            // Hide button if no more products
+            if (featuredVisible >= document.querySelectorAll('#featuredGrid .group').length) {
+                this.style.display = 'none';
+            }
         });
     });
 </script>
