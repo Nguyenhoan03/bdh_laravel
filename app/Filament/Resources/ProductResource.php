@@ -183,15 +183,14 @@ class ProductResource extends Resource
                         
                         $urls = [];
                         foreach ($record->images as $image) {
+                            // Xử lý escaped slash trong database
+                            $image = str_replace('\/', '/', $image);
+                            
+                            // Đơn giản hóa logic: chỉ cần kiểm tra storage path
                             if (str_starts_with($image, 'img/')) {
                                 $urls[] = url('storage/' . $image);
                             } else {
-                                $storagePath = storage_path('app/public/img/' . $image);
-                                if (file_exists($storagePath)) {
-                                    $urls[] = url('storage/img/' . $image);
-                                } else {
-                                    $urls[] = url('img/' . $image);
-                                }
+                                $urls[] = url('storage/img/' . $image);
                             }
                         }
                         return $urls;
