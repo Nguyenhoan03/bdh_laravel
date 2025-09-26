@@ -71,7 +71,10 @@ class BlogController extends Controller
             return view('blog-detail', compact('post', 'relatedPosts', 'meta'));
 
         } catch (\Exception $e) {
-            abort(500, 'Có lỗi xảy ra khi tải bài viết');
+            // Log lỗi để debug
+            \Log::error('Blog detail error: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
+            abort(500, 'Có lỗi xảy ra khi tải bài viết: ' . $e->getMessage());
         }
     }
 

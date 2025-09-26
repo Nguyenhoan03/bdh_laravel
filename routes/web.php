@@ -37,6 +37,47 @@ Route::get('/test-warranty', function () {
 Route::get('/blog-dong-ho-360', [App\Http\Controllers\BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [App\Http\Controllers\BlogController::class, 'show'])->name('blog.show');
 
+// Test route để kiểm tra blog posts
+Route::get('/test-blog', function() {
+    $posts = \App\Models\BlogPost::where('is_published', true)->get();
+    return response()->json([
+        'count' => $posts->count(),
+        'posts' => $posts->map(function($post) {
+            return [
+                'id' => $post->id,
+                'title' => $post->title,
+                'slug' => $post->slug,
+                'is_published' => $post->is_published
+            ];
+        })
+    ]);
+});
+
+// Test route đơn giản cho blog detail
+Route::get('/test-blog-detail/{slug}', function($slug) {
+    try {
+        $post = \App\Models\BlogPost::where('slug', $slug)->where('is_published', true)->first();
+        
+        if (!$post) {
+            return response()->json(['error' => 'Post not found'], 404);
+        }
+        
+        return response()->json([
+            'success' => true,
+            'post' => [
+                'id' => $post->id,
+                'title' => $post->title,
+                'slug' => $post->slug,
+                'content' => $post->content,
+                'author' => $post->author,
+                'image_url' => $post->image_url
+            ]
+        ]);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+});
+
 // Policy pages
 Route::get('/dieu-khoan-thanh-toan', function () {
     $meta = [
