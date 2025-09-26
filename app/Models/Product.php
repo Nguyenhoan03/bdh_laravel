@@ -62,61 +62,46 @@ class Product extends Model
     public function getFirstImageUrlAttribute()
     {
         if (empty($this->images) || !is_array($this->images)) {
-            return asset('img/DW-LOGO.png');
+            return asset('img/DW00100699-247x296.webp');
         }
 
         $firstImage = $this->images[0];
         
-        // Debug log
-        Log::info('First image processing', [
-            'product_id' => $this->id,
-            'product_name' => $this->name,
-            'images_raw' => $this->images,
-            'first_image' => $firstImage
-        ]);
+        // Xử lý escaped slash trong database
+        $firstImage = str_replace('\/', '/', $firstImage);
         
-        // If image path starts with 'img/', it's from storage/app/public/img
+        // Xử lý các trường hợp khác nhau của đường dẫn ảnh
         if (str_starts_with($firstImage, 'img/')) {
             return url('storage/' . $firstImage);
-        }
-        
-        // If it's just a filename, check if it exists in storage
-        $storagePath = storage_path('app/public/img/' . $firstImage);
-        if (file_exists($storagePath)) {
+        } elseif (str_starts_with($firstImage, 'products/')) {
+            return url('storage/' . $firstImage);
+        } else {
+            // Nếu không có prefix, thêm 'img/' và sử dụng storage
             return url('storage/img/' . $firstImage);
         }
-        
-        // Fallback to public/img
-        return url('img/' . $firstImage);
     }
 
     public function getImageUrlsAttribute()
     {
         if (empty($this->images) || !is_array($this->images)) {
-            return [asset('img/DW-LOGO.png')];
+            return [asset('img/DW00100699-247x296.webp')];
         }
 
         $urls = [];
         foreach ($this->images as $image) {
+            // Xử lý escaped slash trong database
+            $image = str_replace('\/', '/', $image);
+            
+            // Xử lý các trường hợp khác nhau của đường dẫn ảnh
             if (str_starts_with($image, 'img/')) {
                 $urls[] = url('storage/' . $image);
+            } elseif (str_starts_with($image, 'products/')) {
+                $urls[] = url('storage/' . $image);
             } else {
-                $storagePath = storage_path('app/public/img/' . $image);
-                if (file_exists($storagePath)) {
-                    $urls[] = url('storage/img/' . $image);
-                } else {
-                    $urls[] = url('img/' . $image);
-                }
+                // Nếu không có prefix, thêm 'img/' và sử dụng storage
+                $urls[] = url('storage/img/' . $image);
             }
         }
-        
-        // Debug log
-        Log::info('Image URLs processing', [
-            'product_id' => $this->id,
-            'product_name' => $this->name,
-            'images_raw' => $this->images,
-            'urls_generated' => $urls
-        ]);
         
         return $urls;
     }

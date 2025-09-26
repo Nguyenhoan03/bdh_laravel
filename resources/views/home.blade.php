@@ -302,7 +302,7 @@
 
         <!-- View More Button -->
         <div class="text-center mt-8">
-            <a href="/danh-muc"
+            <a href="/danh-muc/dong-ho-nu"
                 class="inline-block bg-blue-600 text-white px-8 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                 Xem thêm sản phẩm khác <i class="fas fa-arrow-right ml-2"></i>
             </a>
@@ -450,7 +450,7 @@
 
         <!-- View More Button -->
         <div class="text-center mt-8 mb-5">
-            <a href="/dong-ho-nam"
+            <a href="/danh-muc/dong-ho-nam"
                 class="inline-block bg-blue-600 text-white px-8 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                 Xem thêm sản phẩm khác <i class="fas fa-arrow-right ml-2"></i>
             </a>

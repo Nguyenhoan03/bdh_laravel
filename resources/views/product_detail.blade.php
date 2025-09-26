@@ -51,25 +51,14 @@
                                  onerror="this.src='{{ asset('img/DW00100699-247x296.webp') }}'">
                         </div>
                         @endforeach
-                        @if(count($product->image_urls) < 4)
-                            @for($i = count($product->image_urls); $i < 4; $i++)
-                            <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 border-gray-200 hover:border-blue-500 transition-colors" 
-                                 onclick="changeMainImage('{{ asset('img/DW00100699-247x296.webp') }}', this)">
-                                <img src="{{ asset('img/DW00100699-247x296.webp') }}" 
-                                     alt="{{ $product->name }}" 
-                                     class="w-full h-full object-cover">
-                            </div>
-                            @endfor
-                        @endif
                     @else
-                        @for($i = 0; $i < 4; $i++)
-                        <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 {{ $i === 0 ? 'border-blue-500' : 'border-gray-200' }} hover:border-blue-500 transition-colors" 
+                        <!-- Hiển thị ảnh mặc định nếu không có ảnh -->
+                        <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 border-blue-500" 
                              onclick="changeMainImage('{{ asset('img/DW00100699-247x296.webp') }}', this)">
                             <img src="{{ asset('img/DW00100699-247x296.webp') }}" 
                                  alt="{{ $product->name }}" 
                                  class="w-full h-full object-cover">
                         </div>
-                        @endfor
                     @endif
                 </div>
                 
